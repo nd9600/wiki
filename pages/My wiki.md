@@ -228,3 +228,10 @@ I should read in environment variables from a .env file and set them with `set-e
 Adding that in was a lot easier than I thought, now I can use .env files like a proper dev!
 
 I should be able to use [Prism](https://prismjs.com/) as a lightweight highlighter for my code blocks
+
+For future reference, Eli Bendersky's blog seems very very good:
+https://eli.thegreenplace.net/2009/02/16/abstract-vs-concrete-syntax-trees/
+https://eli.thegreenplace.net/2011/01/23/how-debuggers-work-part-1s
+https://eli.thegreenplace.net/2018/type-inference/
+
+Also, maybe I should parse links into `<a>s` automatically
