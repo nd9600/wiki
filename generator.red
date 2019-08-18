@@ -1,14 +1,18 @@
 Red [
     Title: "Nathan's wiki generator"
-    Author: "Nathan Douglas"
+    Author: "Nathan"
     License: "MIT"
 ]
 
-wikiLocation: %../aws/wiki/
 
 do %helpers.red
+dotenv: context load %dotenv.red
+dotenv/loadEnv
+
+wikiLocation: to-file get-env "WIKI_LOCATION"
+
 templater: context load %templater.red
-markdownCompiler: context load %compiler/markdown.red
+markdownCompiler: context load %compiler/markdown/markdown.red
 
 compileToHTML: function [
     pageContent [string!] "the actual content, excluding the tags at the top"

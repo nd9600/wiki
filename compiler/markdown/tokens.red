@@ -1,6 +1,6 @@
 Red [
-    Title: "Nathan's markdown -> HTML compiler - tokens"
-    Author: "Nathan Douglas"
+    Title: "Nathan's markdown tokens"
+    Author: "Nathan"
     License: "MIT"
 ]
 

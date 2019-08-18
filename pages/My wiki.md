@@ -209,7 +209,7 @@ rollMultipleTextTokens: function [
 ```
 Pretty simple
 
-### Dat 5
+### Day 5
 
 I might like a dark theme like
 ```
@@ -221,3 +221,8 @@ I might like a dark theme like
     --hover-colour: white;
 }
 ```
+
+### Day 6
+
+I should read in environment variables from a .env file and set them with `set-env`, so I can just read them with `get-env` anywhere I want, avoid these nasty global variables
+Adding that in was a lot easier than I thought, now I can use .env files like a proper dev!
