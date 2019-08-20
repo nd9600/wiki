@@ -199,9 +199,9 @@ errorToString: function [
     error [error!]
 ] [
     errorIDBlock: get error/id
-    arg1: to-string error/arg1
-    arg2: to-string error/arg2
-    arg3: to-string error/arg3
+    arg1: mold error/arg1
+    arg2: mold error/arg2
+    arg3: mold error/arg3
     usefulError: bind to-block errorIDBlock 'arg1
 
     ; adds a space in between each thing
@@ -212,7 +212,7 @@ errorToString: function [
         where: error/where
     ]
 
-    rejoin [usefulErrorString newline form errorIDBlock newline newline objectToString fieldsWeWant]
+    rejoin [usefulErrorString newline objectToString fieldsWeWant]
 ]
 
 blockToString: function [

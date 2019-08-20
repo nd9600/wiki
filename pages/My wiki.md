@@ -15,7 +15,7 @@ I made this after I read [this interview with Ceasar Bautista](https://superorga
 It uses Red
 
 ## Todos
-* 
+* Let Headers work with Asterisks, Underscores, Tildes, Links, and Code, as well as just Text
 
 ## Construction report
 

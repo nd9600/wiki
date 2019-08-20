@@ -11,8 +11,10 @@ compile: function [
     "converts an input Markdown string into tokens"
     str [string!]
 ] [
-    tokens: tokenizer str
-    ast: parser tokens
+    newParser: make Parser [
+        tokens: tokenize str
+    ]
+    ast: newParser/parse
     ?? ast
     ; quit
 

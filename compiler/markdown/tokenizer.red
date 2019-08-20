@@ -6,7 +6,7 @@ Red [
 
 do %tokens.red
 
-tokenizer: function [
+tokenize: function [
     "converts an input Markdown string into tokens"
     str [string!]
 ] [
