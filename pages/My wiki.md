@@ -1,5 +1,4 @@
 tags: [meta]
-
 # My wiki
 
 Hello
