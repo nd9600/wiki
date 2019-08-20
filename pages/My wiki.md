@@ -17,6 +17,8 @@ It uses Red
 ## Todos
 * Let Headers work with Asterisks, Underscores, Tildes, Links, and Code, as well as just Text
 * A new ParagraphNode is made when we read in two NewlineTokens in a row, 1 NewlineToken is a NewlineNode
+* Change slugifiers to work with ASCII letters, numbers and `$-_.+!*'()`
+* Site web/graph
 
 ## Construction report
 
@@ -242,3 +244,46 @@ Also, maybe I should parse links into `<a>s` automatically
 
 ### Day 7
 
+Making the initial parser was easy enough (I've only done headers and emphasis right now), but I've run into a pretty big snag: the Markdown syntax says this about paragraphs and line breaks
+> A paragraph is simply one or more consecutive lines of text, separated by one or more blank lines. (A blank line is any line that looks like a blank line — a line containing nothing but spaces or tabs is considered blank.) Normal paragraphs should not be indented with spaces or tabs.
+
+> The implication of the “one or more consecutive lines of text” rule is that Markdown supports “hard-wrapped” text paragraphs. This differs significantly from most other text-to-HTML formatters (including Movable Type’s “Convert Line Breaks” option) which translate every line break character in a paragraph into a `<br />` tag.
+
+> When you do want to insert a `<br />` break tag using Markdown, you end a line with two or more spaces, then type return.
+
+> Yes, this takes a tad more effort to create a `<br />`, but a simplistic “every line break is a `<br />`” rule wouldn’t work for Markdown. Markdown’s email-style blockquoting and multi-paragraph list items work best — and look better — when you format them with hard breaks.
+
+and I don't really understand how to handle that properly. I think it means anytime you see two `\\n`s in a row, that means you start a new `<p>`, closing the existing one (if there _is_ one), and `  \\n` at the end of a line becomes a `<br>`, but what about one newline by itself? It must become a `<br>` too.
+
+I guess I'll need to make some sort of ~~text-y~~ Paragraph node that can include plain Text, Emphasis, Strikethrough, links, and inline code (anything inline, basically) for each string of inline tokens, and make each ~~texty~~ node become a `<p>` in the code generator? Consuming inline tokens until I get to a block one (headers, pluses, hyphens, numbersWithDots, exclamation marks, three backticks, four spaces, and tabs), then putting that into a Paragraph node?
+One more point to writing things down!
+
+A nice code feature I didn't realise in advance: you can tell pretty easily from the `parse_` functions what each Node matches
+```
+parseAsterisk: does [
+        consume Asterisk
+        case [
+            peek Text [
+                textToken: consume Text
+                consume Asterisk
+                return make EmphasisNode [
+                    text: textToken/value
+                ]
+            ]
+            peek Asterisk [
+                consume Asterisk
+                textToken: consume Text
+                consume Asterisk
+                consume Asterisk
+                return make StrongEmphasisNode [
+                    text: textToken/value
+                ]
+            ]
+            ...
+        ]
+    ]
+```
+
+So, an Emphasis node is an Asterisk, some text, and another Asterisk, and a StrongEmphasis node is Asterisk, Asterisk, some text, Asterisk, Asterisk
+
+I think I might not do the Paragraphy bits for now, do the code generation for the Headers, Emphasis and Strikethrough, so I can see some results soon. Maybe get to crank out a proper Tree visitor thingy

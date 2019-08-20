@@ -280,13 +280,7 @@ Parser: context [
         ] [
             strError: errorToString tree
             print rejoin [newline "#####" newline "error: " strError]
-            ; ?? tokens
         ]
-
-        ?? tree
-
-        quit
-
         tree
     ] 
 ]
