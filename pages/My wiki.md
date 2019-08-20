@@ -16,6 +16,7 @@ It uses Red
 
 ## Todos
 * Let Headers work with Asterisks, Underscores, Tildes, Links, and Code, as well as just Text
+* A new ParagraphNode is made when we read in two NewlineTokens in a row, 1 NewlineToken is a NewlineNode
 
 ## Construction report
 

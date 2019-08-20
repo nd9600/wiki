@@ -4,7 +4,7 @@ Red [
     License: "MIT"
 ]
 
-do %tree.red
+do %nodes.red
 
 rollMultipleTextTokens: function [
     "we want to roll multiple `Text` tokens in a row into one big Token, there's no point having a thousand separate ones in a row"
@@ -70,9 +70,16 @@ Parser: context [
         do make error! rejoin ["expected " expectedToken/type " but got " firstToken/type]
     ]
 
-    parseNewline: does [consume NewlineToken]
+    parseNewline: does [
+        consume NewlineToken
+        either (peek NewlineToken) [
+            consume NewlineToken
+            make NewlineNode []
+        ] [
+            none
+        ]
+    ]
 
-    ; Header ----- Newline
     parseHeader1: does [
         consume Header1
         textToken: consume Text
@@ -81,6 +88,110 @@ Parser: context [
         make HeaderNode [
             size: 1
             text: textToken/value
+        ]
+    ]
+    parseHeader2: does [
+        consume Header2
+        textToken: consume Text
+        consume NewlineToken
+
+        make HeaderNode [
+            size: 2
+            text: textToken/value
+        ]
+    ]
+    parseHeader3: does [
+        consume Header3
+        textToken: consume Text
+        consume NewlineToken
+
+        make HeaderNode [
+            size: 3
+            text: textToken/value
+        ]
+    ]
+    parseHeader4: does [
+        consume Header4
+        textToken: consume Text
+        consume NewlineToken
+
+        make HeaderNode [
+            size: 4
+            text: textToken/value
+        ]
+    ]
+    parseHeader5: does [
+        consume Header5
+        textToken: consume Text
+        consume NewlineToken
+
+        make HeaderNode [
+            size: 5
+            text: textToken/value
+        ]
+    ]
+    parseHeader6: does [
+        consume Header6
+        textToken: consume Text
+        consume NewlineToken
+
+        make HeaderNode [
+            size: 6
+            text: textToken/value
+        ]
+    ]
+
+    parseAsterisk: does [
+        consume Asterisk
+        case [
+            peek Text [
+                textToken: consume Text
+                consume Asterisk
+                return make EmphasisNode [
+                    text: textToken/value
+                ]
+            ]
+            peek Asterisk [
+                consume Asterisk
+                textToken: consume Text
+                consume Asterisk
+                consume Asterisk
+                return make StrongEmphasisNode [
+                    text: textToken/value
+                ]
+            ]
+
+            true [
+                firstToken: first self/tokens
+                do make error! rejoin ["expected Asterisk or Text but got " firstToken/type]
+            ]
+        ]
+    ]
+
+    parseUnderscore: does [
+        consume Underscore
+        case [
+            peek Text [
+                textToken: consume Text
+                consume Underscore
+                return make EmphasisNode [
+                    text: textToken/value
+                ]
+            ]
+            peek Underscore [
+                consume Underscore
+                textToken: consume Text
+                consume Underscore
+                consume Underscore
+                return make StrongEmphasisNode [
+                    text: textToken/value
+                ]
+            ]
+
+            true [
+                firstToken: first self/tokens
+                do make error! rejoin ["expected Underscore or Text but got " firstToken/type]
+            ]
         ]
     ]
 
@@ -110,35 +221,56 @@ Parser: context [
         }
     ] [
         self/tokens: rollMultipleTextTokens self/tokens
-
-        ; print blockToString rolledTokens
-
-        ; tokenCursor: tokens
-
-        ; until [
-        ;     currentToken: first tokenCursor
-
-
-        ;     tokenCursor: next tokenCursor
-        ;     tail? tokenCursor
-        ; ]
-
         if error? tree: try [
             markdownContent: copy []
             until [
                 case [
-                    peek NewlineToken [parseNewline print "parsed newline"]
+                    peek NewlineToken [
+                        maybeNewlineNode: parseNewline
+                        if (found? maybeNewlineNode) [
+                            append markdownContent maybeNewlineNode
+                        ]
+                        print "parsed newline"
+                    ]
                     peek Header1 [
-                        header1Node: parseHeader1
-                        append markdownContent header1Node
+                        append markdownContent parseHeader1
                         print "parsed header1"
                     ]
+                    peek Header2 [
+                        append markdownContent parseHeader2
+                        print "parsed header2"
+                    ]
+                    peek Header3 [
+                        append markdownContent parseHeader3
+                        print "parsed header3"
+                    ]
+                    peek Header4 [
+                        append markdownContent parseHeader4
+                        print "parsed header4"
+                    ]
+                    peek Header5 [
+                        append markdownContent parseHeader5
+                        print "parsed header5"
+                    ]
+                    peek Header6 [
+                        append markdownContent parseHeader6
+                        print "parsed header6"
+                    ]
+
+                    peek Asterisk [
+                        append markdownContent parseAsterisk
+                        print "parsed asterisk"
+                    ]
+                    peek Underscore [
+                        append markdownContent parseUnderscore
+                        print "parsed underscore"
+                    ]
+
                     true [
                         print rejoin ["can't handle " (objectToString first self/tokens)]
                         return none
                     ]
                 ]
-                ; ?? self/tokens
                 tail? self/tokens
             ]
 

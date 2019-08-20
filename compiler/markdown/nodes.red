@@ -13,8 +13,22 @@ MarkdownNode: make Node [
     content: []
 ]
 
+NewlineNode: make Node [
+    type: "NewlineNode"
+]
+
 HeaderNode: make Node [
     type: "HeaderNode"
     size: 0
+    text: none
+]
+
+EmphasisNode: make Node [
+    type: "EmphasisNode"
+    text: none
+]
+
+StrongEmphasisNode: make Node [
+    type: "StrongEmphasisNode"
     text: none
 ]
