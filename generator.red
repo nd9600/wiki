@@ -9,7 +9,9 @@ do %helpers.red
 dotenv: context load %dotenv.red
 dotenv/loadEnv
 
-wikiLocation: to-file get-env "WIKI_LOCATION"
+wikiLocation: (get-env "WIKI_LOCATION")
+    |> [lambda/applyArgs [appendLastChar ? "/"]]
+    |> :to-file
 
 templater: context load %templater.red
 markdownCompiler: context load %compiler/markdown/markdown.red

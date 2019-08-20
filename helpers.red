@@ -257,3 +257,11 @@ sepJoin: function [
     rejoin compose/only flatten 
         f_map lambda [reduce [? copy (sep)]] block
 ]
+
+appendLastChar: function [
+    "Appends a character to the end of the string if it's not already there"
+    str [string!]
+    char [string!]
+] [
+    either (last str) == (to-char char) [str] [append str char]
+]
