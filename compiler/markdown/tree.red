@@ -4,25 +4,17 @@ Red [
     License: "MIT"
 ]
 
-MarkdownNode: context [
-
+Node: context [
+	isType: function [typeString [string!]] [not none? find self/type typeString]
 ]
 
-Header1Node: context [
-    text: none
+MarkdownNode: make Node [
+    type: "MarkdownNode"
+    content: []
 ]
-Header2Node: context [
-    text: none
-]
-Header3Node: context [
-    text: none
-]
-Header4Node: context [
-    text: none
-]
-Header5Node: context [
-    text: none
-]
-Header6Node: context [
+
+HeaderNode: make Node [
+    type: "HeaderNode"
+    size: 0
     text: none
 ]

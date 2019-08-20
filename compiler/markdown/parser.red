@@ -50,8 +50,16 @@ rollMultipleTextTokens: function [
 Parser: context [
     tokens: [] ; a block! of Tokens from %tokens.red"
 
+    peek: function [
+        "returns whether the first token has the expected type"
+        expectedToken [object!]
+    ] [
+        firstToken: first self/tokens
+        firstToken/isType expectedToken/type
+    ]
+
     consume: function [
-        "removes the first token and returns it"
+        "removes the first token and returns it, if it has the expected type"
         expectedToken [object!]
     ] [
         firstToken: first self/tokens
@@ -70,13 +78,36 @@ Parser: context [
         textToken: consume Text
         consume NewlineToken
 
-        n: make Header1Node [text: textToken/value]
-        ?? n
-        n
+        make HeaderNode [
+            size: 1
+            text: textToken/value
+        ]
     ]
 
     parse: function [
-        "builds an Abstract Syntax Tree of Tokens from a block! of them"
+        {parses a block! of tokens into a tree that represents the structure of the actual Markdown, something like this:
+            [
+                Header1 Text Newline Newline 
+                Underscore Text Underscore Newline 
+                NumberWithDot Text Newline 
+                NumberWithDot Text Newline 
+                NumberWithDot Asterisk Asterisk Text Asterisk Asterisk
+            ] into
+            MARKDOWN
+                HEADER
+                    SIZE: 1
+                    TEXT: "EXAMPLE"
+                BR
+                EMPHASIS
+                    TEXT: "EXAMPLE"
+                ORDERED_LIST
+                    ITEMS: [
+                        TEXT
+                        TEXT
+                        STRONG_EMPHASIS
+                            TEXT: "EXAMPLE"
+                    ]
+        }
     ] [
         self/tokens: rollMultipleTextTokens self/tokens
 
@@ -93,15 +124,32 @@ Parser: context [
         ; ]
 
         if error? tree: try [
-            parseNewline
-            parseNewline
-            parseHeader1
+            markdownContent: copy []
+            until [
+                case [
+                    peek NewlineToken [parseNewline print "parsed newline"]
+                    peek Header1 [
+                        header1Node: parseHeader1
+                        append markdownContent header1Node
+                        print "parsed header1"
+                    ]
+                    true [
+                        print rejoin ["can't handle " (objectToString first self/tokens)]
+                        return none
+                    ]
+                ]
+                ; ?? self/tokens
+                tail? self/tokens
+            ]
+
+            make MarkdownNode [
+                content: markdownContent
+            ]
         ] [
             strError: errorToString tree
             print rejoin [newline "#####" newline "error: " strError]
-            ?? tokens
+            ; ?? tokens
         ]
-        tree
 
         ?? tree
 

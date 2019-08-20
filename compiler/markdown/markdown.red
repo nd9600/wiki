@@ -16,7 +16,7 @@ compile: function [
     ]
     ast: newParser/parse
     ?? ast
-    ; quit
+    quit
 
     str
 ]
