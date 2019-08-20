@@ -14,6 +14,9 @@ I made this after I read [this interview with Ceasar Bautista](https://superorga
 ## How it all works
 It uses Red
 
+## Todos
+* 
+
 ## Construction report
 
 ### Day 1
@@ -235,3 +238,6 @@ https://eli.thegreenplace.net/2011/01/23/how-debuggers-work-part-1s
 https://eli.thegreenplace.net/2018/type-inference/
 
 Also, maybe I should parse links into `<a>s` automatically
+
+### Day 7
+

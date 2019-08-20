@@ -50,6 +50,11 @@ Underscore: make Token [
     value: "_"
 ]
 
+Tilde: make Token [
+    type: "Tilde"
+    value: "~"
+]
+
 Plus: make Token [
     type: "Plus"
     value: "+"
@@ -101,11 +106,13 @@ FourSpaces: make Token [
 ; conflicts with 'tab in Red
 TabToken: make Token [
     type: "Tab"
+    value: tab
 ]
 
 ; conflicted with 'newline in Red
 NewlineToken: make Token [
     type: "Newline"
+    value: newline
 ]
 
 Text: make Token [

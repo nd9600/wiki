@@ -12,8 +12,8 @@ compile: function [
     str [string!]
 ] [
     tokens: tokenizer str
-    ; ast: parser tokens
-    ; ?? ast
+    ast: parser tokens
+    ?? ast
     ; quit
 
     str

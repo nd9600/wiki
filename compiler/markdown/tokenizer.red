@@ -52,6 +52,8 @@ tokenizer: function [
             |
                 "_" (append tokens make Underscore [])
             |
+                "~" (append tokens make Tilde [])
+            |
                 "+" (append tokens make Plus [])
             |
                 "-" (append tokens make Hyphen [])

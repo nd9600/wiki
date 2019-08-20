@@ -9,7 +9,8 @@ parser: function [
     tokens [block!] "a block! of Tokens from %tokens.red"
 ] [
     rolledTokens: rollMultipleTextTokens tokens
-    rolledTokens
+    print blockToString rolledTokens
+    quit
 ]
 
 rollMultipleTextTokens: function [

@@ -183,11 +183,14 @@ objectToString: function [
     obj [object!]
 ] [
     words: words-of obj
-    values: values-of obj
-    str: copy ""
-    repeat i length? words [
-        append str rejoin [words/(i) ": " values/(i) "^/"]
+    str: copy "object!: [^/"
+    foreach word words [
+        value: get in obj word
+
+        stringifiedValue: mold :value
+        append str rejoin [tab tab word ": " stringifiedValue "^/"]
     ]
+    append str rejoin [tab "]^/"]
     str
 ]
 
@@ -210,6 +213,22 @@ errorToString: function [
     ]
 
     rejoin [usefulErrorString newline form errorIDBlock newline newline objectToString fieldsWeWant]
+]
+
+blockToString: function [
+    block [block!]
+] [
+    str: copy ""
+    append str "[^/"
+    foreach element block [
+        case [
+            object? element [append str rejoin [tab (objectToString element)]]
+            block? element [append str rejoin [tab (blockToString element)]]
+            true [append str rejoin [tab (mold element)]]
+        ]
+    ]
+    append str "]"
+    str
 ]
 
 findFiles: function [
