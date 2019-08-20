@@ -10,7 +10,11 @@ parser: function [
 ] [
     rolledTokens: rollMultipleTextTokens tokens
     print blockToString rolledTokens
+    tree: parseIntoTree rolledTokens
+    ?? tree
     quit
+
+    tree
 ]
 
 rollMultipleTextTokens: function [
@@ -41,10 +45,43 @@ rollMultipleTextTokens: function [
             ]
             append newTokens make Token [type: "Text" value: rolledTextValue]
 
+            ; it wasn't adding the token after a long string of Texts without this
+            if (found? currentToken) [
+                append newTokens currentToken
+            ]
+
             tokenCursor: next tokenCursor ; we want to jump to the end of all the Text tokens, because we'd go over the same tokens twice otherwise 
         ]
-
         tail? tokenCursor
     ]
     newTokens
+]
+
+parseIntoTree: function [
+    {parses a block! of tokens into a tree that represents the structure of the actual Markdown, something like this:
+        [
+            Header1 Text Newline Newline 
+            Underscore Text Underscore Newline 
+            NumberWithDot Text Newline 
+            NumberWithDot Text Newline 
+            NumberWithDot Asterisk Asterisk Text Asterisk Asterisk
+        ] into
+        MARKDOWN
+            HEADER
+                SIZE: 1
+                TEXT: "EXAMPLE"
+            BR
+            EMPHASIS
+                TEXT: "EXAMPLE"
+            ORDERED_LIST
+                ITEMS: [
+                    TEXT
+                    TEXT
+                    STRONG_EMPHASIS
+                        TEXT: "EXAMPLE"
+                ]
+    }
+    tokens [block!]
+] [
+    tokens
 ]
