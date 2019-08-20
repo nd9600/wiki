@@ -200,6 +200,8 @@ Parser: context [
             [
                 Header1 Text Newline Newline 
                 Underscore Text Underscore Newline 
+                Text Newline
+                Text
                 NumberWithDot Text Newline 
                 NumberWithDot Text Newline 
                 NumberWithDot Asterisk Asterisk Text Asterisk Asterisk
@@ -209,8 +211,13 @@ Parser: context [
                     SIZE: 1
                     TEXT: "EXAMPLE"
                 BR
-                EMPHASIS
-                    TEXT: "EXAMPLE"
+                PARAGRAPH
+                    EMPHASIS
+                        TEXT: "EXAMPLE"
+                    TEXT: EXAMPLE
+                    BR
+                    TEXT: EXAMPLE
+                    BR
                 ORDERED_LIST
                     ITEMS: [
                         TEXT

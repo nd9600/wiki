@@ -19,6 +19,7 @@ It uses Red
 * A new ParagraphNode is made when we read in two NewlineTokens in a row, 1 NewlineToken is a NewlineNode
 * Change slugifiers to work with ASCII letters, numbers and `$-_.+!*'()`
 * Site web/graph
+* Delete existing pages before making new ones!
 
 ## Construction report
 

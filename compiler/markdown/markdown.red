@@ -14,9 +14,9 @@ compile: function [
     newParser: make Parser [
         tokens: tokenize str
     ]
-    ast: newParser/parse
-    ?? ast
-    quit
+    ; ast: newParser/parse
+    ; ?? ast
+    ; quit
 
     str
 ]
