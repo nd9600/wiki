@@ -41,8 +41,10 @@ https://code.fb.com/ai-research/unsupervised-machine-translation-a-novel-approac
 [Beej's guide to network programming](http://beej.us/guide/bgnet/)
 [Crafting interpreters](http://www.craftinginterpreters.com/introduction.html)
 
-## Politics
+## Biology
+[Do animals have feelings?](https://www.theatlantic.com/magazine/archive/2019/03/what-the-crow-knows/580726/)
 
+## Politics
 [The Hate Factory, part 1](https://medium.com/@G_S_Bhogal/the-hate-factory-part-1-6135c9b16a1)
 [The True Believer](http://evelynbrooks.com/wp-content/uploads/2011/10/The_True_Believer_-_Eric_Hoffer.pdf)
 [Sam Bowman on Libertarianism, Neoliberalism, the Housing Crisis & Drugs](https://www.youtube.com/watch?v=OZgfdS8IC5w)
@@ -57,6 +59,14 @@ https://code.fb.com/ai-research/unsupervised-machine-translation-a-novel-approac
 [The Sequences](https://wiki.lesswrong.com/wiki/Sequences)
 [From AI to Zombies](https://wiki.lesswrong.com/wiki/Rationality:_From_AI_to_Zombies)
 [Intro to Cooperation Studies](https://www.patreon.com/howardrheingold/posts?tag=cooperation)
+[The throughput of learning](https://www.ribbonfarm.com/2017/01/31/the-throughput-of-learning/)
+
+## Quanta
+it gets it own section, it's that good
+[To build truly intelligent machines, teach them cause and effect](https://www.quantamagazine.org/to-build-truly-intelligent-machines-teach-them-cause-and-effect-20180515/)
+[A primer on causal inference](https://www.erikphoel.com/blog/a-primer-on-causal-emergence)
+[If correlation doesn’t imply causation, then what does? - Michael Nielsen](http://www.michaelnielsen.org/ddi/if-correlation-doesnt-imply-causation-then-what-does/)
+[The brain is a context machine](http://nautil.us/issue/68/context/why-the-brain-is-so-noisy?fbclid=IwAR1vxs1_7h6g0J9x8r7ilo8KmBOeIRdai8nSIsi2qe6E0_Ea-erIcfvl5DE)
 
 
 [SSC books](https://old.reddit.com/r/slatestarcodex/comments/8wfexm/whats_a_book_that_you_would_recommend_that_most/)
@@ -65,4 +75,4 @@ https://code.fb.com/ai-research/unsupervised-machine-translation-a-novel-approac
 [Chimeras - The Stranger Within](http://www.katewerk.com/chimera.html)
 [Seeing around corners](https://www.theatlantic.com/magazine/archive/2002/04/seeing-around-corners/302471/)
 [Cuban Missile Crisis: alternate history](https://www.alternatehistory.com/forum/threads/the-cuban-missile-war-timeline.65071/)
-
+[Why our belief systems create misperceptions - Riva Tez](https://m.theeuropeanmag.com/riva-melissa-tez/9270-why-our-belief-systems-create-misperceptions)

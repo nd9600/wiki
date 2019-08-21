@@ -187,7 +187,7 @@ main: does [
         extension: case [
             (find/last filename ".md") ["md"]
             (find/last filename ".rst") ["rst"]
-            true ["rst"]
+            true ["md"]
         ]
 
         filenameWithoutExtension: (find filename ".md")

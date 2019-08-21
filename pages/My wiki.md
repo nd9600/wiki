@@ -11,7 +11,74 @@ I made this after I read [this interview with Ceasar Bautista](https://superorga
 * I'm planning on making everything I need to make the wiki myself - so, the static-site generator, the Markdown -> HTML compiler, hosting the website, etc, which hopefully should make me a better programmer. If I want to have the pages be dynamic in the future, I've got [a little framework](https://github.com/nd9600/framework) I can use, too.
 
 ## How it all works
-It uses Red
+If you want to look at the code, see `https://www.github.com/[XXX.download]/wiki`.
+
+It uses [Red](https://www.red-lang.org/) - I was lucky not to need to use [Rebol](http://www.rebol.com/), since there's only file IO, no network stuff; Red can't do that yet.
+
+Every file in the `pages` folder that ends in `.md` is found
+```
+wikipages: findFiles/matching %pages/ lambda [endsWith ? ".md"]
+```
+then we/I load the wikipage [Twig](https://twig.symfony.com/) template, and get each file's name and extension, and [slugify](https://en.wikipedia.org/wiki/Clean_URL#Slug) the filename.
+We load the actual file's content, then parse the space-separated tags at the very top (they need to be _immediately_ at the top)
+```
+tags: [technology/computer/programming/languages/design]
+```
+with the help of Red's [PARSE](https://www.red-lang.org/2013/11/041-introducing-parse.html) [DSL](http://en.wikipedia.org/wiki/Domain-specific_language).
+We add the filename to the index-tree you see on the [homepage](index.html) (for once, `index.html` is actually the index!) with a slightly nasty while loop, then there's the very tiny job of compiling the actual Markdown bit of the file.
+
+Then, we compile the wikipage Twig template I mentioned above with the templater from the `%templater.red` file (again heavily using the PARSE DSL) - right now, it only supports a _very_ limited subset of Twig: simple `{{ variables }}` that only accept plain `word!s` (no arrays/objects), for loops, and ifs, ifs in fors, and fors in ifs. Not even for loops inside for loops, or ifs inside ifs. That's because it recognises the start and ends of Twig ifs, which look like `{% if CONDITION %} TEXT {% endif %}`
+```
+"{%" any whitespace "if" some whitespace 
+    copy ifCondition to "%}" "%}"
+copy stringToCompile to
+["{%" any whitespace "endif" any whitespace "%}"]
+```
+or, better to say, since once it reads the start, it jumps with a `to` to the first ending bit it sees, it can't recognise nested ifs or loops, and I don't think you can ever use a `to` to do it. I _was_ able to do it with a stupidly complicated selfmade stack:
+```
+; when you get to the start of an array, push a lit-word! onto the stack
+; when at a digit, append to the peeked value - append (get to-word outputStack/peek) digit
+; when you get to the end of an array, pop from the stack and append/only the value to the peeked value if stack not empty
+this is just the comment
+```
+it was particularly stupid because PARSE itself uses a stack internally - I should just do it the simple-ish way, and call a new function (so it makes a new stack frame) each time I see the start of an if or a for loop. I think if I do that though, I won't be able to keep using PARSE for it, I'll need to switch to using a function-based approach (pretty much a simple compiler, I think).
+
+Anyway, once the wikipage is compiled, we write it to `slugified_filename.html`, then compile and write the `index.twig` template the same way.
+
+Now the fun bit, the actual Markdown compiler!
+It's a pretty standard [compiler](compiler.html), as far as I know. I stole the basic design from [Gary Bernhardt's very very good screencast about it](https://www.destroyallsoftware.com/screencasts/catalog/a-compiler-from-scratch) - the three stages, the tokenizer that takes in the string and makes a stream of tokens, the parser that turns the token stream into an Abstract Syntax Tree, and the code generator that takes the AST and outputs the HTML. Have a look at the `compiler` link for more details.
+
+Nice things to note:
+I made heavy use of the [pipe operator]() I wrote, since Red doesn't have one, [but you can make your own operators]() - it let me turn this function
+```
+escapeString: function [
+    "converts iffy text to HTML entities"
+    str
+] [
+    ampersandsReplaced: replace/all str "&" "&amp;" 
+    lessThansReplaced: replace/all ampersandsReplaced "<" "&lt;"
+    greaterThansReplaced: replace/all lessThansReplaced ">" "&gt;"
+    doubleQuotesReplaced: replace/all greaterThansReplaced {"} "&quot;"
+    singleQuotesReplaced: replace/all doubleQuotesReplaced {'} "&#x27;"
+    forwardSlashesReplaced: replace/all singleQuotesReplaced  "/" "&#x2F;"
+    return forwardSlashesReplaced
+]
+```
+into this, much much easier to read, function
+```
+escapeString: function [
+    "converts iffy text to HTML entities"
+    str
+] [
+    str
+        |> [lambda/applyArgs [replace/all ? "&" "&amp;"]] ; we need to escape this first so that it doesn't escape "<" into "&lt;", then into "&amp;lt;"
+        |> [lambda/applyArgs [replace/all ? "<" "&lt;"]]
+        |> [lambda/applyArgs [replace/all ? ">" "&gt;"]]
+        |> [lambda/applyArgs [replace/all ? {"} "&quot;"]]
+        |> [lambda/applyArgs [replace/all ? {'} "&#x27;"]]
+        |> [lambda/applyArgs [replace/all ? "/" "&#x2F;"]]
+]
+```
 
 ## Todos
 * Let Headers work with Asterisks, Underscores, Tildes, Links, and Code, as well as just Text
@@ -19,6 +86,9 @@ It uses Red
 * Change slugifiers to work with ASCII letters, numbers and `$-_.+!*'()`
 * Site web/graph
 * Delete existing pages before making new ones!
+* Build a table of contents from headers
+* Copy templater tests over from the framework
+* Write system/integration tests
 
 ## Construction report
 
