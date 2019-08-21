@@ -6,6 +6,7 @@ tags: [me]
 ## Books
 
 ### Not read
+[Lord of Light](https://en.wikipedia.org/wiki/Lord_of_Light)
 [How Buildings Learn: What Happens After They're Built](https://www.amazon.co.uk/dp/0140139966)
 [Seeing Like a State: How Certain Schemes to Improve the Human Condition Have Failed](https://www.amazon.co.uk/dp/0300078153)
 [Dragon's Egg](https://en.wikipedia.org/wiki/Dragon%27s_Egg)
