@@ -15,6 +15,7 @@ If you want to look at the code, see `https://www.github.com/[XXX.download]/wiki
 
 It uses [Red](https://www.red-lang.org/) - I was lucky not to need to use [Rebol](http://www.rebol.com/), since there's only file IO, no network stuff; Red can't do that yet.
 
+When we run `red generator.red` in the terminal, this happens:
 Every file in the `pages` folder that ends in `.md` is found
 ```
 wikipages: findFiles/matching %pages/ lambda [endsWith ? ".md"]
@@ -79,6 +80,10 @@ escapeString: function [
         |> [lambda/applyArgs [replace/all ? "/" "&#x2F;"]]
 ]
 ```
+
+Once all the content has been written into the HTML pages, we still need to serve them. For that, I use [Caddy](https://caddyserver.com/), since it only allows [HTTPS](https://en.wikipedia.org/wiki/HTTPS) and is really easy to setup.
+I write all the files into a folder that's specified in a `.env` file (I need to follow at least 1 of the [12 factors](https://12factor.net/)!) - that folder is a different [Git](https://12factor.net/) repo, hosted on an [Amazon EC2](https://aws.amazon.com/ec2/) server, and push that repo up to the remote. After it's received, it runs a post-receive [hook](https://git-scm.com/docs/githooks) that copies the working directory (so, all the HTML files/the wiki) to the folder that Caddy serves.
+Finally, the new files are live!
 
 ## Todos
 * Let Headers work with Asterisks, Underscores, Tildes, Links, and Code, as well as just Text
