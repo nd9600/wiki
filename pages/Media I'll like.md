@@ -1,6 +1,6 @@
-tags: [me]
+tags: [me/stuff_I'll_like]
 
-# Things I'll like
+# Media I'll like
 
 
 ## Books
