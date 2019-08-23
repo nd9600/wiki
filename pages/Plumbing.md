@@ -85,6 +85,25 @@ Rehau is a new material for pipes, 100 year guarantee it doesn't leak - expands 
 * copper pipes might need insulation, since they lose more heat than plastic, but it looks better than plastic
 
 ### Compression fittings
-Put one nut on the middle of the pipe, then the olive, then the other end, flip the pipe round so the olive slides under the second end, then move the nut down, and screw it on. Hold the middle of the fitting (the low bit) in your left-hand with the grip, and the nut in your right with the shifter. Move them together until the nut's tight
+* put one nut on the middle of the pipe, then the olive, then the other end
+* flip the pipe round so the olive slides under the second end
+* move the nut down, and screw it on. 
+* hold the middle of the fitting (the lower bit) in your left-hand with the grip, and the nut in your right with the shifter, in opposite directions
+* move them together until the nut's tight
+
+* you have to put plastic fittings on copper pipes, not the other way round - **don't** put copper fittings on plastic pipes
+* if you're attaching both copper and plastic fittings, put the copper fitting on first, then heat it, *then* put the plastic one on, once the pipe is cool -  you don't want to melt it
+
+
+## PTFE
+* PTFE (poly-tetra-fluoro-ethylene) is very useful to make seals when you don't have seals
+* if the screw you're using has a tapered end, it would break the washer - make sure you use the flush end
+* hold the tape facing away from you, wrap it round the screw 15 - 20 times (~10 if thick)
+* then screw on with grips & shifter, make sure it's flush with the pipe and the position makes sense - it points down when you'd want the water to come out near the ground, etc
+
+A drain valve separates water systems
+Clips move copper away from corrosive materials, like brick
+
+Bends in pipes are used rather than L-shaped fittings cos they're tighter and they increase frictional resistance against the pumps -> bad
  
 Plumbers make a lot of money - if a tap washer gets worn on one side, you can just take it off, turn it round, and put it back on - saves you £110
