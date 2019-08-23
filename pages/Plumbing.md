@@ -3,6 +3,8 @@ Every other time I've been on a course, it's either been to learn so I can event
 
 # Day 1
 Bill's Tool shop in the Barras sells good tools for cheaper than big stores, can get everything for £90.
+Plumbers make a lot of money - if a tap washer gets worn on one side, you can just take it off, turn it round, and put it back on - saves you £110
+
 
 ## Tools
 Plumbers use ball-peen hammers, not the ones that joiners ues to pull out nails.
@@ -20,6 +22,9 @@ Metal pipe slicers for metal pipes, push the pipe in until it clicks, then turn 
 
 Use box-key (just a chunk of metal) to turn nuts in hard to reach sinks, but really you should use a crawfit
 Rulers are more accurate than tape measures - they're always 2mm out
+
+A drain valve separates water systems
+Clips move copper away from corrosive materials, like brick
 
 ## Stopcock/valve
 * turns off water to the whole property
@@ -54,7 +59,8 @@ Rehau is a new material for pipes, 100 year guarantee it doesn't leak - expands 
 * Compression fittings, compress against olives (little copper rings)
 * Straight-union fittings
 * Elbow fittings (L-shaped) have locks - to unlock it, unscrew it slightly and push in from end to remove the teeth that push against a plate, releasing it
-
+* bends in pipes are used rather than L-shaped fittings cos they're tighter and they increase frictional resistance against the pumps -> bad
+ 
 ## How to attach pipes together
 * People generally have 3m sections of pipe, so you need to join them if you have more than 3m to run
 * Clean inside and out of the pipes with steel wool first
@@ -62,8 +68,8 @@ Rehau is a new material for pipes, 100 year guarantee it doesn't leak - expands 
 
 ### Copper fittings, heating
 * Put flux on the end of the pipes to clean it
-    * always goes on the pipe, not on the fitting
-    * pick one side to heat, mainly. Heat 50% rib, 50% pipe - so the solder runs around, but the pipe conducts heat, so the other side warms up too
+* always goes on the pipe, not on the fitting
+* pick one side to heat, mainly. Heat 50% rib, 50% pipe - so the solder runs around, but the pipe conducts heat, so the other side warms up too
 
 #### Blowtorch
 * hold in right hand
@@ -100,10 +106,3 @@ Rehau is a new material for pipes, 100 year guarantee it doesn't leak - expands 
 * if the screw you're using has a tapered end, it would break the washer - make sure you use the flush end
 * hold the tape facing away from you, wrap it round the screw 15 - 20 times (~10 if thick)
 * then screw on with grips & shifter, make sure it's flush with the pipe and the position makes sense - it points down when you'd want the water to come out near the ground, etc
-
-A drain valve separates water systems
-Clips move copper away from corrosive materials, like brick
-
-Bends in pipes are used rather than L-shaped fittings cos they're tighter and they increase frictional resistance against the pumps -> bad
- 
-Plumbers make a lot of money - if a tap washer gets worn on one side, you can just take it off, turn it round, and put it back on - saves you £110
