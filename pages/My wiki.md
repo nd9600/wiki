@@ -28,6 +28,17 @@ tags: [technology/computer/programming/languages/design]
 with the help of Red's [PARSE](https://www.red-lang.org/2013/11/041-introducing-parse.html) [DSL](http://en.wikipedia.org/wiki/Domain-specific_language).
 We add the filename to the index-tree you see on the [homepage](index.html) (for once, `index.html` is actually the index!) with a slightly nasty while loop, then there's the very tiny job of compiling the actual Markdown bit of the file.
 
+Since I wanted the wiki to be completely static, even the search (and I mean "no-HTTP-requests-static"), I made it in a bit of a funky way:
+The list of article names is put into JS like this:
+```
+const ARTICLES = [
+{% for page in listOfPages %}
+    "{{ page }}",
+{% endfor %}
+];
+```
+I've an event listener that triggers whenever the search input changes, which filters the above articles by the trimmed lowercase version of the input, giving me a list of articles whose titles include the input somewhere (not necessarily at the start), then I go through that list, slugify it with a regex - `article.replace(/./g, function(char) { return REPLACED_CHAR; }`, in JS, apparently you can put a regex as the first argument to `.replace`, and the second as a function of the matched character - and then add that list to the page with a `searchResults.append(searchResult);`
+
 Then, we compile the wikipage Twig template I mentioned above with the templater from the `%templater.red` file (again heavily using the PARSE DSL) - right now, it only supports a _very_ limited subset of Twig: simple `{{ variables }}` that only accept plain `word!s` (no arrays/objects), for loops, and ifs, ifs in fors, and fors in ifs. Not even for loops inside for loops, or ifs inside ifs. That's because it recognises the start and ends of Twig ifs, which look like `{% if CONDITION %} TEXT {% endif %}`
 ```
 "{%" any whitespace "if" some whitespace 
@@ -87,10 +98,12 @@ Finally, the new files are live!
 
 ## Todos
 * Let Headers work with Asterisks, Underscores, Tildes, Links, and Code, as well as just Text
-* A new ParagraphNode is made when we read in two NewlineTokens in a row, 1 NewlineToken is a NewlineNode
 * Change slugifiers to work with ASCII letters, numbers and `$-_.+!*'()`
-* Site web/graph
+* A new ParagraphNode is made when we read in two NewlineTokens in a row, 1 NewlineToken is a NewlineNode
+* Handle spaces before list markers
+* Handle sub-lists (see above)
 * Delete existing pages before making new ones!
+* Site web/graph
 * Build a table of contents from headers
 * Copy templater tests over from the framework
 * Write system/integration tests
@@ -362,3 +375,11 @@ parseAsterisk: does [
 So, an Emphasis node is an Asterisk, some text, and another Asterisk, and a StrongEmphasis node is Asterisk, Asterisk, some text, Asterisk, Asterisk
 
 I think I might not do the Paragraphy bits for now, do the code generation for the Headers, Emphasis and Strikethrough, so I can see some results soon. Maybe get to crank out a proper Tree visitor thingy
+
+### Day 8
+
+I think I'll need a `Space` token too - you nest items inside lists by using 4 spaces. Nope, that's already handled by the `FourSpaces` token used for the code blocks. 
+But, there's another space-related issue - you can write a list like `\n* LIST ITEM`, `\n * LIST ITEM`, all the way up to 3 spaces, and still have a normal list item (4 spaces makes a sub-list), so I've a decision to make - do I handle this in the tokenizer, or in the code generator?
+I can either make a `Space` token like I thought, and roll it into any surrounding `Text` tokens, like I already do with `Text` tokens (before the code generator gets the stream of tokens), or, when I'm parsing the token stream, if I see a Newline, followed by Text, followed by an Asterisk (or Hyphen, etc.), I can check if the Text is only a series of spaces, and make a list. The 2nd way seems more complicated.
+Nah, there's a 3rd way. In the tokenizer, when I read in a series of spaces, I can check what comes after it - if it's an Asterisk (etc.),I can output the right list token, and ignore the spaces if there are < 4, and output the `FourSpace` token otherwise (maybe output `numberOfSpaces / 4` tokens, since both arguments are integers). Yeah, that's better.
+But, I'll put that in the todos, and do it later. No need to complicate it yet, when there isn't even a working code generator yet.

@@ -16,17 +16,19 @@ They generally have 3 stages:
 Tokens are the smallest meaningful pieces in a language - for example, in `def f() 1 end`, even though `def` is three characters, `d`, `e` and `f` don't mean anything by themselves, only `def` does, so it's a token.
 
 For the [Markdown](https://daringfireball.net/projects/markdown/basics) -> HTML compiler used to make this wiki, we need a few different tokens:
+* a `\` backslash, followed by any character, for it to be included literally (not as part of any other token)
 * `#` to `######` for headers
 * `>` for blockquotes
 * `*` for bold
 * `_` for italics
+* `~` for strikethrough
 * `*` again, `+`, and `-` for unordered lists
 * `{number}.` for ordered lists
 * `[`, `]`, `(`, and `)` for links,
 * `!` for images
 * ```, `    `, and `{tab}` for code
-* newlines, so you know when a header stops
-* and everything else that one of the above tokens, is a "text" token
+* newlines, so you know when a header stops,
+* and everything else that isn't one of the above tokens, is a "text" token
 
 ## Parser
 
