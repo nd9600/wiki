@@ -10,7 +10,7 @@ dotenv: context load %dotenv.red
 dotenv/loadEnv
 
 wikiLocation: (get-env "WIKI_LOCATION")
-    |> [lambda/applyArgs [appendLastChar ? "/"]]
+    |> :dirize
     |> :to-file
 
 templater: context load %templater.red
@@ -180,6 +180,8 @@ makeAToZIndexListHTML: function [
 ]
 
 main: does [
+    deleteDir/matching wikiLocation lambda [endsWith ? ".html"]
+    
     wikipages: findFiles/matching %pages/ lambda [endsWith ? ".md"]
     wikiTemplate: read %wikipage.twig
 

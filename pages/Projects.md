@@ -1,12 +1,9 @@
 tags: [me projects]
-
-# Projects
-
-## Done
+# Done
 * Transducers in PHP - https://tgvashworth.com/2014/08/31/csp-and-transducers.html
 * Ray tracing http://in1weekend.blogspot.com/2016/01/ray-tracing-in-one-weekend.html?m=1 https://www.siggraph.org/education/materials/HyperGraph/raytrace/rtrace0.htm 
 
-## Not done
+# Not done
 * English translations of CSS selectors like http://tux.theopalgroup.com/cgi-bin/
 css3explainer/selectoracle.py
 * Local ebook/pdf reader website

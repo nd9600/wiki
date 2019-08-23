@@ -1,5 +1,4 @@
 tags: [technology/computer/ai]
-
 Causal inference is inferring that X caused Y
 
 [To build truly intelligent machines, teach them cause and effect](https://www.quantamagazine.org/to-build-truly-intelligent-machines-teach-them-cause-and-effect-20180515/)

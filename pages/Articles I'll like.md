@@ -1,11 +1,7 @@
 tags: [me/stuff_I'll_like]
+# Technology
 
-# Articles I'll like
-
-
-## Technology
-
-### Boundaries, Gary Bernhardt
+## Boundaries, Gary Bernhardt
 http://www.dossier-andreas.net/software_architecture/ports_and_adapters.html
 http://wiki.c2.com/?PortsAndAdaptersArchitecture
 https://spin.atomicobject.com/2013/02/23/ports-adapters-software-architecture/
@@ -19,7 +15,7 @@ http://blog.ploeh.dk/2017/01/27/dependency-injection-is-passing-an-argument/
 [Commodotize your complement](https://www.gwern.net/Complement#2)
 [People's favourite tech talks](https://news.ycombinator.com/item?id=12637239)
 
-### Radical stuff
+## Radical stuff
 (see [projects](projects.html))
 http://www.squeakland.org/resources/articles/article.jsp?id=1001 
 https://rsnous.com/posts/notes-from-dynamicland-geokit/ 
@@ -28,23 +24,23 @@ https://vimeo.com/274771188
 https://futureofcoding.org/notes/bret-victor/dynamicland#day-1 
 http://fexpr.blogspot.com/2016/08/interpreted-programming-languages.html
 
-### AI
+## AI
 > humans are able to learn safe behaviours without having to die even once
 https://blog.keras.io/the-limitations-of-deep-learning.html 
 https://code.fb.com/ai-research/unsupervised-machine-translation-a-novel-approach-to-provide-fast-accurate-translations-for-more-languages/
 [A theory of reality as more than the sum of its parts](https://www.quantamagazine.org/a-theory-of-reality-as-more-than-the-sum-of-its-parts-20170601/)
 [Unsupervised learning: what will replace backpropagation?](http://rebelscience.blogspot.com/2017/09/unsupervised-machine-learning-what-will.html)
 
-### Guides
+## Guides
 [Staging servers, source control & deploy workflows, and other Stuff nobody teaches you](https://www.kalzumeus.com/2010/12/12/staging-servers-source-control-deploy-workflows-and-other-stuff-nobody-teaches-you/)
 [Web design in 4 minutes](https://jgthms.com/web-design-in-4-minutes/)
 [Beej's guide to network programming](http://beej.us/guide/bgnet/)
 [Crafting interpreters](http://www.craftinginterpreters.com/introduction.html)
 
-## Biology
+# Biology
 [Do animals have feelings?](https://www.theatlantic.com/magazine/archive/2019/03/what-the-crow-knows/580726/)
 
-## Politics
+# Politics
 [The Hate Factory, part 1](https://medium.com/@G_S_Bhogal/the-hate-factory-part-1-6135c9b16a1)
 [The True Believer](http://evelynbrooks.com/wp-content/uploads/2011/10/The_True_Believer_-_Eric_Hoffer.pdf)
 [Sam Bowman on Libertarianism, Neoliberalism, the Housing Crisis & Drugs](https://www.youtube.com/watch?v=OZgfdS8IC5w)
@@ -52,16 +48,16 @@ https://code.fb.com/ai-research/unsupervised-machine-translation-a-novel-approac
 [“Who I am” and the Problem of Offense](https://areomagazine.com/2018/07/04/who-i-am-and-the-problem-of-offense/)
 [The task facing masculinity](https://areomagazine.com/2018/07/06/the-task-facing-masculinity/)
 
-## Education
+# Education
 [A Mathematician's Lament](https://www.maa.org/external_archive/devlin/LockhartsLament.pdf)
 
-## Rationality
+# Rationality
 [The Sequences](https://wiki.lesswrong.com/wiki/Sequences)
 [From AI to Zombies](https://wiki.lesswrong.com/wiki/Rationality:_From_AI_to_Zombies)
 [Intro to Cooperation Studies](https://www.patreon.com/howardrheingold/posts?tag=cooperation)
 [The throughput of learning](https://www.ribbonfarm.com/2017/01/31/the-throughput-of-learning/)
 
-## Quanta
+# Quanta
 it gets it own section, it's that good
 [To build truly intelligent machines, teach them cause and effect](https://www.quantamagazine.org/to-build-truly-intelligent-machines-teach-them-cause-and-effect-20180515/)
 [A primer on causal inference](https://www.erikphoel.com/blog/a-primer-on-causal-emergence)

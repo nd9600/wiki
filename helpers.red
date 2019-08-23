@@ -235,7 +235,7 @@ findFiles: function [
     "find files in a directory (including sub-directories), optionally matching against a condition"
     dir [file!]
     /matching "only find files that match a condition"
-    condition [any-function!] "the condition files must match"
+        condition [any-function!] "the condition files must match"
 ] [
     fileList: copy []
     files: sort read dir
@@ -268,6 +268,36 @@ findFiles: function [
     fileList
 ]
 
+deleteDir: function [
+    "Deletes a directory including all files and subdirectories"
+    dir [file!]
+    /matching "only find files that match a condition"
+        condition [any-function!] "the condition files must match"
+][
+    if all [
+        dir? dir 
+        dir: dirize dir 
+        attempt [files: read dir]
+    ] [
+        foreach file files [
+            either matching [
+                deleteDir/matching dir/:file :condition
+            ] [
+                deleteDir dir/:file
+            ]
+            
+        ]
+    ] 
+    attempt [
+         either matching [
+            if condition dir [delete dir]
+        ] [
+            delete dir
+        ]
+        
+    ]
+]
+
 sepJoin: function [
     "Returns a reduced block of values as a string, separated by a separator"
     block [block!]
@@ -275,12 +305,4 @@ sepJoin: function [
 ] [
     rejoin compose/only flatten 
         f_map lambda [reduce [? copy (sep)]] block
-]
-
-appendLastChar: function [
-    "Appends a character to the end of the string if it's not already there"
-    str [string!]
-    char [string!]
-] [
-    either (last str) == (to-char char) [str] [append str char]
 ]
