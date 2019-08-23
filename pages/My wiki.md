@@ -98,15 +98,19 @@ Finally, the new files are live!
 
 ## Todos
 * Let Headers work with Asterisks, Underscores, Tildes, Links, and Code, as well as just Text
-* Change slugifiers to work with ASCII letters, numbers and `$-_.+!*'()`
 * A new ParagraphNode is made when we read in two NewlineTokens in a row, 1 NewlineToken is a NewlineNode
-* Handle spaces before list markers
+* Handle spaces before list markers (see day 8)
 * Handle sub-lists (see above)
 * Delete existing pages before making new ones!
 * Site web/graph
 * Build a table of contents from headers
 * Copy templater tests over from the framework
 * Write system/integration tests
+
+### Done
+* ~Handle backslashes inside code blocks~ just use two backslashes when you want a literal one
+* ~Change slugifiers to work with ASCII letters, numbers and `$-_.+!*'()`~ browsers don't handle `'` in URLs
+
 
 ## Construction report
 
@@ -383,3 +387,8 @@ But, there's another space-related issue - you can write a list like `\n* LIST I
 I can either make a `Space` token like I thought, and roll it into any surrounding `Text` tokens, like I already do with `Text` tokens (before the code generator gets the stream of tokens), or, when I'm parsing the token stream, if I see a Newline, followed by Text, followed by an Asterisk (or Hyphen, etc.), I can check if the Text is only a series of spaces, and make a list. The 2nd way seems more complicated.
 Nah, there's a 3rd way. In the tokenizer, when I read in a series of spaces, I can check what comes after it - if it's an Asterisk (etc.),I can output the right list token, and ignore the spaces if there are < 4, and output the `FourSpace` token otherwise (maybe output `numberOfSpaces / 4` tokens, since both arguments are integers). Yeah, that's better.
 But, I'll put that in the todos, and do it later. No need to complicate it yet, when there isn't even a working code generator yet.
+
+Ambiguity I've just thought of - how do I handle an asterisk, followed by a backslash and another asterisk? It should be output as an inline code block with just a backslash in it, not as an emphasis marker and a literal asterisk, that would be really surprising and not make sense.
+Nope, it's the more general, harder to sort, case: backslashes inside code blocks.
+~I think I might need another property inside the `Text` tokens that says whether or not it was escaped~
+I'm just going to make my life easy and always use two backslashes, so I'll type `\\\\` (I had to type 4 for 2 to appear)

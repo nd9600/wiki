@@ -36,9 +36,8 @@
 
     <script>
         const ARTICLES = [
-        {% for page in listOfPages %}
-            "{{ page }}",
-        {% endfor %}
+            {% for page in listOfPages %}"{{ page }}",
+            {% endfor %}
         ];
 
         const searchResults = document.getElementById("search__results");
@@ -54,14 +53,21 @@
                 return article.toLowerCase().indexOf(searchTerm) > -1;
             });
 
-            const letterRegex = RegExp("[a-zA-Z]");
+            const letterRegex = RegExp(/[a-zA-Z]/);
+            const numberRegex = RegExp(/[0-9]/);
+            const specialCharacterRegex = RegExp(/[\$\-\_\.\+\!\*\(\)\,]/);
             matchedArticles.forEach(function (article) {
                 const slugifiedArticle = article.replace(/./g, function(char) {
                     const isLetter = letterRegex.test(char);
+                    const isNumber = numberRegex.test(char);
+                    const isSpecialCharacter = specialCharacterRegex.test(char);
                     if (isLetter) {
                         return char.toLowerCase();
                     } else if (char === " ") {
                         return "_";
+                    } else if (isNumber || isSpecialCharacter) {
+                        console.log(char, isNumber, isSpecialCharacter, specialCharacterRegex);
+                        return char;
                     } else {
                         return "";
                     }

@@ -99,11 +99,17 @@ slugifyFilename: function [
     "turns 'File name a£%$' into 'file_name_'"
     filename [string!]
 ] [
+    digits: charset "0123456789"
     letters: charset [#"a" - #"z" #"A" - #"Z"]
+
+    ; https://tools.ietf.org/html/rfc1738
+    ; "only alphanumerics, the special characters "$-_.+!*'(),", and [...] may be used    unencoded within a URL" but Firefox splits the URL in half if you put in a '
+    specialChars: charset "$-_.+!*(),"
+    acceptableChars: union union letters digits specialChars
     slugifiedFilename: copy ""
     parse (lowercase copy filename) [
         any [
-            copy letter letters (append slugifiedFilename letter) 
+            copy char acceptableChars (append slugifiedFilename char) 
             | space (append slugifiedFilename "_") 
             | skip
         ]
@@ -218,6 +224,7 @@ main: does [
         write filepath wikipageHTML
     ]
 
+    print "compiling index"
     filenamesWithoutExtension: f_map function [page] [
         filename: (next find/last page "/")
             |> :to-string
