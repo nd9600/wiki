@@ -6,47 +6,6 @@ Red [
 
 do %nodes.red
 
-rollMultipleTextTokens: function [
-    "we want to roll multiple `Text` tokens in a row into one big Token, there's no point having a thousand separate ones in a row"
-    tokens [block!]
-] [
-    newTokens: copy []
-    tokenCursor: tokens
-
-    until [
-        currentToken: first tokenCursor
-        either (not currentToken/isType "Text") [
-            append newTokens currentToken
-        ] [
-            rolledTextValue: copy ""
-
-            while [
-                all [
-                    not tail? tokenCursor ; the text might go all the way to the end, and then there won't be an innerCurrentToken
-                    found? currentToken
-                    currentToken/isType "Text"
-                ]
-            ] [
-                append rolledTextValue currentToken/value
-                tokenCursor: next tokenCursor
-                currentToken: first tokenCursor
-            ]
-            append newTokens make Token [type: "Text" value: rolledTextValue]
-
-            ; it wasn't adding the token after a long string of Texts without this
-            if (found? currentToken) [
-                append newTokens currentToken
-            ]
-
-            ; we want to jump to the end of all the Text tokens, because we'd go over the same tokens twice otherwise 
-        ]
-
-        tokenCursor: next tokenCursor
-        tail? tokenCursor
-    ]
-    newTokens
-]
-
 Parser: context [
     tokens: [] ; a block! of Tokens from %tokens.red"
 
