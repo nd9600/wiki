@@ -7,6 +7,7 @@ Red [
 do %nodes.red
 
 Parser: context [
+    file: ""
     tokens: [] ; a block! of Tokens from %tokens.red"
 
     peek: function [
@@ -122,7 +123,7 @@ Parser: context [
 
             true [
                 firstToken: first self/tokens
-                do make error! rejoin ["expected Asterisk or Text but got " firstToken/type]
+                do make error! rejoin ["expected Asterisk or Text but got " firstToken/type { in file "} self/file {"}]
             ]
         ]
     ]
@@ -149,7 +150,35 @@ Parser: context [
 
             true [
                 firstToken: first self/tokens
-                do make error! rejoin ["expected Underscore or Text but got " firstToken/type]
+                do make error! rejoin ["expected Underscore or Text but got " firstToken/type { in file "} self/file {"}]
+            ]
+        ]
+    ]
+
+    parseTilde: does [
+        consume Tilde
+        case [
+            peek Tilde [
+                consume Tilde
+                textToken: consume Text
+                consume Tilde
+                consume Tilde
+                return make StrikethroughNode [
+                    text: textToken/value
+                ]
+            ]
+            peek Text [
+                consume Asterisk
+                textToken: consume Text
+                consume Tilde
+                return make StrikethroughNode [
+                    text: textToken/value
+                ]
+            ]
+
+            true [
+                firstToken: first self/tokens
+                do make error! rejoin ["expected Tilde or Text but got " firstToken/type { in file "} self/file {"}]
             ]
         ]
     ]
@@ -231,9 +260,15 @@ Parser: context [
                         append markdownContent parseUnderscore
                         print "parsed underscore"
                     ]
+                    peek Tilde [
+                        append markdownContent parseTilde
+                        print "parsed tilde"
+                    ]
 
                     true [
-                        print rejoin ["can't handle " (objectToString first self/tokens)]
+                        badToken: first self/tokens
+                        print rejoin ["can't handle " badToken/type { in file "} self/file {"}]
+                        quit
                         return none
                     ]
                 ]
@@ -245,7 +280,7 @@ Parser: context [
             ]
         ] [
             strError: errorToString tree
-            print rejoin [newline "#####" newline "error: " strError]
+            print rejoin [newline "#####" newline "error: " strError { in file "} self/file {"}]
         ]
         tree
     ] 

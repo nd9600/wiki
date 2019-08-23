@@ -32,3 +32,8 @@ StrongEmphasisNode: make Node [
     type: "StrongEmphasisNode"
     text: none
 ]
+
+StrikethroughNode: make Node [
+    type: "StrikethroughNode"
+    text: none
+]

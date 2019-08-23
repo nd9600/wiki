@@ -9,13 +9,15 @@ do %compiler/markdown/parser.red
 
 compile: function [
     "converts an input Markdown string into tokens"
+    filename [string!]
     str [string!]
 ] [
     newParser: make Parser [
+        file: filename
         tokens: tokenize str
     ]
     ; ast: newParser/parse
-    ; ?? ast
+    ; print objectToString ast
     ; quit
 
     str

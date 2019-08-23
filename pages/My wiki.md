@@ -95,8 +95,11 @@ I write all the files into a folder that's specified in a `.env` file (I need to
 Finally, the new files are live!
 
 # Todos
+* Add indent parameter to `objectToString`
 * Let Headers work with Asterisks, Underscores, Tildes, Links, and Code, as well as just Text
-* A new ParagraphNode is made when we read in two NewlineTokens in a row, 1 NewlineToken is a NewlineNode
+* Let  Asterisks, Underscores, Tildes work with Emphasis, Strikethrough, links, and inline code, not just text
+* Make a new ParagraphNode when we read in two NewlineTokens in a row, 1 NewlineToken is a NewlineNode
+
 * Handle spaces before list markers (see day 8)
 * Handle sub-lists (see above)
 * Site web/graph
@@ -346,7 +349,7 @@ Making the initial parser was easy enough (I've only done headers and emphasis r
 
 and I don't really understand how to handle that properly. I think it means anytime you see two `\\n`s in a row, that means you start a new `<p>`, closing the existing one (if there _is_ one), and `  \\n` at the end of a line becomes a `<br>`, but what about one newline by itself? It must become a `<br>` too.
 
-I guess I'll need to make some sort of ~~text-y~~ Paragraph node that can include plain Text, Emphasis, Strikethrough, links, and inline code (anything inline, basically) for each string of inline tokens, and make each ~~texty~~ node become a `<p>` in the code generator? Consuming inline tokens until I get to a block one (headers, pluses, hyphens, numbersWithDots, exclamation marks, three backticks, four spaces, and tabs), then putting that into a Paragraph node?
+I guess I'll need to make some sort of text-y Paragraph node that can include plain Text, Emphasis, Strikethrough, links, and inline code (anything inline, basically) for each string of inline tokens, and make each texty node become a `<p>` in the code generator? Consuming inline tokens until I get to a block one (headers, pluses, hyphens, numbersWithDots, exclamation marks, three backticks, four spaces, and tabs), then putting that into a Paragraph node?
 One more point to writing things down!
 
 A nice code feature I didn't realise in advance: you can tell pretty easily from the `parse_` functions what each Node matches

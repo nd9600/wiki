@@ -20,4 +20,4 @@ R* ed IDE, like Bret Victor's (w/ language server?) https://blog.acolyer.org/201
 * General stuff https://github.com/danistefanovic/build-your-own-x
 * Getting things delivered to a company for < £1, who keep them until you're home, then you text them and they deliver it to you
 
-* ~~ Keypress interceptor, for games that don't support key rebinding, shareable online, like Steam's controller configs, in Nim/F#? ~~ not do-able without kernely stuff
+* ~~Keypress interceptor, for games that don't support key rebinding, shareable online, like Steam's controller configs, in Nim/F#?~~ I don't think this is do-able without kernely stuff

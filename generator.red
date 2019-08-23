@@ -17,14 +17,13 @@ templater: context load %templater.red
 markdownCompiler: context load %compiler/markdown/markdown.red
 
 compileToHTML: function [
+    filename [string!]
     pageContent [string!] "the actual content, excluding the tags at the top"
     extension [string!] 
 ] [
-    switch/default extension [
-        "md" [markdownCompiler/compile pageContent]
+    switch extension [
+        "md" [markdownCompiler/compile filename pageContent]
         "rst" ["CAN'T COMPILE RESTRUCTURED TEXT YET"]
-    ] [
-        markdownCompiler/compile "# abcdef"
     ]
 ]
 
@@ -181,7 +180,7 @@ makeAToZIndexListHTML: function [
 
 main: does [
     deleteDir/matching wikiLocation lambda [endsWith ? ".html"]
-    
+
     wikipages: findFiles/matching %pages/ lambda [endsWith ? ".md"]
     wikiTemplate: read %wikipage.twig
 
@@ -214,7 +213,7 @@ main: does [
         ]
         index: addToIndexFromTags index tagsString filenameWithoutExtension
 
-        content: compileToHTML pageContent extension
+        content: compileToHTML filename pageContent extension
 
         variables: make map! reduce [
             'title filenameWithoutExtension
