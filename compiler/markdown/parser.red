@@ -215,7 +215,6 @@ Parser: context [
                     ]
         }
     ] [
-        self/tokens: rollMultipleTextTokens self/tokens
         if error? tree: try [
             markdownContent: copy []
             until [

@@ -34,8 +34,107 @@ The general idea is you look at the current input, make a specific token based o
 
 One important note: since [Red's](https://www.red-lang.org/) [PARSE](https://www.red-lang.org/2013/11/041-introducing-parse.html) engine uses [Parsing Expression Grammars](https://en.wikipedia.org/wiki/Parsing_expression_grammar), the order of the rules in the tokenizer is important - if an earlier rule matches, it ignores later alternative rules. So, I wrote the rules in exactly the order the tokens are above: `backslash[CHARACTER]`, then the header rules, etc., so that the literal character rule would be used first - I didn't want `\\*` to be matched as a `\\` and as an `*`, separately.
 
+Just because the standard compiler has 3 stages doesn't mean it can _only_ do those 3 things - this compiler, for example, processes the normal token stream after it makes it; the way I do
+> everything else that isn't one of the above tokens, is a "text" token
+is like this:
+```
+copy data skip (append tokens make Text [value: data])
+```
+and that `skip` advances the input by one character, so a string like `test` will be made into 4 different `Text` tokens, not 1 token with "test" in it, like you'd expect, so I run a while loop over the tokens and put all the consecutive text tokens into one big one.
+
 # Parser
 
-The parser takes the stream of tokens made in the last step, and turns that into a tree that the code generator will use
+The parser takes the stream of tokens made in the last step, and turns that into a tree that the code generator will use, e.g. if the token stream (indented for readability) is
+```
+[
+    Header1 Text Newline Newline 
+    Underscore Text Underscore Newline 
+    Text Newline
+    Text
+    NumberWithDot Text Newline 
+    NumberWithDot Text Newline 
+    NumberWithDot Asterisk Asterisk Text Asterisk Asterisk
+]
+```
+it would give you something like
+```
+MARKDOWN
+    HEADER
+        SIZE: 1
+        TEXT: "EXAMPLE"
+    BR
+    PARAGRAPH
+        EMPHASIS
+            TEXT: "EXAMPLE"
+        TEXT: EXAMPLE
+        BR
+        TEXT: EXAMPLE
+        BR
+    ORDERED_LIST
+        ITEMS: [
+            TEXT
+            TEXT
+            STRONG_EMPHASIS
+                TEXT: "EXAMPLE"
+        ]
+```
+
+It does this by using two main functions, `peek` and `consume`; both take 1 argument, which is the token type they expect to see. `peek` looks at the first token in the stream, and returns whether it's the expected type, and `consume`, if the first token has the expected type, removes it from the stream and returns it.
+
+With parsers, they quite often have to look at more than 1 token to decide how to parse the stream; this is what the `k` means in an `LR(k)` parser (the "LR" means "Left-to-right, Rightmost derivation in reverse", which isn't important here) - it's the maximum number of tokens the parser has to peek at before it knows how to parse the stream. Normally, `k` is 1, but here I think it'll need to be more than that - three backticks in a row have  to be treated differently that 1 backtick, so we can't just peek at 1 backtick and decide it's an inline code block, I think.
+
+Once the parser has peeked at a token, if it knows how to parse the start of stream based just off that one token, it consumes the token, optionally transforms it/uses it (and any following tokens, if it needs to) somehow to make somesort of `Node` that it then adds into the AST.
+
+I'll use the `HeaderNode`,  `EmphasisNode` and `StrongEmphasisNode` as examples.
+Once the parser peeks at the stream and sees a `Header1` token
+```
+peek Header1 [
+    append markdownContent parseHeader1
+    print "parsed header1"
+]
+```
+it calls a function `parseHeader1` that consumes `Header1` token, and, since headers contain all the text up to the next newline (so they're followed by text and newline tokens), consumes the following `Text` and `Newline` tokens, and adds a `Header` node to the AST using the `Text` token's value
+```
+parseHeader1: does [
+    consume Header1
+    textToken: consume Text
+    consume NewlineToken
+
+    make HeaderNode [
+        size: 1
+        text: textToken/value
+    ]
+]
+```
+
+Parsing `Asterisk`s is slightly more complicated - since one Asterisk is for emphasis, but 2 are for _strong_ emphasis, once we consume an asterisk, we need to peek at the next token and see if it's `Text` or another `Asterisk`, and make an `EmphasisNode` or a `StrongEmphasisNode` depending on which it is, consuming the text like it does with the header nodes:
+```
+parseAsterisk: does [
+    consume Asterisk
+    case [
+        peek Text [
+            textToken: consume Text
+            consume Asterisk
+            return make EmphasisNode [
+                text: textToken/value
+            ]
+        ]
+        peek Asterisk [
+            consume Asterisk
+            textToken: consume Text
+            consume Asterisk
+            consume Asterisk
+            return make StrongEmphasisNode [
+                text: textToken/value
+            ]
+        ]
+
+        true [
+            firstToken: first self/tokens
+            do make error! rejoin ["expected Asterisk or Text but got " firstToken/type { in file "} self/file {"}]
+        ]
+    ]
+]
+```
 
 # Code generator
