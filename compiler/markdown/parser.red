@@ -13,9 +13,12 @@ Parser: context [
     peek: function [
         "returns whether the first token has the expected type"
         expectedToken [object!]
+        /at
+            offset [integer!]
     ] [
-        firstToken: first self/tokens
-        firstToken/isType expectedToken/type
+        offset: either at [offset] [1]
+        token: pick self/tokens offset
+        token/isType expectedToken/type
     ]
 
     consume: function [
