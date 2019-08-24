@@ -179,18 +179,88 @@ assert: function [
     ]
 ]
 
-objectToString: function [
-    obj [object!]
+prettyFormat: function [
+    "converts the thing into a nicely formatted string"
+    thing [any-type!]
 ] [
+    case [
+        object? :thing [objectToString :thing]
+        block? :thing [blockToString :thing]
+        true [mold :thing]
+    ]
+]
+
+objectToString: function [
+    "converts the object! to a nicely formatted string"
+    obj [object!]
+    /objectIndent "indent the start and end of the object with a number of tabs"
+        objectIndentNumber [integer!]
+    /elementIndent "indent each element with a number of tabs"
+        elementIndentNumber [integer!]
+] [
+    objectIndentNumber: either objectIndent [objectIndentNumber] [0]
+    elementIndentNumber: either elementIndent [elementIndentNumber] [1]
+
+    objectTabs: copy [] loop objectIndentNumber [append objectTabs "    "]
+    keyValueTabs: copy [] loop elementIndentNumber [append keyValueTabs "    "]
+    
+    either (objectIndentNumber == 0) [
+        str: copy "object!: [^/"
+    ] [
+        str: copy rejoin [objectTabs "object!: [^/"]
+    ]
+
     words: words-of obj
-    str: copy "object!: [^/"
     foreach word words [
         value: get in obj word
 
-        stringifiedValue: mold :value
-        append str rejoin [tab tab word ": " stringifiedValue "^/"]
+        stringifiedValue: case [
+            object? :value [objectToString/elementIndent :value (elementIndentNumber + 1)]
+            block? :value [blockToString/elementIndent :value (elementIndentNumber + 1)]
+            true [mold :value]
+        ]
+
+        append str rejoin [keyValueTabs (to-string word) ": " stringifiedValue "^/"]
     ]
-    append str rejoin [tab "]^/"]
+
+    ; the closing bracket is always 1 less indent than the keyValue indent
+    append str rejoin [(next keyValueTabs) "]" ]
+    
+    str
+]
+
+blockToString: function [
+    "converts the block! to a nicely formatted string"
+    block [block!]
+    /blockIndent "indent the start and end of the block with a number of tabs"
+        blockIndentNumber [integer!]
+    /elementIndent "indent each element with a number of tabs"
+        elementIndentNumber [integer!]
+] [
+    blockIndentNumber: either blockIndent [blockIndentNumber] [0]
+    elementIndentNumber: either elementIndent [elementIndentNumber] [1]
+
+    blockTabs: copy [] loop blockIndentNumber [append blockTabs "    "]
+    elementTabs: copy [] loop elementIndentNumber [append elementTabs "    "]
+
+    either (blockIndentNumber == 0) [
+        str: copy "[^/"
+    ] [
+        str: copy rejoin [blockTabs "[^/"]
+    ]
+
+    foreach element block [
+        stringifiedValue: case [
+            object? :element [objectToString/elementIndent :element (elementIndentNumber + 1)]
+            block? :element [blockToString/elementIndent :element (elementIndentNumber + 1)]
+            true [mold :element]
+        ]
+
+        append str rejoin [elementTabs stringifiedValue "^/"]
+    ]
+
+    ; the closing bracket is always 1 less indent than the keyValue indent
+    append str rejoin [(next elementTabs) "]" ]
     str
 ]
 
@@ -213,22 +283,6 @@ errorToString: function [
     ]
 
     rejoin [usefulErrorString newline objectToString fieldsWeWant]
-]
-
-blockToString: function [
-    block [block!]
-] [
-    str: copy ""
-    append str "[^/"
-    foreach element block [
-        case [
-            object? element [append str rejoin [tab (objectToString element)]]
-            block? element [append str rejoin [tab (blockToString element)]]
-            true [append str rejoin [tab (mold element)]]
-        ]
-    ]
-    append str "]"
-    str
 ]
 
 findFiles: function [

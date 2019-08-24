@@ -16,9 +16,9 @@ compile: function [
         file: filename
         tokens: tokenize str
     ]
-    ; ast: newParser/parse
-    ; print objectToString ast
-    ; quit
+    ast: newParser/parse
+    print prettyFormat ast
+    quit
 
     str
 ]
