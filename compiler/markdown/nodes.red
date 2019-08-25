@@ -49,6 +49,12 @@ StrikethroughNode: make Node [
 ]
 
 LinkNode: make Node [
+    type: "LinkNode"
     url: none
+    text: none
+]
+
+BlockquoteNode: make Node [
+    type: "BlockquoteNode"
     text: none
 ]

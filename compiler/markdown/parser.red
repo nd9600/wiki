@@ -58,67 +58,6 @@ Parser: context [
         ]
     ]
 
-    parseHeader1: does [
-        consume Header1
-        textToken: consume Text
-        consume NewlineToken
-
-        make HeaderNode [
-            size: 1
-            text: textToken/value
-        ]
-    ]
-    parseHeader2: does [
-        consume Header2
-        textToken: consume Text
-        consume NewlineToken
-
-        make HeaderNode [
-            size: 2
-            text: textToken/value
-        ]
-    ]
-    parseHeader3: does [
-        consume Header3
-        textToken: consume Text
-        consume NewlineToken
-
-        make HeaderNode [
-            size: 3
-            text: textToken/value
-        ]
-    ]
-    parseHeader4: does [
-        consume Header4
-        textToken: consume Text
-        consume NewlineToken
-
-        make HeaderNode [
-            size: 4
-            text: textToken/value
-        ]
-    ]
-    parseHeader5: does [
-        consume Header5
-        textToken: consume Text
-        consume NewlineToken
-
-        make HeaderNode [
-            size: 5
-            text: textToken/value
-        ]
-    ]
-    parseHeader6: does [
-        consume Header6
-        textToken: consume Text
-        consume NewlineToken
-
-        make HeaderNode [
-            size: 6
-            text: textToken/value
-        ]
-    ]
-
     parseAsterisk: does [
         consume Asterisk
         case [
@@ -278,6 +217,74 @@ Parser: context [
         ]
     ]
 
+    parseHeader1: does [
+        consume Header1
+        textToken: consume Text
+        consume NewlineToken
+
+        make HeaderNode [
+            size: 1
+            text: textToken/value
+        ]
+    ]
+    parseHeader2: does [
+        consume Header2
+        textToken: consume Text
+        consume NewlineToken
+
+        make HeaderNode [
+            size: 2
+            text: textToken/value
+        ]
+    ]
+    parseHeader3: does [
+        consume Header3
+        textToken: consume Text
+        consume NewlineToken
+
+        make HeaderNode [
+            size: 3
+            text: textToken/value
+        ]
+    ]
+    parseHeader4: does [
+        consume Header4
+        textToken: consume Text
+        consume NewlineToken
+
+        make HeaderNode [
+            size: 4
+            text: textToken/value
+        ]
+    ]
+    parseHeader5: does [
+        consume Header5
+        textToken: consume Text
+        consume NewlineToken
+
+        make HeaderNode [
+            size: 5
+            text: textToken/value
+        ]
+    ]
+    parseHeader6: does [
+        consume Header6
+        textToken: consume Text
+        consume NewlineToken
+
+        make HeaderNode [
+            size: 6
+            text: textToken/value
+        ]
+    ]
+    parseGreaterThan: does [
+        consume GreaterThan
+        textToken: consume Text
+        make BlockquoteNode [
+            text: textToken/value
+        ]
+    ]
+
     parse: function [
         {parses a block! of tokens into a tree that represents the structure of the actual Markdown, something like this:
             [
@@ -390,6 +397,9 @@ Parser: context [
                         ]
                         peek Header6 [
                             append markdownChildren parseHeader6
+                        ]
+                        peek GreaterThan [
+                            append markdownChildren parseGreaterThan
                         ]
 
                         true [
