@@ -46,6 +46,156 @@ Parser: context [
         do make error! rejoin ["expected " expectedToken/type " but got " currentToken/type]
     ]
 
+    parse: function [
+        {parses a block! of tokens into a tree that represents the structure of the actual Markdown, something like this:
+            [
+                Header1 Text Newline Newline 
+                Underscore Text Underscore Newline 
+                Text Newline
+                Text
+                NumberWithDot Text Newline 
+                NumberWithDot Text Newline 
+                NumberWithDot Asterisk Asterisk Text Asterisk Asterisk
+            ] into
+            MARKDOWN
+                HEADER
+                    SIZE: 1
+                    TEXT: "EXAMPLE"
+                BR
+                PARAGRAPH
+                    EMPHASIS
+                        TEXT: "EXAMPLE"
+                    TEXT: EXAMPLE
+                    BR
+                    TEXT: EXAMPLE
+                    BR
+                ORDERED_LIST
+                    ITEMS: [
+                        TEXT
+                        TEXT
+                        STRONG_EMPHASIS
+                            TEXT: "EXAMPLE"
+                    ]
+        }
+    ] [        
+        ; while not at stream end
+        ;   if peek inline node
+        ;       make paragraph node
+        ;       while any [
+        ;           peek inlineNode
+        ;           all [
+        ;               peek/at NewlineToken 0
+        ;               not peek/at NewlineToken 1
+        ;           ]
+        ;       ] [
+        ;           parseInlineTokens
+        ;           add node to paragraph node
+        ;       ]
+        ;       add paragraph node to markdownChildren
+
+        if error? tree: try [
+            markdownChildren: copy []
+            until [
+                currentToken: first self/tokens
+                if all [
+                    not tail? self/tokens
+                    found? currentToken
+                    any [
+                        currentToken/type isOneOf INLINE_TOKEN_TYPES
+                        all [
+                            peek/at NewlineToken 1
+                            not peek/at NewlineToken 2
+                        ]   
+                    ]
+                ] [
+                    append markdownChildren parseParagraph
+                ]
+
+                if (not tail? self/tokens) [
+                    blockNode: parseBlockTokens
+                    if found? blockNode [
+                        append markdownChildren blockNode
+                    ]
+                ]
+                tail? self/tokens
+            ]
+
+            make MarkdownNode [
+                children: markdownChildren
+            ]
+        ] [
+            strError: errorToString tree
+            print rejoin ["stream is " prettyFormat copy/part self/tokens 5]
+            print rejoin [newline "#####" newline "error: " strError { in file "} self/file {"}]
+            quit
+        ]
+        tree
+    ]
+
+    ; ####################
+    ;  inline nodes
+    ; ####################
+
+    ; collects all the consecutive inline tokens into a paragraph
+    parseParagraph: does [
+        paragraphNodeChildren: copy []
+        while [
+            currentToken: first self/tokens
+            all [
+                not tail? self/tokens
+                found? currentToken
+                any [
+                    currentToken/type isOneOf INLINE_TOKEN_TYPES
+                    all [
+                        peek/at NewlineToken 1
+                        not peek/at NewlineToken 2
+                    ]   
+                ]
+            ]
+        ] [
+            append paragraphNodeChildren parseInlineTokens
+        ]
+        make ParagraphNode [
+            children: paragraphNodeChildren
+        ]
+    ]
+
+    parseInlineTokens: does [
+        case [
+            peek NewlineToken [
+                parseNewline
+            ]
+            peek Text [
+                parseText
+            ]
+            peek Asterisk [
+                parseAsterisk
+            ]
+            peek Underscore [
+                parseUnderscore
+            ]
+            peek Tilde [
+                parseTilde
+            ]
+            peek LeftSquareBracket [
+                parseLeftSquareBracket
+            ]
+            peek LeftBracket [
+                parseLeftBracket
+            ]
+            peek RightBracket [
+                parseRightBracket
+            ]
+
+            true [
+                badToken: first self/tokens
+                print rejoin ["stream is " prettyFormat copy/part self/tokens 5]
+                print rejoin ["can't handle " badToken/type {Token in file "} self/file {"}]
+                quit
+            ]
+        ]
+    ]
+
     parseNewline: does [
         consume NewlineToken
         make NewlineNode []
@@ -180,35 +330,45 @@ Parser: context [
         ]
     ]
 
-    parseInlineTokens: function [
-    ] [
+    ; ####################
+    ;  block nodes
+    ; ####################
+
+    parseBlockTokens: does [
         case [
-            peek NewlineToken [
-                parseNewline
+            all [
+                peek/at NewlineToken 1 
+                peek/at NewlineToken 2
+            ] [
+                consume NewlineToken
+                consume NewlineToken
+                return none
             ]
-            peek Text [
-                parseText
+            
+            peek Header1 [
+                return parseHeader1
             ]
-            peek Asterisk [
-                parseAsterisk
+            peek Header2 [
+                return parseHeader2
             ]
-            peek Underscore [
-                parseUnderscore
+            peek Header3 [
+                return parseHeader3
             ]
-            peek Tilde [
-                parseTilde
+            peek Header4 [
+                return parseHeader4
             ]
-            peek LeftSquareBracket [
-                parseLeftSquareBracket
+            peek Header5 [
+                return parseHeader5
             ]
-            peek LeftBracket [
-                parseLeftBracket
+            peek Header6 [
+                return parseHeader6
             ]
-            peek RightBracket [
-                parseRightBracket
+            
+            peek GreaterThan [
+                return parseGreaterThan
             ]
 
-             true [
+            true [
                 badToken: first self/tokens
                 print rejoin ["stream is " prettyFormat copy/part self/tokens 5]
                 print rejoin ["can't handle " badToken/type {Token in file "} self/file {"}]
@@ -284,146 +444,6 @@ Parser: context [
             text: textToken/value
         ]
     ]
-
-    parse: function [
-        {parses a block! of tokens into a tree that represents the structure of the actual Markdown, something like this:
-            [
-                Header1 Text Newline Newline 
-                Underscore Text Underscore Newline 
-                Text Newline
-                Text
-                NumberWithDot Text Newline 
-                NumberWithDot Text Newline 
-                NumberWithDot Asterisk Asterisk Text Asterisk Asterisk
-            ] into
-            MARKDOWN
-                HEADER
-                    SIZE: 1
-                    TEXT: "EXAMPLE"
-                BR
-                PARAGRAPH
-                    EMPHASIS
-                        TEXT: "EXAMPLE"
-                    TEXT: EXAMPLE
-                    BR
-                    TEXT: EXAMPLE
-                    BR
-                ORDERED_LIST
-                    ITEMS: [
-                        TEXT
-                        TEXT
-                        STRONG_EMPHASIS
-                            TEXT: "EXAMPLE"
-                    ]
-        }
-    ] [        
-        ; while not at stream end
-        ;   if peek inline node
-        ;       make paragraph node
-        ;       while any [
-        ;           peek inlineNode
-        ;           all [
-        ;               peek/at NewlineToken 0
-        ;               not peek/at NewlineToken 1
-        ;           ]
-        ;       ] [
-        ;           parseInlineTokens
-        ;           add node to paragraph node
-        ;       ]
-        ;       add paragraph node to markdownChildren
-
-        if error? tree: try [
-            markdownChildren: copy []
-            until [
-                currentToken: first self/tokens
-                if all [
-                    not tail? self/tokens
-                    found? currentToken
-                    any [
-                        currentToken/type isOneOf INLINE_TOKEN_TYPES
-                        all [
-                            peek/at NewlineToken 1
-                            not peek/at NewlineToken 2
-                        ]   
-                    ]
-                ] [
-                    newParagraphNodeChildren: copy []
-                    while [
-                        currentToken: first self/tokens
-                        all [
-                            not tail? self/tokens
-                            found? currentToken
-                            any [
-                                currentToken/type isOneOf INLINE_TOKEN_TYPES
-                                all [
-                                    peek/at NewlineToken 1
-                                    not peek/at NewlineToken 2
-                                ]   
-                            ]
-                        ]
-                    ] [
-                        node: parseInlineTokens
-                        append newParagraphNodeChildren node
-                    ]
-                    newParagraphNode: make ParagraphNode [
-                        children: newParagraphNodeChildren
-                    ]
-                    append markdownChildren newParagraphNode
-                ]
-
-                if (not tail? self/tokens) [
-                    case [
-                        all [
-                            peek/at NewlineToken 1 
-                            peek/at NewlineToken 2
-                        ] [
-                            consume NewlineToken
-                            consume NewlineToken
-                        ]
-                        peek Header1 [
-                            append markdownChildren parseHeader1
-                        ]
-                        peek Header2 [
-                            append markdownChildren parseHeader2
-                        ]
-                        peek Header3 [
-                            append markdownChildren parseHeader3
-                        ]
-                        peek Header4 [
-                            append markdownChildren parseHeader4
-                        ]
-                        peek Header5 [
-                            append markdownChildren parseHeader5
-                        ]
-                        peek Header6 [
-                            append markdownChildren parseHeader6
-                        ]
-                        peek GreaterThan [
-                            append markdownChildren parseGreaterThan
-                        ]
-
-                        true [
-                            badToken: first self/tokens
-                            print rejoin ["stream is " prettyFormat copy/part self/tokens 5]
-                            print rejoin ["can't handle " badToken/type {Token in file "} self/file {"}]
-                            quit
-                        ]
-                    ]
-                ]
-                tail? self/tokens
-            ]
-
-            make MarkdownNode [
-                children: markdownChildren
-            ]
-        ] [
-            strError: errorToString tree
-            print rejoin ["stream is " prettyFormat copy/part self/tokens 5]
-            print rejoin [newline "#####" newline "error: " strError { in file "} self/file {"}]
-            quit
-        ]
-        tree
-    ] 
 ]
 
 escapeString: function [
