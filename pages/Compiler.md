@@ -15,7 +15,6 @@ I'm going to use the compiler I made for this wiki, which translates [Markdown](
 Tokens are the smallest meaningful pieces in a language - for example, in `def f() 1 end`, even though `def` is three characters, `d`, `e` and `f` don't mean anything by themselves, only `def` does, so it's a token.
 
 For the compiler used to make this wiki, we need a few different tokens:
-* a `\\` backslash, followed by any character, for it to be included literally (not as part of any other token)
 * `######` to `#` for headers, in _that_ order
 * `>` for blockquotes
 * `*` for bold
@@ -27,8 +26,11 @@ For the compiler used to make this wiki, we need a few different tokens:
 * `!` for images
 * ```, `    `, and `{tab}` for code
 * `    ` again, for nesting things inside lists
-* newlines, so you know when a header stops,
+* newlines
 * and everything else that isn't one of the above tokens, is a "text" token
+
+Also, we can't just have the above tokens as rules, we need a rule for a `\\` backslash, followed by any character, so the character is included literally (not as part of any other token), and there's another little complication that means I can't just have simple straight rules: URLs have to be handled explicitly in the tokenizer, so that it doesn't mess up with any of the special characters that URLs can have (see [RFC 1738](https://tools.ietf.org/html/rfc1738))
+
 
 The general idea is you look at the current input, make a specific token based off whatever the current input is (not necessarily only the first character, e.g. `    `), add that token to current stream (it's a `block!` with this wiki, since the compiler's written in Red), and advance to the next bit of the input you haven't matched yet, until you're at the end of the input. If you can't match all the input, something's gone wrong.
 

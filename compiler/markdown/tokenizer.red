@@ -15,7 +15,10 @@ Tokenizer: context [
 
         ; PARSE rules
 
+        ; we need to handle URLs explicitly so that it doesn't mess up with any of the special characters (see generator.red/slugifyFilename); it shouldn't think that e.g. an underscore is an Underscore token, for the beginning of an Emphasis node
+        ; and we want `[Commodotize your complement](https://www.gwern.net/Complement#2)` to have the URL stop at `#2` - it shouldn't include the `)`, so need to exclude that too, and we might as well exclude `(` and `,` while we're at it
         whitespace: [newline | cr | lf | "^(0C)" | tab | space] ; 0C is form feed, see https://www.pcre.org/original/doc/html/pcrepattern.html
+        disallowedURLCharacters: ["(" | ")" | "," | whitespace]
 
         headers: [
                 "######" (append tokens make Header6 [])
@@ -46,11 +49,11 @@ Tokenizer: context [
             any [
                 [
                     "\" copy data skip (append tokens make Text [value: data]) ; this needs to go first so that e.g. `\*` matches before `*` 
-                |   "http://" copy data to whitespace ( ; we need to handle URLs explicitly so that it doesn't mess up with any of the special characters (see generator.red/slugifyFilename); it shouldn't think that e.g. an underscore is an Underscore token, for the beginning of an Emphasis node
+                |   "http://" copy data to disallowedURLCharacters (
                         link: rejoin ["http://" data] 
                         append tokens make Text [value: link]
                     )
-                |   "https://" copy data to whitespace (
+                |   "https://" copy data to disallowedURLCharacters (
                         link: rejoin ["https://" data] 
                         append tokens make Text [value: link]
                     )

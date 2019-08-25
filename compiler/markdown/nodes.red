@@ -47,3 +47,8 @@ StrikethroughNode: make Node [
     type: "StrikethroughNode"
     text: none
 ]
+
+LinkNode: make Node [
+    url: none
+    text: none
+]

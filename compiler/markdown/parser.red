@@ -201,6 +201,46 @@ Parser: context [
         ]
     ]
 
+    parseLeftSquareBracket: does [
+        consume LeftSquareBracket
+
+        ; it's a URL
+        if all [
+            peek/at Text 1
+            peek/at RightSquareBracket 2
+            peek/at LeftBracket 3
+            peek/at Text 4
+            peek/at RightBracket 5
+        ] [
+            textToken: consume Text
+            consume RightSquareBracket
+            consume LeftBracket
+            urlToken: consume Text
+            consume RightBracket
+            return make LinkNode [
+                url: urlToken/value
+                text: textToken/value
+            ]
+        ]
+        return make TextToken [
+            value: "["
+        ]
+    ]
+
+    parseLeftBracket: does [
+        consume LeftBracket
+        make TextNode [
+            value: "["
+        ]
+    ]
+
+    parseRightBracket: does [
+        consume RightBracket
+        make TextNode [
+            value: "]"
+        ]
+    ]
+
     parseInlineTokens: function [
     ] [
         case [
@@ -218,6 +258,15 @@ Parser: context [
             ]
             peek Tilde [
                 parseTilde
+            ]
+            peek LeftSquareBracket [
+                parseLeftSquareBracket
+            ]
+            peek LeftBracket [
+                parseLeftBracket
+            ]
+            peek RightBracket [
+                parseRightBracket
             ]
 
              true [

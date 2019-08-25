@@ -445,3 +445,6 @@ I need to handle URLs explicitly so that it doesn't mess up with any of the spec
 
 This "colleting inline nodes into paragraph nodes" thing is _hard_. I'm trying to do in the main `parse` function and every way I can think of doesn't work.
 Maybe I should just make the AST as normal, then go over it aferwards and group each consecutive run of inline nodes & 1 NewlineNode as a ParagraphNode?
+
+Now the URL parsing from 2 paragraphs ago is failing on `[Commodotize your complement](https://www.gwern.net/Complement#2)`, because I read in the URL until I see a space, but the delimiter here is a right bracket, not a space! This is https://blog.codinghorror.com/the-problem-with-urls in code form :(
+Ok I'm going to disallow `)` in URLs. `(` and `,` too - for consistency, and I like to put URLs in the middle of sentences.
