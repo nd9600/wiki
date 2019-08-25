@@ -15,6 +15,7 @@ compile: function [
 ] [
     newTokenizer: make Tokenizer []
     tokenStream: newTokenizer/tokenize str
+    ; print prettyFormat tokenStream
 
     newParser: make Parser [
         file: filename
@@ -25,8 +26,8 @@ compile: function [
     newCodeGenerator: make CodeGenerator []
     str: codeGenerator/generate ast
     print str
-    quit
-    
+    ; quit
+
     str
 ]
 

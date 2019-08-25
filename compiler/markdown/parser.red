@@ -35,12 +35,7 @@ Parser: context [
 
     parseNewline: does [
         consume NewlineToken
-        either (peek NewlineToken) [
-            consume NewlineToken
-            make NewlineNode []
-        ] [
-            none
-        ]
+        make NewlineNode []
     ]
 
     parseHeader1: does [
@@ -223,10 +218,7 @@ Parser: context [
             until [
                 case [
                     peek NewlineToken [
-                        maybeNewlineNode: parseNewline
-                        if (found? maybeNewlineNode) [
-                            append markdownChildren maybeNewlineNode
-                        ]
+                        append markdownChildren parseNewline
                         print "parsed newline"
                     ]
                     peek Header1 [
@@ -269,9 +261,9 @@ Parser: context [
 
                     true [
                         badToken: first self/tokens
+                        print rejoin ["stream is " prettyFormat copy/part self/tokens 5]
                         print rejoin ["can't handle " badToken/type { in file "} self/file {"}]
                         quit
-                        return none
                     ]
                 ]
                 tail? self/tokens
@@ -282,7 +274,9 @@ Parser: context [
             ]
         ] [
             strError: errorToString tree
+            print rejoin ["stream is " prettyFormat copy/part self/tokens 5]
             print rejoin [newline "#####" newline "error: " strError { in file "} self/file {"}]
+            quit
         ]
         tree
     ] 

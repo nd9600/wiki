@@ -394,3 +394,51 @@ Ambiguity I've just thought of - how do I handle an asterisk, followed by a back
 Nope, it's the more general, harder to sort, case: backslashes inside code blocks.
 ~I think I might need another property inside the `Text` tokens that says whether or not it was escaped~
 I'm just going to make my life easy and always use two backslashes, so I'll type `\\\\` (I had to type 4 for 2 to appear)
+
+## Day 9
+
+Code generation seems easy enough so far, you pretty much just `switch` on the node type and recursively call the generating function:
+```
+generate: function [
+    "recursively generates the HTML for a node in %nodes.red"
+    node [object!]
+] [
+    switch/default node/type [
+        "MarkdownNode" [
+            (f_map lambda [self/generate ?] node/children)
+                |> lambda [join ? newline]
+        ]
+        "NewlineNode" [
+            "<br>"
+        ]
+        "EmphasisNode" [
+            rejoin ["<i>" node/text "</i>"]
+        ]
+        "StrongEmphasisNode" [
+            rejoin ["<b>" node/text "</b>"]
+        ]
+        "StrikethroughNode" [
+            rejoin ["<s>" node/text "</s>"]
+        ]
+    ] [
+        print rejoin ["AST is " prettyFormat node]
+        do make error! rejoin ["don't know how to handle " node/type]
+    ]
+]
+```
+
+I completely messed up the order of the Header rules in the tokenizer:
+```
+headers: [
+        "#" (append tokens make Header1 []) 
+    |   "##" (append tokens make Header2 []) 
+    |   "###" (append tokens make Header3 []) 
+    |   "####" (append tokens make Header4 []) 
+    |   "#####" (append tokens make Header5 []) 
+    |   "######" (append tokens make Header6 [])
+]
+```
+it should be the other way round - this way, it always matches two `Header1`s, rather than one `Header2`, which is exactly not what I want it to do.
+(this was really annoying to figure out - it was the parser that was complaining when it was trying to consume a `Text` token after getting a `Header1` token, which is what it _should_ be doing, so I thought that that was the bug, but the bug was _actually_ in the tokenizer, way upstream! so, like how when you look really hard for something you've lost in one place, and don't think how it could be in another place, I didn't find the bug for ages. Kinda reminds me of what's the context and what's the form you're designing, in [Notes on the Synthesis of Form](notes_on_the_synthesis_of_form.html)).
+
+I need to handle URLs explicitly so that it doesn't mess up with any of the special characters (see generator.red/slugifyFilename); it shouldn't think that e.g. an underscore is an Underscore token, for the beginning of an Emphasis node
