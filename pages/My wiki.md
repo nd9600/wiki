@@ -387,7 +387,7 @@ I think I might not do the Paragraphy bits for now, do the code generation for t
 I think I'll need a `Space` token too - you nest items inside lists by using 4 spaces. Nope, that's already handled by the `FourSpaces` token used for the code blocks. 
 But, there's another space-related issue - you can write a list like `\\n* LIST ITEM`, `\\n * LIST ITEM`, all the way up to 3 spaces, and still have a normal list item (4 spaces makes a sub-list), so I've a decision to make - do I handle this in the tokenizer, or in the code generator?
 I can either make a `Space` token like I thought, and roll it into any surrounding `Text` tokens, like I already do with `Text` tokens (before the code generator gets the stream of tokens), or, when I'm parsing the token stream, if I see a Newline, followed by Text, followed by an Asterisk (or Hyphen, etc.), I can check if the Text is only a series of spaces, and make a list. The 2nd way seems more complicated.
-Nah, there's a 3rd way. In the tokenizer, when I read in a series of spaces, I can check what comes after it - if it's an Asterisk (etc.),I can output the right list token, and ignore the spaces if there are < 4, and output the `FourSpace` token otherwise (maybe output `numberOfSpaces / 4` tokens, since both arguments are integers). Yeah, that's better.
+Nah, there's a 3rd way. In the tokenizer, when I read in a series of spaces, I can check what comes after it - if it's an Asterisk (etc.), I can output the right list token, and ignore the spaces if there are < 4, and output the `FourSpace` token otherwise (maybe output `numberOfSpaces / 4` tokens, since both arguments are integers). Yeah, that's better.
 But, I'll put that in the todos, and do it later. No need to complicate it yet, when there isn't even a working code generator yet.
 
 Ambiguity I've just thought of - how do I handle an asterisk, followed by a backslash and another asterisk? It should be output as an inline code block with just a backslash in it, not as an emphasis marker and a literal asterisk, that would be really surprising and not make sense.
@@ -443,10 +443,20 @@ it should be the other way round - this way, it always matches two `Header1`s, r
 
 I need to handle URLs explicitly so that it doesn't mess up with any of the special characters (see generator.red/slugifyFilename); it shouldn't think that e.g. an underscore is an Underscore token, for the beginning of an Emphasis node.
 
-This "colleting inline nodes into paragraph nodes" thing is _hard_. I'm trying to do in the main `parse` function and every way I can think of doesn't work.
+This "collecting inline nodes into paragraph nodes" thing is _hard_. I'm trying to do in the main `parse` function and every way I can think of doesn't work.
 Maybe I should just make the AST as normal, then go over it aferwards and group each consecutive run of inline nodes & 1 NewlineNode as a ParagraphNode?
 
 Now the URL parsing from 2 paragraphs ago is failing on `[Commodotize your complement](https://www.gwern.net/Complement#2)`, because I read in the URL until I see a space, but the delimiter here is a right bracket, not a space! This is https://blog.codinghorror.com/the-problem-with-urls in code form :(
 Ok I'm going to disallow `)` in URLs. `(` and `,` too - for consistency, and I like to put URLs in the middle of sentences.
 
 I've made a fair amount of progress there, once the URL thingy was fixed: it gets down to `[If correlation doesn’t imply causation, then what does? - Michael Nielsen](http://www.michaelnielsen.org/ddi/if-correlation-doesnt-imply-causation-then-what-does/)` in [Articles I'll like](articles_ill_like.html) now!
+
+Turns out I can't _not_ handle lists right now (look at the start of day 8) - that link I have in the above paragraph completely breaks the parser, because it has a `Hyphen` token in it, not a hyphen as part of a `Text` node, which I guessed I assumed would happen.
+I was thinking about it by accident on the way back from a barbeque with one side of my family, and I've thought of a _fourth_, even simpler, way of handling it.
+So, I made a `Hyphen` token _in the context of it being used for lists_ - the token only exists to be used to start an unordered list item; a hyphen marks an unordered list _if and only if_ it follows a newline and possibly a series of spaces (not caring about tabs here, I'm the only one writing the Markdown, and my tab key puts in spaces), so, I only need to make a `Hyphen` token if I've just read in a newline and maybe some spaces.
+My `Hyphen` rule doesn't only need to have a hyphen in it!!
+
+I think this is a big insight - if a tokenizer makes a token for a particular series of characters, like `-`, that token might actually only be a token in the context of other characters, so you can read in other characters beforehand (or after, I guess), and only _then_ decide to make the `-` or not.
+Same goes for the `Asterisk`, `Plus`, and `NumberWithDot` tokens.
+
+Yet another benefit of notes here - they're like comments that are tied to a time, rather than to a place in the code, so I can go back and re-read what I thought yesterday, soemthing I definitely needed to just do to see what the space issue was and how I thought it fix it. I don't even think we kid ourselves that we'll go back and look at the comments in past Git commits.
