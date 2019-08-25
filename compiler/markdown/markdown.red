@@ -28,7 +28,7 @@ compile: function [
     newCodeGenerator: make CodeGenerator [
         file: filename
     ]
-    html: codeGenerator/generate ast
+    html: newCodeGenerator/generate ast
     print html
     ; quit
     html

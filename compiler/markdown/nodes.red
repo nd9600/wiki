@@ -58,3 +58,13 @@ BlockquoteNode: make Node [
     type: "BlockquoteNode"
     text: none
 ]
+
+UnorderedListNode: make Node [
+    type: "UnorderedListNode"
+    items: none
+]
+
+UnorderedListItemNode: make Node [
+    type: "UnorderedListItemNode"
+    children: none
+]

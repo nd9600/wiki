@@ -76,11 +76,29 @@ Tokenizer: context [
                 |
                     "~" (append tokens make Tilde [])
                 |
-                    "+" (append tokens make Plus [])
+                    [newline copy spaces any space "+"] (
+                        append tokens make NewlineToken []
+                        loop ((length? spaces) / 4) [ ; 4 spaces marks a sub-list
+                            append tokens make FourSpaces []
+                        ]
+                        append tokens make Plus []
+                    )
                 |
-                    "-" (append tokens make Hyphen [])
+                    [newline copy spaces any space "-"] (
+                        append tokens make NewlineToken []
+                        loop ((length? spaces) / 4) [ ; 4 spaces marks a sub-list
+                            append tokens make FourSpaces []
+                        ]
+                        append tokens make Hyphen []
+                    )
                 |
-                    [copy data number "." (append tokens make NumberWithDot [value: data]) ]
+                    [newline copy spaces any space copy data number "."] (
+                        append tokens make NewlineToken []
+                        loop ((length? spaces) / 4) [ ; 4 spaces marks a sub-list
+                            append tokens make FourSpaces []
+                        ]
+                        append tokens make NumberWithDot [value: data]
+                    )
                 |
                     linkCharacters
                 |

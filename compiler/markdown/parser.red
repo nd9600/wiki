@@ -79,7 +79,7 @@ Parser: context [
         }
     ] [        
         ; while not at stream end
-        ;   if peek inline node
+        ;   if peek inline token
         ;       make paragraph node
         ;       while any [
         ;           peek inlineNode
@@ -92,29 +92,21 @@ Parser: context [
         ;           add node to paragraph node
         ;       ]
         ;       add paragraph node to markdownChildren
+        ;   else
+        ;       parse block tokens
 
         if error? tree: try [
             markdownChildren: copy []
             until [
-                currentToken: first self/tokens
-                if all [
-                    not tail? self/tokens
-                    found? currentToken
-                    any [
-                        currentToken/type isOneOf INLINE_TOKEN_TYPES
-                        all [
-                            peek/at NewlineToken 1
-                            not peek/at NewlineToken 2
-                        ]   
-                    ]
-                ] [
-                    append markdownChildren parseParagraph
+                maybeParagraphNode: maybeParseParagraph
+                if found? maybeParagraphNode [
+                    append markdownChildren maybeParagraphNode
                 ]
 
                 if (not tail? self/tokens) [
-                    blockNode: parseBlockTokens
-                    if found? blockNode [
-                        append markdownChildren blockNode
+                    maybeBlockNode: maybeParseBlockTokens
+                    if found? maybeBlockNode [
+                        append markdownChildren maybeBlockNode
                     ]
                 ]
                 tail? self/tokens
@@ -135,6 +127,27 @@ Parser: context [
     ; ####################
     ;  inline nodes
     ; ####################
+
+    ; collects all the consecutive inline tokens into a paragraph, if it should
+    maybeParseParagraph: does [
+        currentToken: first self/tokens
+        isParagraph: all [
+            not tail? self/tokens
+            found? currentToken
+            any [
+                currentToken/type isOneOf INLINE_TOKEN_TYPES
+                all [
+                    peek/at NewlineToken 1
+                    not peek/at NewlineToken 2
+                ]   
+            ]
+        ]
+        either isParagraph [
+            parseParagraph
+        ] [
+            none
+        ]
+    ]
 
     ; collects all the consecutive inline tokens into a paragraph
     parseParagraph: does [
@@ -334,7 +347,7 @@ Parser: context [
     ;  block nodes
     ; ####################
 
-    parseBlockTokens: does [
+    maybeParseBlockTokens: does [
         case [
             all [
                 peek/at NewlineToken 1 
@@ -366,6 +379,15 @@ Parser: context [
             
             peek GreaterThan [
                 return parseGreaterThan
+            ]
+
+            peek Hyphen [
+                return parseHyphen
+            ]
+
+            peek FourSpaces [
+                consume FourSpaces
+                return none
             ]
 
             true [
@@ -437,11 +459,48 @@ Parser: context [
             text: textToken/value
         ]
     ]
+
     parseGreaterThan: does [
         consume GreaterThan
         textToken: consume Text
         make BlockquoteNode [
             text: textToken/value
+        ]
+    ]
+
+    parseHyphen: does [
+
+        ; add all the list items to a list node
+        unorderedListItemNodes: copy []
+        until [
+            consume Hyphen
+
+            ; add all the inline nodes in the line to an item node
+            inlineNodesInListItem: copy []
+            until [
+                append inlineNodesInListItem parseInlineTokens
+
+                any [
+                    tail? self/tokens
+                    peek NewlineToken
+                ]
+            ]
+
+            ; the list might be at the end of the file
+            if (not tail? self/tokens) [
+                consume NewlineToken
+            ]
+            append unorderedListItemNodes make UnorderedListItemNode [
+                children: inlineNodesInListItem
+            ]
+
+            any [
+                tail? self/tokens
+                not peek Hyphen
+            ]
+        ]
+        make UnorderedListNode [
+            items: unorderedListItemNodes
         ]
     ]
 ]
