@@ -121,11 +121,16 @@ Tokenizer: context [
         "we want to roll multiple `Text` tokens in a row into one big Token, there's no point having a thousand separate ones in a row"
         tokens [block!]
     ] [
+        if (empty? tokens) [
+            return []
+        ]
+        
         newTokens: copy []
         tokenCursor: tokens
 
         until [
             currentToken: first tokenCursor
+            print "tokenizing"
             either (not currentToken/isType "Text") [
                 append newTokens currentToken
             ] [

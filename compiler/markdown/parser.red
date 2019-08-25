@@ -30,7 +30,11 @@ Parser: context [
     ] [
         offset: either at [offset] [1]
         token: pick self/tokens offset
-        token/isType expectedToken/type
+
+        all [
+            found? token
+            token/isType expectedToken/type
+        ]
     ]
 
     consume: function [

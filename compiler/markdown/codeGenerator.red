@@ -37,6 +37,20 @@ CodeGenerator: context [
             "StrikethroughNode" [
                 rejoin [{<s class="strikethrough">} node/text "</s>"]
             ]
+            "LinkNode" [
+                rejoin [{<a href="} node/url {" class="link">} node/text "</a>"]
+            ]
+
+            "HeaderNode" [
+                rejoin ["<h" node/size { class="header header--} node/size {">} (node/text) "</h" node/size ">"]
+            ]
+            "BlockquoteNode" [
+                rejoin [
+                    {<blockquote class="quote">} newline
+                    {<p class="quote__content">} node/text "</p>" newline
+                    "</blockquote>"
+                ]
+            ]
 
             "UnorderedListNode" [
                 unorderedListItems: (f_map lambda [self/generate ?] node/items)
