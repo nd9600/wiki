@@ -13,6 +13,11 @@ MarkdownNode: make Node [
     children: []
 ]
 
+ParagraphNode: make Node [
+    type: "ParagraphNode"
+    children: []
+]
+
 NewlineNode: make Node [
     type: "NewlineNode"
 ]

@@ -20,6 +20,14 @@ contains?: function [
     not none? find s e
 ]
 
+isOneOf: make op! function [
+    "returns if 'e is inside 's"
+    e [any-type!] 
+    s [series!]
+] [
+    contains? s e
+]
+
 startsWith: function [
     "returns whether 'series starts with 'value"
     series [series!]
