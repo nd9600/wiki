@@ -10,7 +10,7 @@ Node: context [
 
 MarkdownNode: make Node [
     type: "MarkdownNode"
-    content: []
+    children: []
 ]
 
 NewlineNode: make Node [

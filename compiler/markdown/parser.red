@@ -219,51 +219,51 @@ Parser: context [
         }
     ] [
         if error? tree: try [
-            markdownContent: copy []
+            markdownChildren: copy []
             until [
                 case [
                     peek NewlineToken [
                         maybeNewlineNode: parseNewline
                         if (found? maybeNewlineNode) [
-                            append markdownContent maybeNewlineNode
+                            append markdownChildren maybeNewlineNode
                         ]
                         print "parsed newline"
                     ]
                     peek Header1 [
-                        append markdownContent parseHeader1
+                        append markdownChildren parseHeader1
                         print "parsed header1"
                     ]
                     peek Header2 [
-                        append markdownContent parseHeader2
+                        append markdownChildren parseHeader2
                         print "parsed header2"
                     ]
                     peek Header3 [
-                        append markdownContent parseHeader3
+                        append markdownChildren parseHeader3
                         print "parsed header3"
                     ]
                     peek Header4 [
-                        append markdownContent parseHeader4
+                        append markdownChildren parseHeader4
                         print "parsed header4"
                     ]
                     peek Header5 [
-                        append markdownContent parseHeader5
+                        append markdownChildren parseHeader5
                         print "parsed header5"
                     ]
                     peek Header6 [
-                        append markdownContent parseHeader6
+                        append markdownChildren parseHeader6
                         print "parsed header6"
                     ]
 
                     peek Asterisk [
-                        append markdownContent parseAsterisk
+                        append markdownChildren parseAsterisk
                         print "parsed asterisk"
                     ]
                     peek Underscore [
-                        append markdownContent parseUnderscore
+                        append markdownChildren parseUnderscore
                         print "parsed underscore"
                     ]
                     peek Tilde [
-                        append markdownContent parseTilde
+                        append markdownChildren parseTilde
                         print "parsed tilde"
                     ]
 
@@ -278,7 +278,7 @@ Parser: context [
             ]
 
             make MarkdownNode [
-                content: markdownContent
+                children: markdownChildren
             ]
         ] [
             strError: errorToString tree

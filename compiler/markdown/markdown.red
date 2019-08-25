@@ -23,7 +23,11 @@ compile: function [
     ast: newParser/parse
 
     newCodeGenerator: make CodeGenerator []
-    codeGenerator/generate ast
+    str: codeGenerator/generate ast
+    print str
+    quit
+    
+    str
 ]
 
 escapeString: function [

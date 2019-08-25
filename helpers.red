@@ -352,11 +352,11 @@ deleteDir: function [
     ]
 ]
 
-sepJoin: function [
+join: function [
     "Returns a reduced block of values as a string, separated by a separator"
     block [block!]
     sep [string! char!]
 ] [
     rejoin compose/only flatten 
-        f_map lambda [reduce [? copy (sep)]] block
+        f_map lambda [reduce [? copy (to-string sep)]] block
 ]
