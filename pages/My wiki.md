@@ -460,3 +460,5 @@ I think this is a big insight - if a tokenizer makes a token for a particular se
 Same goes for the `Asterisk`, `Plus`, and `NumberWithDot` tokens.
 
 Yet another benefit of notes here - they're like comments that are tied to a time, rather than to a place in the code, so I can go back and re-read what I thought yesterday, soemthing I definitely needed to just do to see what the space issue was and how I thought it fix it. I don't even think we kid ourselves that we'll go back and look at the comments in past Git commits.
+
+I forgot about relative URLs :(

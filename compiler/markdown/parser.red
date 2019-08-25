@@ -197,6 +197,9 @@ Parser: context [
             peek LeftSquareBracket [
                 parseLeftSquareBracket
             ]
+            peek RightSquareBracket [
+                parseRightSquareBracket
+            ]
             peek LeftBracket [
                 parseLeftBracket
             ]
@@ -333,17 +336,24 @@ Parser: context [
         ]
     ]
 
+    parseRightSquareBracket: does [
+        consume RightSquareBracket
+        return make TextToken [
+            value: "]"
+        ]
+    ]
+
     parseLeftBracket: does [
         consume LeftBracket
         make TextNode [
-            value: "["
+            value: "("
         ]
     ]
 
     parseRightBracket: does [
         consume RightBracket
         make TextNode [
-            value: "]"
+            value: ")"
         ]
     ]
 
