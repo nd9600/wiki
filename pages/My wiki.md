@@ -95,10 +95,8 @@ I write all the files into a folder that's specified in a `.env` file (I need to
 Finally, the new files are live!
 
 # Todos
-* Add indent parameter to `objectToString`
 * Let Headers work with Asterisks, Underscores, Tildes, Links, and Code, as well as just Text
-* Let  Asterisks, Underscores, Tildes work with Emphasis, Strikethrough, links, and inline code, not just text
-* Make a new ParagraphNode when we read in two NewlineTokens in a row, 1 NewlineToken is a NewlineNode
+* Let Asterisks, Underscores, Tildes work with Emphasis, Strikethrough, links, and inline code, not just text
 
 * Handle spaces before list markers (see day 8)
 * Handle sub-lists (see above)
@@ -111,6 +109,8 @@ Finally, the new files are live!
 * ~Handle backslashes inside code blocks~ just use two backslashes when you want a literal one
 * ~Change slugifiers to work with ASCII letters, numbers and `$-_.+!*'()`~ browsers don't handle `'` in URLs
 * ~Delete existing pages before making new ones!~
+* ~Add indent parameter to `objectToString`~
+* ~Make a new ParagraphNode when we read in two NewlineTokens in a row, 1 NewlineToken is a NewlineNode~
 
 
 
