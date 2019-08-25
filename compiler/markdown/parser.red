@@ -37,17 +37,25 @@ Parser: context [
         "removes the first token and returns it, if it has the expected type"
         expectedToken [object!]
     ] [
-        firstToken: first self/tokens
-        if (firstToken/isType expectedToken/type) [
+        currentToken: first self/tokens
+        if (currentToken/isType expectedToken/type) [
+            print rejoin ["consumed " expectedToken/type]
             self/tokens: next self/tokens
-            return firstToken
+            return currentToken
         ]
-        do make error! rejoin ["expected " expectedToken/type " but got " firstToken/type]
+        do make error! rejoin ["expected " expectedToken/type " but got " currentToken/type]
     ]
 
     parseNewline: does [
         consume NewlineToken
         make NewlineNode []
+    ]
+
+    parseText: does [
+        textToken: consume Text
+        make TextNode [
+            text: textToken/value
+        ]
     ]
 
     parseHeader1: does [
@@ -132,8 +140,8 @@ Parser: context [
             ]
 
             true [
-                firstToken: first self/tokens
-                do make error! rejoin ["expected Asterisk or Text but got " firstToken/type { in file "} self/file {"}]
+                currentToken: first self/tokens
+                do make error! rejoin ["expected Asterisk or Text but got " currentToken/type { in file "} self/file {"}]
             ]
         ]
     ]
@@ -159,8 +167,8 @@ Parser: context [
             ]
 
             true [
-                firstToken: first self/tokens
-                do make error! rejoin ["expected Underscore or Text but got " firstToken/type { in file "} self/file {"}]
+                currentToken: first self/tokens
+                do make error! rejoin ["expected Underscore or Text but got " currentToken/type { in file "} self/file {"}]
             ]
         ]
     ]
@@ -187,8 +195,36 @@ Parser: context [
             ]
 
             true [
-                firstToken: first self/tokens
-                do make error! rejoin ["expected Tilde or Text but got " firstToken/type { in file "} self/file {"}]
+                currentToken: first self/tokens
+                do make error! rejoin ["expected Tilde or Text but got " currentToken/type { in file "} self/file {"}]
+            ]
+        ]
+    ]
+
+    parseInlineTokens: function [
+    ] [
+        case [
+            peek NewlineToken [
+                parseNewline
+            ]
+            peek Text [
+                parseText
+            ]
+            peek Asterisk [
+                parseAsterisk
+            ]
+            peek Underscore [
+                parseUnderscore
+            ]
+            peek Tilde [
+                parseTilde
+            ]
+
+             true [
+                badToken: first self/tokens
+                print rejoin ["stream is " prettyFormat copy/part self/tokens 5]
+                print rejoin ["can't handle " badToken/type {Token in file "} self/file {"}]
+                quit
             ]
         ]
     ]
@@ -224,45 +260,54 @@ Parser: context [
                             TEXT: "EXAMPLE"
                     ]
         }
-    ] [
-        ; if peek inline node
-        ;   make paragraph node
-        ;   while peek inline node
-        ;       add node to paragraph node
-        ;   if peek newline
-        ;       if peek 2 newline
-        ;           end paragraph
-        ;       else
-        ;           add newline to paragraph node
-        ;   add paragraph node to markdownChildren
-        
+    ] [        
         ; while not at stream end
         ;   if peek inline node
         ;       make paragraph node
         ;       while any [
         ;           peek inlineNode
         ;           all [
-        ;                peek/at newlineNode 0
-        ;               not peek/at newlineNode 1
-        ;            ]
-        ;       ]
+        ;               peek/at NewlineToken 0
+        ;               not peek/at NewlineToken 1
+        ;           ]
+        ;       ] [
+        ;           parseInlineTokens
         ;           add node to paragraph node
+        ;       ]
         ;       add paragraph node to markdownChildren
 
         if error? tree: try [
             markdownChildren: copy []
             until [
-                firstToken: first self/tokens
-                if (firstToken/type isOneOf INLINE_TOKEN_TYPES) [
-                    newParagraphNodeChildren: copy []
-                    while [any [
-                        firstToken/type isOneOf INLINE_TOKEN_TYPES
+                currentToken: first self/tokens
+                if all [
+                    not tail? self/tokens
+                    found? currentToken
+                    any [
+                        currentToken/type isOneOf INLINE_TOKEN_TYPES
                         all [
-                            peek/at NewlineNode 0
-                            not peek/at NewlineNode 1
+                            peek/at NewlineToken 1
+                            not peek/at NewlineToken 2
                         ]   
-                    ]] [
-                        append newParagraphNodeChildren make NewlineNode []
+                    ]
+                ] [
+                    newParagraphNodeChildren: copy []
+                    while [
+                        currentToken: first self/tokens
+                        all [
+                            not tail? self/tokens
+                            found? currentToken
+                            any [
+                                currentToken/type isOneOf INLINE_TOKEN_TYPES
+                                all [
+                                    peek/at NewlineToken 1
+                                    not peek/at NewlineToken 2
+                                ]   
+                            ]
+                        ]
+                    ] [
+                        node: parseInlineTokens
+                        append newParagraphNodeChildren node
                     ]
                     newParagraphNode: make ParagraphNode [
                         children: newParagraphNodeChildren
@@ -270,54 +315,40 @@ Parser: context [
                     append markdownChildren newParagraphNode
                 ]
 
-                case [
-                    peek NewlineToken [
-                        append markdownChildren parseNewline
-                        print "parsed newline"
-                    ]
-                    peek Header1 [
-                        append markdownChildren parseHeader1
-                        print "parsed header1"
-                    ]
-                    peek Header2 [
-                        append markdownChildren parseHeader2
-                        print "parsed header2"
-                    ]
-                    peek Header3 [
-                        append markdownChildren parseHeader3
-                        print "parsed header3"
-                    ]
-                    peek Header4 [
-                        append markdownChildren parseHeader4
-                        print "parsed header4"
-                    ]
-                    peek Header5 [
-                        append markdownChildren parseHeader5
-                        print "parsed header5"
-                    ]
-                    peek Header6 [
-                        append markdownChildren parseHeader6
-                        print "parsed header6"
-                    ]
+                if (not tail? self/tokens) [
+                    case [
+                        all [
+                            peek/at NewlineToken 1 
+                            peek/at NewlineToken 2
+                        ] [
+                            consume NewlineToken
+                            consume NewlineToken
+                        ]
+                        peek Header1 [
+                            append markdownChildren parseHeader1
+                        ]
+                        peek Header2 [
+                            append markdownChildren parseHeader2
+                        ]
+                        peek Header3 [
+                            append markdownChildren parseHeader3
+                        ]
+                        peek Header4 [
+                            append markdownChildren parseHeader4
+                        ]
+                        peek Header5 [
+                            append markdownChildren parseHeader5
+                        ]
+                        peek Header6 [
+                            append markdownChildren parseHeader6
+                        ]
 
-                    peek Asterisk [
-                        append markdownChildren parseAsterisk
-                        print "parsed asterisk"
-                    ]
-                    peek Underscore [
-                        append markdownChildren parseUnderscore
-                        print "parsed underscore"
-                    ]
-                    peek Tilde [
-                        append markdownChildren parseTilde
-                        print "parsed tilde"
-                    ]
-
-                    true [
-                        badToken: first self/tokens
-                        print rejoin ["stream is " prettyFormat copy/part self/tokens 5]
-                        print rejoin ["can't handle " badToken/type { in file "} self/file {"}]
-                        quit
+                        true [
+                            badToken: first self/tokens
+                            print rejoin ["stream is " prettyFormat copy/part self/tokens 5]
+                            print rejoin ["can't handle " badToken/type {Token in file "} self/file {"}]
+                            quit
+                        ]
                     ]
                 ]
                 tail? self/tokens

@@ -15,19 +15,21 @@ compile: function [
 ] [
     str
 
-    ; newTokenizer: make Tokenizer []
-    ; tokenStream: newTokenizer/tokenize str
-    ; ; print prettyFormat tokenStream
+    newTokenizer: make Tokenizer []
+    tokenStream: newTokenizer/tokenize str
+    ; print prettyFormat tokenStream
 
-    ; newParser: make Parser [
-    ;     file: filename
-    ;     tokens: tokenStream
-    ; ]
-    ; ast: newParser/parse
+    newParser: make Parser [
+        file: filename
+        tokens: tokenStream
+    ]
+    ast: newParser/parse
 
-    ; newCodeGenerator: make CodeGenerator []
-    ; html: codeGenerator/generate ast
-    ; print html
+    newCodeGenerator: make CodeGenerator [
+        file: filename
+    ]
+    html: codeGenerator/generate ast
+    print html
     ; quit
-    ; html
+    html
 ]

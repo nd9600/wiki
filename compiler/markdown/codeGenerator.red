@@ -5,6 +5,8 @@ Red [
 ]
 
 CodeGenerator: context [
+    file: ""
+
     generate: function [
         "recursively generates the HTML for a node in %nodes.red"
         node [object!]
@@ -14,21 +16,26 @@ CodeGenerator: context [
                 (f_map lambda [self/generate ?] node/children)
                     |> lambda [join ? newline]
             ]
+            "ParagraphNode" [
+                paragraphContent: (f_map lambda [self/generate ?] node/children)
+                    |> lambda [join ? newline]
+                rejoin [{<p class="paragraph">} newline paragraphContent "</p>"]
+            ]
             "NewlineNode" [
                 "<br>"
             ]
             "EmphasisNode" [
-                rejoin ["<i>" node/text "</i>"]
+                rejoin [{<i class="italic">} node/text "</i>"]
             ]
             "StrongEmphasisNode" [
-                rejoin ["<b>" node/text "</b>"]
+                rejoin [{<b class="bold">} node/text "</b>"]
             ]
             "StrikethroughNode" [
-                rejoin ["<s>" node/text "</s>"]
+                rejoin [{<s class="strikethrough">} node/text "</s>"]
             ]
         ] [
             print rejoin ["AST is " prettyFormat node]
-            do make error! rejoin ["don't know how to handle " node/type]
+            do make error! rejoin ["can't handle " node/type {Node in file "} self/file {"}]
         ]
     ]
 ]

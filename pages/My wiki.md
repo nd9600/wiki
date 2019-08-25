@@ -441,4 +441,7 @@ headers: [
 it should be the other way round - this way, it always matches two `Header1`s, rather than one `Header2`, which is exactly not what I want it to do.
 (this was really annoying to figure out - it was the parser that was complaining when it was trying to consume a `Text` token after getting a `Header1` token, which is what it _should_ be doing, so I thought that that was the bug, but the bug was _actually_ in the tokenizer, way upstream! so, like how when you look really hard for something you've lost in one place, and don't think how it could be in another place, I didn't find the bug for ages. Kinda reminds me of what's the context and what's the form you're designing, in [Notes on the Synthesis of Form](notes_on_the_synthesis_of_form.html)).
 
-I need to handle URLs explicitly so that it doesn't mess up with any of the special characters (see generator.red/slugifyFilename); it shouldn't think that e.g. an underscore is an Underscore token, for the beginning of an Emphasis node
+I need to handle URLs explicitly so that it doesn't mess up with any of the special characters (see generator.red/slugifyFilename); it shouldn't think that e.g. an underscore is an Underscore token, for the beginning of an Emphasis node.
+
+This "colleting inline nodes into paragraph nodes" thing is _hard_. I'm trying to do in the main `parse` function and every way I can think of doesn't work.
+Maybe I should just make the AST as normal, then go over it aferwards and group each consecutive run of inline nodes & 1 NewlineNode as a ParagraphNode?

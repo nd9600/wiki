@@ -22,6 +22,11 @@ NewlineNode: make Node [
     type: "NewlineNode"
 ]
 
+TextNode: make Node [
+    type: "TextNode"
+    text: none
+]
+
 HeaderNode: make Node [
     type: "HeaderNode"
     size: 0
