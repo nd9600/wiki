@@ -6,21 +6,24 @@ Red [
 
 do %compiler/markdown/tokenizer.red
 do %compiler/markdown/parser.red
+do %compiler/markdown/codeGenerator.red
 
 compile: function [
     "converts an input Markdown string into tokens"
     filename [string!]
     str [string!]
 ] [
+    newTokenizer: make Tokenizer []
+    tokenStream: newTokenizer/tokenize str
+
     newParser: make Parser [
         file: filename
-        tokens: tokenize str
+        tokens: tokenStream
     ]
     ast: newParser/parse
-    print prettyFormat ast
-    quit
 
-    str
+    newCodeGenerator: make CodeGenerator []
+    codeGenerator/generate ast
 ]
 
 escapeString: function [
