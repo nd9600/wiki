@@ -448,3 +448,5 @@ Maybe I should just make the AST as normal, then go over it aferwards and group 
 
 Now the URL parsing from 2 paragraphs ago is failing on `[Commodotize your complement](https://www.gwern.net/Complement#2)`, because I read in the URL until I see a space, but the delimiter here is a right bracket, not a space! This is https://blog.codinghorror.com/the-problem-with-urls in code form :(
 Ok I'm going to disallow `)` in URLs. `(` and `,` too - for consistency, and I like to put URLs in the middle of sentences.
+
+I've made a fair amount of progress there, once the URL thingy was fixed: it gets down to `[If correlation doesn’t imply causation, then what does? - Michael Nielsen](http://www.michaelnielsen.org/ddi/if-correlation-doesnt-imply-causation-then-what-does/)` in [Articles I'll like](articles_ill_like.html) now!
