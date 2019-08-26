@@ -156,6 +156,7 @@ Parser: context [
     ; collects all the consecutive inline tokens into a paragraph
     parseParagraph: does [
         paragraphNodeChildren: copy []
+        lastNodeWasInline: true
         while [
             currentToken: first self/tokens
             all [
@@ -163,14 +164,25 @@ Parser: context [
                 found? currentToken
                 any [
                     currentToken/type isOneOf INLINE_TOKEN_TYPES
+                    
+                    ; two Newlines in a row marks the start of a new paragraph
                     all [
                         peek/at NewlineToken 1
                         not peek/at NewlineToken 2
                     ]   
+
+                    ; parseInlineTokens returns 'none if it sees two backtick tokens in a row - this is the start of a code block, which isn't inline
+                    not lastNodeWasInline
                 ]
             ]
         ] [
-            append paragraphNodeChildren parseInlineTokens
+            maybeInlineNode: parseInlineTokens
+            either found? maybeInlineNode [
+                append paragraphNodeChildren maybeInlineNode
+            ] [
+                lastNodeWasInline: false
+            ]
+            
         ]
         make ParagraphNode [
             children: paragraphNodeChildren
@@ -185,6 +197,7 @@ Parser: context [
             peek Text [
                 parseText
             ]
+
             peek Asterisk [
                 parseAsterisk
             ]
@@ -194,6 +207,7 @@ Parser: context [
             peek Tilde [
                 parseTilde
             ]
+
             peek LeftSquareBracket [
                 parseLeftSquareBracket
             ]
@@ -205,6 +219,14 @@ Parser: context [
             ]
             peek RightBracket [
                 parseRightBracket
+            ]
+
+            peek Backtick [
+                either peek/at Backtick 1 [ ; this is the start of a code block, which isn't inline
+                    return none
+                ] [
+                    parseBacktick
+                ]
             ]
 
             true [
@@ -370,6 +392,49 @@ Parser: context [
         ]
     ]
 
+    parseBacktick: does [
+        consume Backtick
+        either peek Backtick [ ; the start of a code block, which is 1 by three backticks
+            consume Backtick
+            consume Backtick
+
+            codeContent: copy ""
+            until [
+                currentToken: first self/tokens
+                append codeContent currentToken/value 
+                self/tokens: next self/tokens
+
+                all [
+                    peek/at Backtick 1
+                    peek/at Backtick 2
+                    peek/at Backtick 3
+                ]
+            ]
+            consume Backtick
+            consume Backtick
+            consume Backtick
+
+            make InlineCodeNode [
+                code: codeContent
+            ]
+
+        ] [ ; or inline code, delimited by 1 backtick
+            codeContent: copy ""
+            until [
+                currentToken: first self/tokens
+                append codeContent currentToken/value 
+                self/tokens: next self/tokens
+
+                peek Backtick
+            ]
+            consume Backtick
+
+            make InlineCodeNode [
+                code: codeContent
+            ]
+        ]
+    ]
+
     ; ####################
     ;  block nodes
     ; ####################
@@ -419,6 +484,10 @@ Parser: context [
             peek FourSpaces [
                 consume FourSpaces
                 return none
+            ]
+
+            peek Backtick [
+                parseBacktick
             ]
 
             true [
@@ -508,10 +577,14 @@ Parser: context [
             ; add all the inline nodes in the line to an item node
             inlineNodesInListItem: copy []
             until [
-                append inlineNodesInListItem parseInlineTokens
+                maybeInlineNode: parseInlineTokens
+                if found? maybeInlineNode [
+                    append inlineNodesInListItem maybeInlineNode
+                ]
 
                 any [
                     tail? self/tokens
+                    not found? maybeInlineNode
                     peek NewlineToken
                 ]
             ]
@@ -543,10 +616,14 @@ Parser: context [
             ; add all the inline nodes in the line to an item node
             inlineNodesInListItem: copy []
             until [
-                append inlineNodesInListItem parseInlineTokens
+                maybeInlineNode: parseInlineTokens
+                if found? maybeInlineNode [
+                    append inlineNodesInListItem maybeInlineNode
+                ]
 
                 any [
                     tail? self/tokens
+                    not found? maybeInlineNode
                     peek NewlineToken
                 ]
             ]
