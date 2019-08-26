@@ -11,7 +11,7 @@ tags: [me/stuff_I'll_like]
 [Principles of Neural Design](https://www.amazon.com/Principles-Neural-Design-MIT-Press-ebook/dp/B00YBF4GGE)
 [The Chronicle of the Narvaez Expedition](https://www.amazon.co.uk/Chronicle-Narvaez-Expedition-Penguin-Classics/dp/0142437077)
 [A Deepness in the Sky](https://en.wikipedia.org/wiki/A_Deepness_in_the_Sky#Background)
-[The Story of Civilization [Volumes 1 to 11]](https://www.amazon.com/Story-Civilization-Volumes-Hardcover-1963-1975/dp/B000OEA066/ref=sr_1_1?keywords=The+Story+of+Civilization&qid=1556057082&s=gateway&sr=8-1)
+[The Story of Civilization \[Volumes 1 to 11\]](https://www.amazon.com/Story-Civilization-Volumes-Hardcover-1963-1975/dp/B000OEA066/ref=sr_1_1?keywords=The+Story+of+Civilization&qid=1556057082&s=gateway&sr=8-1)
 [The Death and Life of Great American Cities (Vintage)](https://www.amazon.co.uk/Death-Great-American-Cities-Vintage/dp/067974195X)
 [Lions' Commentary on UNIX 6th Edition, with Source Code - Wikipedia](https://en.wikipedia.org/wiki/Lions%27_Commentary_on_UNIX_6th_Edition)
 [Operating Systems: Three Easy Pieces](http://pages.cs.wisc.edu/%7Eremzi/OSTEP/)

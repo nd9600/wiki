@@ -6,7 +6,7 @@ Hello
 I made this after I read [this interview with Ceasar Bautista](https://superorganizers.substack.com/p/why-ceasar-bautista-wrote-his-own), and I liked the idea:
 * I read a fair amount of stuff, and I can't really remember the little details of most of it. I hope I will if I write them down here
 * Writing what I think about things and how I understand they work should help my understand things properly  - I might _think_ I know how a compiler works, but do I really? Writing [an article](compiler.html) should make me actually understand it
-* I'm planning on making everything I need to make the wiki myself - so, the static-site generator, the Markdown -> HTML compiler, hosting the website, etc, which hopefully should make me a better programmer. If I want to have the pages be dynamic in the future, I've got [a little framework](https://github.com/nd9600/framework) I can use, too.
+* I'm planning on making everything I need to make the wiki myself - so, the static-site generator, the Markdown -\> HTML compiler, hosting the website, etc, which hopefully should make me a better programmer. If I want to have the pages be dynamic in the future, I've got [a little framework](https://github.com/nd9600/framework) I can use, too.
 
 # How it all works
 If you want to look at the code, see `https://www.github.com/[XXX.download]/wiki`.

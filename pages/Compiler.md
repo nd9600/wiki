@@ -31,7 +31,6 @@ For the compiler used to make this wiki, we need a few different tokens:
 
 Also, we can't just have the above tokens as rules, we need a rule for a `\\` backslash, followed by any character, so the character is included literally (not as part of any other token), and there's another little complication that means I can't just have simple straight rules: URLs have to be handled explicitly in the tokenizer, so that it doesn't mess up with any of the special characters that URLs can have (see [RFC 1738](https://tools.ietf.org/html/rfc1738))
 
-
 The general idea is you look at the current input, make a specific token based off whatever the current input is (not necessarily only the first character, e.g. `    `), add that token to current stream (it's a `block!` with this wiki, since the compiler's written in Red), and advance to the next bit of the input you haven't matched yet, until you're at the end of the input. If you can't match all the input, something's gone wrong.
 
 For some tokens, I'm storing their actual character representation (so, `*` for an `Asterisk` token), since, if I type in "backtick asterisk backtick", I want that to appear as `*`, but the asterisk will be tokenized as an `Asterisk` token, not as `Text` with the value `*` - doing that would've been too complicated, and now I can just directly read out the value of an `Asterisk` node if it happens to be inside a code block in the parser.

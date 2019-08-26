@@ -43,9 +43,6 @@ Parser: context [
         currentToken: first self/tokens
         if (currentToken/isType expectedToken/type) [
             print rejoin ["consumed " expectedToken/type]
-            if  equal? expectedToken/type "Text" [
-                print rejoin ["consumed " mold currentToken]
-            ]
             self/tokens: next self/tokens
             return currentToken
         ]
@@ -464,8 +461,6 @@ Parser: context [
                 currentToken: first self/tokens
                 append codeContent currentToken/value 
                 self/tokens: next self/tokens
-                print prettyFormat currentToken
-                print prettyFormat first self/tokens
 
                 peek Backtick
             ]
@@ -727,7 +722,7 @@ Parser: context [
         if (peek NewlineToken) [
             consume NewlineToken
         ]
-        
+
         make OrderedListNode [
             items: orderedListItemNodes
         ]
