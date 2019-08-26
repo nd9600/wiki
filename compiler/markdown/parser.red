@@ -635,6 +635,10 @@ Parser: context [
     parseGreaterThan: does [
         consume GreaterThan
         textToken: consume Text
+        if (peek NewlineToken) [
+            consume NewlineToken
+        ]
+        
         make BlockquoteNode [
             text: textToken/value
         ]
