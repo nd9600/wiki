@@ -55,23 +55,23 @@ CodeGenerator: context [
             "UnorderedListNode" [
                 unorderedListItems: (f_map lambda [self/generate ?] node/items)
                     |> lambda [join ? newline]
-                rejoin [{<ul class="unorderedList">} newline unorderedListItems "</ul>"]
+                rejoin [{<ul class="list list--unordered">} newline unorderedListItems "</ul>"]
             ]
             "UnorderedListItemNode" [
                 itemContent: (f_map lambda [self/generate ?] node/children)
                     |> :rejoin
-                rejoin [{<li class="unorderedList--item">} itemContent "</li>"]
+                rejoin [{<li class="list__item list__item--unordered">} itemContent "</li>"]
             ]
 
             "OrderedListNode" [
                 orderedListItems: (f_map lambda [self/generate ?] node/items)
                     |> lambda [join ? newline]
-                rejoin [{<ol class="orderedList">} newline orderedListItems "</ol>"]
+                rejoin [{<ol class="list list--ordered">} newline orderedListItems "</ol>"]
             ]
             "OrderedListItemNode" [
                 itemContent: (f_map lambda [self/generate ?] node/children)
                     |> :rejoin
-                rejoin [{<li class="orderedList--item">} itemContent "</li>"]
+                rejoin [{<li class="list__item list__item--unordered">} itemContent "</li>"]
             ]
 
             "InlineCodeNode" [

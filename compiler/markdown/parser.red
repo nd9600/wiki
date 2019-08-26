@@ -638,7 +638,7 @@ Parser: context [
         if (peek NewlineToken) [
             consume NewlineToken
         ]
-        
+
         make BlockquoteNode [
             text: textToken/value
         ]
@@ -678,6 +678,12 @@ Parser: context [
                 not peek Hyphen
             ]
         ]
+
+        ; we don't want this extra newline
+        if (peek NewlineToken) [
+            consume NewlineToken
+        ]
+
         make UnorderedListNode [
             items: unorderedListItemNodes
         ]
@@ -717,6 +723,11 @@ Parser: context [
                 not peek NumberWithDot
             ]
         ]
+        ; we don't want this extra newline
+        if (peek NewlineToken) [
+            consume NewlineToken
+        ]
+        
         make OrderedListNode [
             items: orderedListItemNodes
         ]
