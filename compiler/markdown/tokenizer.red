@@ -130,7 +130,6 @@ Tokenizer: context [
 
         until [
             currentToken: first tokenCursor
-            print "tokenizing"
             either (not currentToken/isType "Text") [
                 append newTokens currentToken
             ] [

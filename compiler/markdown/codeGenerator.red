@@ -18,8 +18,8 @@ CodeGenerator: context [
             ]
             "ParagraphNode" [
                 paragraphContent: (f_map lambda [self/generate ?] node/children)
-                    |> lambda [join ? newline]
-                rejoin [{<p class="paragraph">} newline paragraphContent "</p>"]
+                    |> :rejoin
+                rejoin [{<p class="paragraph">} newline paragraphContent newline "</p>"]
             ]
 
             "NewlineNode" [
@@ -59,7 +59,7 @@ CodeGenerator: context [
             ]
             "UnorderedListItemNode" [
                 itemContent: (f_map lambda [self/generate ?] node/children)
-                    |> [rejoin]
+                    |> :rejoin
                 rejoin [{<li class="unorderedList--item">} itemContent "</li>"]
             ]
         ] [

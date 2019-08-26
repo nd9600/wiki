@@ -332,28 +332,28 @@ Parser: context [
             ]
         ]
         return make TextToken [
-            value: "["
+            text: "["
         ]
     ]
 
     parseRightSquareBracket: does [
         consume RightSquareBracket
         return make TextToken [
-            value: "]"
+            text: "]"
         ]
     ]
 
     parseLeftBracket: does [
         consume LeftBracket
         make TextNode [
-            value: "("
+            text: "("
         ]
     ]
 
     parseRightBracket: does [
         consume RightBracket
         make TextNode [
-            value: ")"
+            text: ")"
         ]
     ]
 
