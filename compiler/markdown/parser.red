@@ -547,6 +547,9 @@ Parser: context [
         if (not tail? self/tokens) [ ; we're at the end of the file
             consume NewlineToken
         ]
+        if (peek NewlineToken) [
+            consume NewlineToken
+        ]
 
         make HeaderNode [
             size: 1
@@ -557,6 +560,9 @@ Parser: context [
         consume Header2
         textToken: consume Text
         if (not tail? self/tokens) [
+            consume NewlineToken
+        ]
+        if (peek NewlineToken) [
             consume NewlineToken
         ]
 
@@ -571,6 +577,9 @@ Parser: context [
         if (not tail? self/tokens) [ ; we're at the end of the file
             consume NewlineToken
         ]
+        if (peek NewlineToken) [
+            consume NewlineToken
+        ]
 
         make HeaderNode [
             size: 3
@@ -581,6 +590,9 @@ Parser: context [
         consume Header4
         textToken: consume Text
         if (not tail? self/tokens) [ ; we're at the end of the file
+            consume NewlineToken
+        ]
+        if (peek NewlineToken) [
             consume NewlineToken
         ]
 
@@ -595,6 +607,9 @@ Parser: context [
         if (not tail? self/tokens) [ ; we're at the end of the file
             consume NewlineToken
         ]
+        if (peek NewlineToken) [
+            consume NewlineToken
+        ]
 
         make HeaderNode [
             size: 5
@@ -605,6 +620,9 @@ Parser: context [
         consume Header6
         textToken: consume Text
         if (not tail? self/tokens) [ ; we're at the end of the file
+            consume NewlineToken
+        ]
+        if (peek NewlineToken) [
             consume NewlineToken
         ]
 
