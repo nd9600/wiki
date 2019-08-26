@@ -313,32 +313,45 @@ Parser: context [
     parseLeftSquareBracket: does [
         consume LeftSquareBracket
 
-        ; it's a URL
-        if all [
-            peek/at Text 1
-            peek/at RightSquareBracket 2
-            peek/at LeftBracket 3
-            peek/at Text 4
-            peek/at RightBracket 5
-        ] [
-            textToken: consume Text
+        ; it's a URL; if I want to type a literal LeftSquareBracket, it'll be \[, which is just a Text token
+        ; we need to handle the text like this cos it might have Underscores or Asterisks in it, and we don't want to confuse them with Emphasis markers
+        if (peek Text) [
+            ; the link's text is the value of all the tokens until a RightSquareBracket is peeked
+            textValue: copy ""
+            until [
+                currentToken: first self/tokens
+                append textValue currentToken/value 
+                self/tokens: next self/tokens
+
+                peek RightSquareBracket
+            ]
             consume RightSquareBracket
             consume LeftBracket
-            urlToken: consume Text
+
+            ; the link's url is the value of all the tokens until a RightBracket is peeked
+            urlValue: copy ""
+            until [
+                currentToken: first self/tokens
+                append urlValue currentToken/value 
+                self/tokens: next self/tokens
+
+                peek RightBracket
+            ]
             consume RightBracket
+
             return make LinkNode [
-                url: urlToken/value
-                text: textToken/value
+                url: urlValue
+                text: textValue
             ]
         ]
-        return make TextToken [
+        return make TextNode [
             text: "["
         ]
     ]
 
     parseRightSquareBracket: does [
         consume RightSquareBracket
-        return make TextToken [
+        return make TextNode [
             text: "]"
         ]
     ]

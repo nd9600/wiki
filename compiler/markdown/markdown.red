@@ -24,7 +24,7 @@ compile: function [
         tokens: tokenStream
     ]
     ast: newParser/parse
-    print prettyFormat ast
+    ; print prettyFormat ast
 
     newCodeGenerator: make CodeGenerator [
         file: filename
