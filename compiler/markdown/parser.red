@@ -15,7 +15,6 @@ INLINE_TOKEN_TYPES: [
     "RightSquareBracket"
     "LeftBracket"
     "RightBracket"
-    "Backtick"
 ]
 
 Parser: context [
@@ -44,6 +43,9 @@ Parser: context [
         currentToken: first self/tokens
         if (currentToken/isType expectedToken/type) [
             print rejoin ["consumed " expectedToken/type]
+            if  equal? expectedToken/type "Text" [
+                print rejoin ["consumed " mold currentToken]
+            ]
             self/tokens: next self/tokens
             return currentToken
         ]
@@ -140,6 +142,14 @@ Parser: context [
             found? currentToken
             any [
                 currentToken/type isOneOf INLINE_TOKEN_TYPES
+
+                ; two Backticks in a row marks the start of a code block
+                all [
+                    peek/at Backtick 1
+                    not peek/at Backtick 2
+                ]
+
+                ; two Newlines in a row marks the start of a new paragraph
                 all [
                     peek/at NewlineToken 1
                     not peek/at NewlineToken 2
@@ -147,6 +157,7 @@ Parser: context [
             ]
         ]
         either isParagraph [
+            print "parseParagraph"
             parseParagraph
         ] [
             none
@@ -164,6 +175,12 @@ Parser: context [
                 found? currentToken
                 any [
                     currentToken/type isOneOf INLINE_TOKEN_TYPES
+
+                    ; two Backticks in a row marks the start of a code block
+                    all [
+                        peek/at Backtick 1
+                        not peek/at Backtick 2
+                    ]
                     
                     ; two Newlines in a row marks the start of a new paragraph
                     all [
@@ -222,7 +239,7 @@ Parser: context [
             ]
 
             peek Backtick [
-                either peek/at Backtick 1 [ ; this is the start of a code block, which isn't inline
+                either peek/at Backtick 2 [ ; this is the start of a code block, which isn't inline
                     return none
                 ] [
                     parseBacktick
@@ -395,6 +412,7 @@ Parser: context [
     parseBacktick: does [
         consume Backtick
         either peek Backtick [ ; the start of a code block, which is 1 by three backticks
+            print "parsing code block"
             consume Backtick
             consume Backtick
 
@@ -414,16 +432,19 @@ Parser: context [
             consume Backtick
             consume Backtick
 
-            make InlineCodeNode [
+            make CodeBlockNode [
                 code: codeContent
             ]
 
         ] [ ; or inline code, delimited by 1 backtick
+            print "parsing inline code"
             codeContent: copy ""
             until [
                 currentToken: first self/tokens
                 append codeContent currentToken/value 
                 self/tokens: next self/tokens
+                print prettyFormat currentToken
+                print prettyFormat first self/tokens
 
                 peek Backtick
             ]
@@ -502,7 +523,9 @@ Parser: context [
     parseHeader1: does [
         consume Header1
         textToken: consume Text
-        consume NewlineToken
+        if (not tail? self/tokens) [ ; we're at the end of the file
+            consume NewlineToken
+        ]
 
         make HeaderNode [
             size: 1
@@ -512,7 +535,9 @@ Parser: context [
     parseHeader2: does [
         consume Header2
         textToken: consume Text
-        consume NewlineToken
+        if (not tail? self/tokens) [
+            consume NewlineToken
+        ]
 
         make HeaderNode [
             size: 2
@@ -522,7 +547,9 @@ Parser: context [
     parseHeader3: does [
         consume Header3
         textToken: consume Text
-        consume NewlineToken
+        if (not tail? self/tokens) [ ; we're at the end of the file
+            consume NewlineToken
+        ]
 
         make HeaderNode [
             size: 3
@@ -532,7 +559,9 @@ Parser: context [
     parseHeader4: does [
         consume Header4
         textToken: consume Text
-        consume NewlineToken
+        if (not tail? self/tokens) [ ; we're at the end of the file
+            consume NewlineToken
+        ]
 
         make HeaderNode [
             size: 4
@@ -542,7 +571,9 @@ Parser: context [
     parseHeader5: does [
         consume Header5
         textToken: consume Text
-        consume NewlineToken
+        if (not tail? self/tokens) [ ; we're at the end of the file
+            consume NewlineToken
+        ]
 
         make HeaderNode [
             size: 5
@@ -552,7 +583,9 @@ Parser: context [
     parseHeader6: does [
         consume Header6
         textToken: consume Text
-        consume NewlineToken
+        if (not tail? self/tokens) [ ; we're at the end of the file
+            consume NewlineToken
+        ]
 
         make HeaderNode [
             size: 6

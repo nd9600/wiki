@@ -24,7 +24,7 @@ For the compiler used to make this wiki, we need a few different tokens:
 * `{number}.` for ordered lists
 * `[`, `]`, `(`, and `)` for links,
 * `!` for images
-* ```, `    `, and `{tab}` for code
+* `\``, `    `, and `{tab}` for code
 * `    ` again, for nesting things inside lists
 * newlines
 * and everything else that isn't one of the above tokens, is a "text" token

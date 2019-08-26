@@ -62,6 +62,24 @@ CodeGenerator: context [
                     |> :rejoin
                 rejoin [{<li class="unorderedList--item">} itemContent "</li>"]
             ]
+
+            "OrderedListNode" [
+                orderedListItems: (f_map lambda [self/generate ?] node/items)
+                    |> lambda [join ? newline]
+                rejoin [{<ol class="orderedList">} newline orderedListItems "</ol>"]
+            ]
+            "OrderedListItemNode" [
+                itemContent: (f_map lambda [self/generate ?] node/children)
+                    |> :rejoin
+                rejoin [{<li class="orderedList--item">} itemContent "</li>"]
+            ]
+
+            "InlineCodeNode" [
+                rejoin [{<code class="code code--inline">} node/code "</code>"]
+            ]
+            "CodeBlockNode" [
+                rejoin [{<pre class="pre"><code class="code code--block">} node/code "</code></pre>"]
+            ]
         ] [
             print rejoin ["AST is " prettyFormat node]
             do make error! rejoin ["can't handle " node/type { in file "} self/file {"}]

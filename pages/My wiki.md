@@ -492,3 +492,10 @@ consume RightBracket
 ```
 
 After fixing some bugs, it get's down to [the Compiler page](compiler.html) now (the ordered list, specifically)!
+
+Ok there's aproblem with starting a list with asterisks - it thinks they're marking emphasis, so it tries to look for another asterisk after a `Text` token, which will obviously break.
+I'm going to do the same as I did with the hyphens - treat a newline, any spaces, and an asterisk as the start of a list by outputting `Newline` and `Hyphen` tokens - not an `Asterisk`, cos that would just being this problem back again! Lists with hyphens are already handled in the parser.
+Lists with pluses _aren't_ though..
+And doing _that_ broke this: `\n* hello world *` because the token stream is `[newline, hyphen, text, asterisk]` now. I'm not sure how I can tell "a list starting with an asterisk & arbitrary inline nodes & a newline" and "emphasis started by an asterisk & arbitrary inline nodes & an asterisk & a newline" easily. I guess I'll just not start a line with emphasis made with an asterisk, only an underscore.
+
+I forgot that header's don't necessarily end with a newline, they can be at the end of the file 

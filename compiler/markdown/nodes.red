@@ -78,3 +78,13 @@ OrderedListItemNode: make Node [
     type: "OrderedListItemNode"
     children: none
 ]
+
+InlineCodeNode: make Node [
+    type: "InlineCodeNode"
+    code: none
+]
+
+CodeBlockNode: make Node [
+    type: "CodeBlockNode"
+    code: none
+]

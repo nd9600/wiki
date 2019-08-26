@@ -92,6 +92,14 @@ Tokenizer: context [
                         append tokens make Hyphen []
                     )
                 |
+                    [newline copy spaces any space "*" not "*"] ( ; this is the start of a list, not emphasis; we want to allow "**" because that's strong emphasis
+                        append tokens make NewlineToken []
+                        loop ((length? spaces) / 4) [ ; 4 spaces marks a sub-list
+                            append tokens make FourSpaces []
+                        ]
+                        append tokens make Hyphen []
+                    )
+                |
                     [newline copy spaces any space copy data number "."] (
                         append tokens make NewlineToken []
                         loop ((length? spaces) / 4) [ ; 4 spaces marks a sub-list
