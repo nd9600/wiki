@@ -68,3 +68,13 @@ UnorderedListItemNode: make Node [
     type: "UnorderedListItemNode"
     children: none
 ]
+
+OrderedListNode: make Node [
+    type: "OrderedListNode"
+    items: none
+]
+
+OrderedListItemNode: make Node [
+    type: "OrderedListItemNode"
+    children: none
+]

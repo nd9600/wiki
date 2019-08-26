@@ -412,6 +412,10 @@ Parser: context [
                 return parseHyphen
             ]
 
+            peek NumberWithDot [
+                return parseNumberWithDot
+            ]
+
             peek FourSpaces [
                 consume FourSpaces
                 return none
@@ -496,7 +500,6 @@ Parser: context [
     ]
 
     parseHyphen: does [
-
         ; add all the list items to a list node
         unorderedListItemNodes: copy []
         until [
@@ -528,6 +531,41 @@ Parser: context [
         ]
         make UnorderedListNode [
             items: unorderedListItemNodes
+        ]
+    ]
+
+    parseNumberWithDot: does [
+        ; add all the list items to a list node
+        orderedListItemNodes: copy []
+        until [
+            consume NumberWithDot
+
+            ; add all the inline nodes in the line to an item node
+            inlineNodesInListItem: copy []
+            until [
+                append inlineNodesInListItem parseInlineTokens
+
+                any [
+                    tail? self/tokens
+                    peek NewlineToken
+                ]
+            ]
+
+            ; the list might be at the end of the file
+            if (not tail? self/tokens) [
+                consume NewlineToken
+            ]
+            append orderedListItemNodes make OrderedListItemNode [
+                children: inlineNodesInListItem
+            ]
+
+            any [
+                tail? self/tokens
+                not peek NumberWithDot
+            ]
+        ]
+        make OrderedListNode [
+            items: orderedListItemNodes
         ]
     ]
 ]

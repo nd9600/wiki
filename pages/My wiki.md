@@ -97,8 +97,7 @@ Finally, the new files are live!
 # Todos
 * Let Headers work with Asterisks, Underscores, Tildes, Links, and Code, as well as just Text
 * Let Asterisks, Underscores, Tildes work with Emphasis, Strikethrough, links, and inline code, not just text
-
-* Handle spaces before list markers (see day 8)
+* Let unordered lists start with Asterisks (might be hard/conflict with how the Emphasis nodes are parsed)
 * Handle sub-lists (see above)
 * Site web/graph
 * Build a table of contents from headers
@@ -111,6 +110,7 @@ Finally, the new files are live!
 * ~Delete existing pages before making new ones!~
 * ~Add indent parameter to `objectToString`~
 * ~Make a new ParagraphNode when we read in two NewlineTokens in a row, 1 NewlineToken is a NewlineNode~
+* ~Handle spaces before list markers (see day 8)~
 
 
 
@@ -462,3 +462,33 @@ Same goes for the `Asterisk`, `Plus`, and `NumberWithDot` tokens.
 Yet another benefit of notes here - they're like comments that are tied to a time, rather than to a place in the code, so I can go back and re-read what I thought yesterday, soemthing I definitely needed to just do to see what the space issue was and how I thought it fix it. I don't even think we kid ourselves that we'll go back and look at the comments in past Git commits.
 
 I forgot about relative URLs :(
+
+## Day 10
+I've had to write a bit of a hack to fix relative URLs not being recognised :/
+It just consumes all the tokens after a LeftSquareBracket until the RightSquareBracket, taking them all as the link's text, and all the tokens between the LeftBracket and RightBracket as the actual URL:
+```
+; the link's text is the value of all the tokens until a RightSquareBracket is peeked
+textValue: copy ""
+until [
+    currentToken: first self/tokens
+    append textValue currentToken/value 
+    self/tokens: next self/tokens
+
+    peek RightSquareBracket
+]
+consume RightSquareBracket
+consume LeftBracket
+
+; the link's url is the value of all the tokens until a RightBracket is peeked
+urlValue: copy ""
+until [
+    currentToken: first self/tokens
+    append urlValue currentToken/value 
+    self/tokens: next self/tokens
+
+    peek RightBracket
+]
+consume RightBracket
+```
+
+After fixing some bugs, it get's down to [the Compiler page](compiler.html) now (the ordered list, specifically)!
