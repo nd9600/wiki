@@ -412,9 +412,13 @@ Parser: context [
     parseBacktick: does [
         consume Backtick
         either peek Backtick [ ; the start of a code block, which is 1 by three backticks
-            print "parsing code block"
             consume Backtick
             consume Backtick
+
+            ; we don't need to include this extra newline
+            if (peek NewlineToken) [
+                consume NewlineToken
+            ]
 
             codeContent: copy ""
             until [
@@ -422,22 +426,39 @@ Parser: context [
                 append codeContent currentToken/value 
                 self/tokens: next self/tokens
 
-                all [
-                    peek/at Backtick 1
-                    peek/at Backtick 2
-                    peek/at Backtick 3
+                ; we want to ignore the last newline too
+                any [
+                    all [
+                        peek/at NewlineToken 1
+                        peek/at Backtick 2
+                        peek/at Backtick 3
+                        peek/at Backtick 4
+                    ]   
+                    all [
+                        peek/at Backtick 1
+                        peek/at Backtick 2
+                        peek/at Backtick 3
+                    ]
                 ]
+            ]
+
+            if (peek NewlineToken) [
+                consume NewlineToken
             ]
             consume Backtick
             consume Backtick
             consume Backtick
+
+            ; and we want to ignore the one _after_ the three backticks
+            if (peek NewlineToken) [
+                consume NewlineToken
+            ]
 
             make CodeBlockNode [
                 code: codeContent
             ]
 
         ] [ ; or inline code, delimited by 1 backtick
-            print "parsing inline code"
             codeContent: copy ""
             until [
                 currentToken: first self/tokens

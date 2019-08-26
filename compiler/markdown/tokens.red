@@ -101,6 +101,7 @@ Backtick: make Token [
 
 FourSpaces: make Token [
     type: "FourSpaces"
+    value: "    "
 ]
 
 ; conflicts with 'tab in Red
@@ -117,4 +118,5 @@ NewlineToken: make Token [
 
 Text: make Token [
     type: "Text"
+    value: none
 ]
