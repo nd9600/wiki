@@ -30,7 +30,7 @@ compile: function [
         file: filename
     ]
     html: newCodeGenerator/generate ast
-    print html
+    ; print html
     ; quit
     html
 ]

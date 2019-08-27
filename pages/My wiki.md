@@ -95,7 +95,6 @@ I write all the files into a folder that's specified in a `.env` file (I need to
 Finally, the new files are live!
 
 # Todos
-* Let Headers work with Asterisks, Underscores, Tildes, Links, and Code, as well as just Text
 * Let Asterisks, Underscores, Tildes work with Emphasis, Strikethrough, links, and inline code, not just text
 * Let URLs include escaped characters (see day 11)
 * Handle sub-lists (see day 8)
@@ -112,6 +111,7 @@ Finally, the new files are live!
 * ~Add indent parameter to `objectToString`~
 * ~Make a new ParagraphNode when we read in two NewlineTokens in a row, 1 NewlineToken is a NewlineNode~
 * ~Handle spaces before list markers (see day 8)~
+* ~Let Headers work with Asterisks, Underscores, Tildes, Links, and Code, as well as just Text~
 
 
 
@@ -224,7 +224,7 @@ So, the tokens I think I'll need now,
 
 Maybe I can just handle the "user-escaped" ones by, when I read in a `\\`, just putting the next character in as a `Text` token straightaway?
 
-Oh, I can't forget to not do anything with the stuff that's surrounded by two \\`s in the code generator.
+Oh, I can't forget to not do anything with the stuff that's surrounded by two \\'s in the code generator.
 
 The tokenizer makes tokens like this:
 ```
@@ -522,3 +522,7 @@ url: [
 ```
 I _really_ shouldn't use `to` if I don't absolutely need to - maybe I can check for an escaped character, or a disallowed character (and fail), or copy `skip` like I do with the normal `Text` tokens.
 Something to go into the todos.
+
+Just managed to delete > 100 lines by using 1 type of `Header`, rather than 1 for each size! That's the good type of refactor, where you just _know_ that it was the right thing to do. Pretty rare.
+
+Letting Headers work with all inline tokens was really once, since I'd already made a function to `parseInlineTokens`

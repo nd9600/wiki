@@ -8,7 +8,7 @@ tags: [me projects]
 css3explainer/selectoracle.py
 * Local ebook/pdf reader website
 * Reduced MNIST with nose architecture & predictive processing https://www.quantamagazine.org/new-ai-strategy-mimics-how-brains-learn-to-smell-20180918/ http://cognitivemedium.com/rmnist https://slatestarcodex.com/2017/09/05/book-review-surfing-uncertainty/ http://www.foundalis.com/res/poc/PrinciplesOfCognition.htm#sixth_law
-R* ed IDE, like Bret Victor's (w/ language server?) https://blog.acolyer.org/2016/09/05/on-the-criteria-to-be-used-in-decomposing-systems-into-modules/ https://github.com/AlexanderBaggett/RedIDE http://redlanguageblog.blogspot.com/?m=1 http://www.rebol.net/cookbook/recipes/0042.html https://github.com/fullstackio/choc http://worrydream.com/LearnableProgramming/ https://news.ycombinator.com/item?id=6458424
+* Red IDE, like Bret Victor's (w/ language server?) https://blog.acolyer.org/2016/09/05/on-the-criteria-to-be-used-in-decomposing-systems-into-modules/ https://github.com/AlexanderBaggett/RedIDE http://redlanguageblog.blogspot.com/?m=1 http://www.rebol.net/cookbook/recipes/0042.html https://github.com/fullstackio/choc http://worrydream.com/LearnableProgramming/ https://news.ycombinator.com/item?id=6458424
 * Twitter interest extractor + sentiment analysis to id people like in that AI trilogy
 * Twitter follower graph, like https://kieranhealy.org/blog/archives/2013/06/09/using-metadata-to-find-paul-revere/g
 * Sentence word categoriser + deambiguator

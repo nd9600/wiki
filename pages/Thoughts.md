@@ -13,4 +13,4 @@ Does this mean you should continue using terms that have a possibility of being 
 
 * America is a state-nation, France and Estonia are nation-states
 
-* Possibility spaces: reactions on Facebook and gmail's automatic suggestions constrain the possibility space of responses from human languages down to ~10 reactions, vs. the bitcoin.pdf opening up a giant possibility space that didn't exist before with Ethereum/Zcash etc., like functional programming does for programming
+* Possibility spaces: reactions on Facebook and gmail's automatic suggestions constrain the possibility space of responses from human languages down to \~10 reactions, vs. the bitcoin.pdf opening up a giant possibility space that didn't exist before with Ethereum/Zcash etc., like functional programming does for programming

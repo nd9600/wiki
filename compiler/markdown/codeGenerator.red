@@ -13,6 +13,9 @@ CodeGenerator: context [
     ] [
         switch/default node/type [
             "MarkdownNode" [
+                if empty? node/children [
+                    return ""
+                ]
                 (f_map lambda [self/generate ?] node/children)
                     |> lambda [join ? newline]
             ]
@@ -49,7 +52,9 @@ CodeGenerator: context [
             ]
 
             "HeaderNode" [
-                rejoin ["<h" node/size { class="header header--} node/size {">} (node/text) "</h" node/size ">"]
+                headerContent: (f_map lambda [self/generate ?] node/children)
+                    |> :rejoin
+                rejoin ["<h" node/size { class="header header--} node/size {">} headerContent "</h" node/size ">"]
             ]
             "BlockquoteNode" [
                 rejoin [

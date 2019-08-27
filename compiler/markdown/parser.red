@@ -15,6 +15,7 @@ INLINE_TOKEN_TYPES: [
     "RightSquareBracket"
     "LeftBracket"
     "RightBracket"
+    "ExclamationMark"
 ]
 
 Parser: context [
@@ -42,7 +43,6 @@ Parser: context [
     ] [
         currentToken: first self/tokens
         if (currentToken/isType expectedToken/type) [
-            print rejoin ["consumed " expectedToken/type]
             self/tokens: next self/tokens
             return currentToken
         ]
@@ -142,7 +142,6 @@ Parser: context [
             ]
         ]
         either isParagraph [
-            print "parseParagraph"
             parseParagraph
         ] [
             none
@@ -320,10 +319,17 @@ Parser: context [
         strikethroughText: copy ""
         until [
             currentToken: first self/tokens
-            append strikethroughText currentToken/value 
+            if (found? currentToken) [
+                append strikethroughText currentToken/value 
+            ]
             self/tokens: next self/tokens
 
             peek Tilde
+            any [
+                tail? self/tokens
+                not found? currentToken
+                peek Tilde
+            ]
         ]
         consume Tilde
         if peek Tilde [
@@ -427,7 +433,6 @@ Parser: context [
                     ]
                 ]
             ]
-            print "consumed code content"
 
             if (peek NewlineToken) [
                 consume NewlineToken
@@ -454,7 +459,6 @@ Parser: context [
 
                 peek Backtick
             ]
-            print "consumed code content"
             consume Backtick
 
             make InlineCodeNode [
@@ -532,7 +536,21 @@ Parser: context [
 
     parseHeader: does [
         headerToken: consume Header
-        textToken: consume Text
+        
+        headerBodyNodes: copy []
+        until [
+            maybeInlineNode: parseInlineTokens
+            if found? maybeInlineNode [
+                append headerBodyNodes maybeInlineNode
+            ]
+
+            any [
+                tail? self/tokens
+                not found? maybeInlineNode
+                peek NewlineToken
+            ]
+        ]
+
         if (not tail? self/tokens) [ ; we're at the end of the file
             consume NewlineToken
         ]
@@ -542,7 +560,7 @@ Parser: context [
 
         make HeaderNode [
             size: headerToken/size
-            text: textToken/value
+            children: headerBodyNodes
         ]
     ]
 
