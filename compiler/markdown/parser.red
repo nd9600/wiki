@@ -447,7 +447,7 @@ Parser: context [
             ]
 
             make CodeBlockNode [
-                code: codeContent
+                code: escapeString codeContent
             ]
 
         ] [ ; or inline code, delimited by 1 backtick
@@ -462,7 +462,7 @@ Parser: context [
             consume Backtick
 
             make InlineCodeNode [
-                code: codeContent
+                code: escapeString codeContent
             ]
         ]
     ]
@@ -537,11 +537,11 @@ Parser: context [
     parseHeader: does [
         headerToken: consume Header
         
-        headerBodyNodes: copy []
+        headerContentNodes: copy []
         until [
             maybeInlineNode: parseInlineTokens
             if found? maybeInlineNode [
-                append headerBodyNodes maybeInlineNode
+                append headerContentNodes maybeInlineNode
             ]
 
             any [
@@ -560,19 +560,28 @@ Parser: context [
 
         make HeaderNode [
             size: headerToken/size
-            children: headerBodyNodes
+            children: headerContentNodes
         ]
     ]
 
     parseGreaterThan: does [
         consume GreaterThan
-        textToken: consume Text
-        if (peek NewlineToken) [
-            consume NewlineToken
+        blockquoteContentNodes: copy []
+        until [
+            maybeInlineNode: parseInlineTokens
+            if found? maybeInlineNode [
+                append blockquoteContentNodes maybeInlineNode
+            ]
+
+            any [
+                tail? self/tokens
+                not found? maybeInlineNode
+                peek NewlineToken
+            ]
         ]
 
         make BlockquoteNode [
-            text: textToken/value
+            children: blockquoteContentNodes
         ]
     ]
 
