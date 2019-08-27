@@ -35,12 +35,12 @@ Tokenizer: context [
         ]
 
         headers: [
-                "######" (append tokens make Header6 [])
-            |   "#####" (append tokens make Header5 []) 
-            |   "####" (append tokens make Header4 []) 
-            |   "###" (append tokens make Header3 []) 
-            |   "##" (append tokens make Header2 []) 
-            |    "#" (append tokens make Header1 []) 
+                "######" (append tokens make Header [size: 6])
+            |   "#####" (append tokens make Header [size: 5]) 
+            |   "####" (append tokens make Header [size: 4]) 
+            |   "###" (append tokens make Header [size: 3]) 
+            |   "##" (append tokens make Header [size: 2]) 
+            |    "#" (append tokens make Header [size: 1]) 
         ]
 
         non-zero: charset "123456789"

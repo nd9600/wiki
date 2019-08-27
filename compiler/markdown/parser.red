@@ -492,23 +492,8 @@ Parser: context [
                 return none
             ]
             
-            peek Header1 [
-                return parseHeader1
-            ]
-            peek Header2 [
-                return parseHeader2
-            ]
-            peek Header3 [
-                return parseHeader3
-            ]
-            peek Header4 [
-                return parseHeader4
-            ]
-            peek Header5 [
-                return parseHeader5
-            ]
-            peek Header6 [
-                return parseHeader6
+            peek Header [
+                return parseHeader
             ]
             
             peek GreaterThan [
@@ -545,8 +530,8 @@ Parser: context [
         ]
     ]
 
-    parseHeader1: does [
-        consume Header1
+    parseHeader: does [
+        headerToken: consume Header
         textToken: consume Text
         if (not tail? self/tokens) [ ; we're at the end of the file
             consume NewlineToken
@@ -556,82 +541,7 @@ Parser: context [
         ]
 
         make HeaderNode [
-            size: 1
-            text: textToken/value
-        ]
-    ]
-    parseHeader2: does [
-        consume Header2
-        textToken: consume Text
-        if (not tail? self/tokens) [
-            consume NewlineToken
-        ]
-        if (peek NewlineToken) [
-            consume NewlineToken
-        ]
-
-        make HeaderNode [
-            size: 2
-            text: textToken/value
-        ]
-    ]
-    parseHeader3: does [
-        consume Header3
-        textToken: consume Text
-        if (not tail? self/tokens) [ ; we're at the end of the file
-            consume NewlineToken
-        ]
-        if (peek NewlineToken) [
-            consume NewlineToken
-        ]
-
-        make HeaderNode [
-            size: 3
-            text: textToken/value
-        ]
-    ]
-    parseHeader4: does [
-        consume Header4
-        textToken: consume Text
-        if (not tail? self/tokens) [ ; we're at the end of the file
-            consume NewlineToken
-        ]
-        if (peek NewlineToken) [
-            consume NewlineToken
-        ]
-
-        make HeaderNode [
-            size: 4
-            text: textToken/value
-        ]
-    ]
-    parseHeader5: does [
-        consume Header5
-        textToken: consume Text
-        if (not tail? self/tokens) [ ; we're at the end of the file
-            consume NewlineToken
-        ]
-        if (peek NewlineToken) [
-            consume NewlineToken
-        ]
-
-        make HeaderNode [
-            size: 5
-            text: textToken/value
-        ]
-    ]
-    parseHeader6: does [
-        consume Header6
-        textToken: consume Text
-        if (not tail? self/tokens) [ ; we're at the end of the file
-            consume NewlineToken
-        ]
-        if (peek NewlineToken) [
-            consume NewlineToken
-        ]
-
-        make HeaderNode [
-            size: 6
+            size: headerToken/size
             text: textToken/value
         ]
     ]

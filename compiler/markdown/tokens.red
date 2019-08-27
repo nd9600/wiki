@@ -10,29 +10,14 @@ Token: make object! [
     value: none ; the plaintext thing you use to type in the token, needed so we can just get the 'value of anything inside `two backticks` to print it out exactly, to store the actual normal text I type in, to store the numbers in ordered lists, and user-escaped characters like `\*`
 ]
 
-Header1: make Token [
-    type: "Header1"
-    value: "#"
-]
-Header2: make Token [
-    type: "Header2"
-    value: "##"
-]
-Header3: make Token [
-    type: "Header3"
-    value: "###"
-]
-Header4: make Token [
-    type: "Header4"
-    value: "####"
-]
-Header5: make Token [
-    type: "Header5"
-    value: "#####"
-]
-Header6: make Token [
-    type: "Header6"
-    value: "######"
+Header: make Token [
+    type: "Header"
+    size: none
+    value: does [
+        str: copy ""
+        loop self/size [append str "#"]
+        str
+    ]
 ]
 
 GreaterThan: make Token [
