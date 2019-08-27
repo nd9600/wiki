@@ -189,6 +189,7 @@ main: does [
         'innerTags make map! []
     ]
     foreach file wikipages [
+        tagsString: ""
         filename: (next find/last file "/")
             |> :to-string
         extension: case [
@@ -211,7 +212,9 @@ main: does [
             ] 
             copy pageContent to end 
         ]
-        index: addToIndexFromTags index tagsString filenameWithoutExtension
+        if not empty? tagsString [
+            index: addToIndexFromTags index tagsString filenameWithoutExtension
+        ]
 
         content: compileToHTML filename pageContent extension
 

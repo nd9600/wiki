@@ -579,6 +579,9 @@ Parser: context [
                 peek NewlineToken
             ]
         ]
+        if peek NewlineToken [
+            consume NewlineToken
+        ]
 
         make BlockquoteNode [
             children: blockquoteContentNodes
