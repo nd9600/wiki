@@ -593,3 +593,26 @@ and what I want is basically this (I've only put the numbers in for simplicity)
 ; 1
 ```
 Do I while over all the headers until the end, and store the current header, the previous one, and the nearest parent? No, that won't work, I might need to do header 1 - 2 - 3 - 4 - 5 - 6, and I can't store 5 parents in a nice way
+
+This is VERY hard. Nothing I do works.
+I might need to make a proper Tree data structure; this is what I actually want in the end:
+```
+; [1   2   2   2    1  2   2  3   3    2    1]
+; [[1  2   2   2]  [1  2   2  3   3    2]  [1]]
+; [[1 [2] [2] [2]] [1 [2] [2  3   3]  [2]] [1]]
+; [[1 [2] [2] [2]] [1 [2] [2  3   3]  [2]] [1]]
+; [[1 [2] [2] [2]] [1 [2] [2 [3] [3]] [2]] [1]]
+
+;                      root
+;        -------------------------------
+;        |              |              |
+;        1              1              1
+;        |              |              
+;    ---------      ---------          
+;    |   |   |      |   |   |          
+;    2   2   2      2   2   2          
+;                       |              
+;                      ---             
+;                      | |             
+;                      3 3             
+```

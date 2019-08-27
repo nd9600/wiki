@@ -26,9 +26,9 @@ compile: function [
     ast: newParser/parse
     ; print prettyFormat ast
 
-    headerTree: makeHeaderTree ast
-    print prettyFormat headerTree
-    quit
+    ; headerTree: makeHeaderTree ast
+    ; print prettyFormat headerTree
+    ; quit
 
     newCodeGenerator: make CodeGenerator [
         file: filename

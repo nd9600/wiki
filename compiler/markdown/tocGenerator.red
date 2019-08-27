@@ -1,5 +1,10 @@
 Red [
-
+    Title: "Nathan's markdown -> HTML table of contents maker"
+    Author: "Nathan"
+    License: "MIT"
+    Description: {
+        It makes the table using all the headers in a page's AST (you should only pass the AST in) -  header 3's are children of the first header 2 above them, header 2's are children of the first header 1 above _them_, etc.
+    }
 ]
 
 TocGenerator: context [
