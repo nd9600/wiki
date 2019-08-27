@@ -172,12 +172,12 @@ Parser: context [
                         not peek/at NewlineToken 2
                     ]   
 
-                    ; parseInlineTokens returns 'none if it sees two backtick tokens in a row - this is the start of a code block, which isn't inline
+                    ; maybeParseInlineTokens returns 'none if it sees two backtick tokens in a row - this is the start of a code block, which isn't inline
                     not lastNodeWasInline
                 ]
             ]
         ] [
-            maybeInlineNode: parseInlineTokens
+            maybeInlineNode: maybeParseInlineTokens
             either found? maybeInlineNode [
                 append paragraphNodeChildren maybeInlineNode
             ] [
@@ -190,7 +190,7 @@ Parser: context [
         ]
     ]
 
-    parseInlineTokens: does [
+    maybeParseInlineTokens: does [
         case [
             peek NewlineToken [
                 parseNewline
@@ -238,7 +238,7 @@ Parser: context [
             true [
                 badToken: first self/tokens
                 print rejoin ["stream is " prettyFormat copy/part self/tokens 5]
-                print rejoin ["can't handle " badToken/type {Token in file "} self/file {"}]
+                print rejoin ["can't handle " badToken/type {Token in file "} self/file {", maybeParseInlineTokens}]
                 quit
             ]
         ]
@@ -528,7 +528,7 @@ Parser: context [
             true [
                 badToken: first self/tokens
                 print rejoin ["stream is " prettyFormat copy/part self/tokens 5]
-                print rejoin ["can't handle " badToken/type {Token in file "} self/file {"}]
+                print rejoin ["can't handle " badToken/type {Token in file "} self/file {", maybeParseBlockTokens}]
                 quit
             ]
         ]
@@ -539,7 +539,7 @@ Parser: context [
         
         headerContentNodes: copy []
         until [
-            maybeInlineNode: parseInlineTokens
+            maybeInlineNode: maybeParseInlineTokens
             if found? maybeInlineNode [
                 append headerContentNodes maybeInlineNode
             ]
@@ -565,10 +565,13 @@ Parser: context [
     ]
 
     parseGreaterThan: does [
-        consume GreaterThan
         blockquoteContentNodes: copy []
         until [
-            maybeInlineNode: parseInlineTokens
+            if peek GreaterThan [
+                consume GreaterThan
+            ]
+
+            maybeInlineNode: maybeParseInlineTokens
             if found? maybeInlineNode [
                 append blockquoteContentNodes maybeInlineNode
             ]
@@ -576,7 +579,10 @@ Parser: context [
             any [
                 tail? self/tokens
                 not found? maybeInlineNode
-                peek NewlineToken
+                all [
+                    peek/at NewlineToken 1
+                    not peek/at GreaterThan 2
+                ]
             ]
         ]
         if peek NewlineToken [
@@ -597,7 +603,7 @@ Parser: context [
             ; add all the inline nodes in the line to an item node
             inlineNodesInListItem: copy []
             until [
-                maybeInlineNode: parseInlineTokens
+                maybeInlineNode: maybeParseInlineTokens
                 if found? maybeInlineNode [
                     append inlineNodesInListItem maybeInlineNode
                 ]
@@ -642,7 +648,7 @@ Parser: context [
             ; add all the inline nodes in the line to an item node
             inlineNodesInListItem: copy []
             until [
-                maybeInlineNode: parseInlineTokens
+                maybeInlineNode: maybeParseInlineTokens
                 if found? maybeInlineNode [
                     append inlineNodesInListItem maybeInlineNode
                 ]

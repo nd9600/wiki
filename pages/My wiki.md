@@ -118,7 +118,6 @@ Finally, the new files are live!
 # Construction report
 
 ## Day 1
-
 \* = done
 
 1. \*Make Twig template for wikipage
@@ -134,7 +133,6 @@ Finally, the new files are live!
     2. \*JS search, using static compiled array of filenames
 
 ## Day 2
-
 DAY 2 IN THE ~BIG BROTHER HOUSE~ WIKI CONSTRUCTION REPORT
 
 I'm pretending I planned to make a construction report from the start. I didn't. But I was thinking it might be fun slash useful to read back through my notes/thought process in the future, once/if this is all done and works ("the future" might be next week, if I'm lucky). Also, people get impressed when they see the final product (sometimes!), but they don't see the slog you go through to make it, and how annoying it can be at times. Now, you will (hi people in the future,  you time-archaeologists!).
@@ -202,8 +200,7 @@ value: none
 ```
 
 ## Day 3
-
-Escaping everything was easy enough - I don't relly need to  worry about XSS attacks, since I'm the one writing all the content, and there's nothing stored here apart from the HTML/Markdown files anyway. One thing I didn't think about, though: if I escape `>` into `&gt;`, and _then_ `&` into `&amp;`, I'll actually end up with `&amp;gt;` for `>`. Not what I want. So I had to escape all the `&`s first. Precedence matters ([Gary Bernhardt](https://www.destroyallsoftware.com/screencasts/catalog/a-compiler-from-scratch) mentioned that in his screencast, I guess that's why I realised.)
+Escaping everything was pretty easy - I don't really need to worry about XSS attacks, since I'm the one writing all the content, and there's nothing stored here apart from the HTML/Markdown files anyway. One thing I didn't think about, though: if I escape `>` into `&gt;`, and _then_ `&` into `&amp;`, I'll actually end up with `&amp;gt;` for `>`. Not what I want. So I had to escape all the `&`s first. Precedence matters ([Gary Bernhardt](https://www.destroyallsoftware.com/screencasts/catalog/a-compiler-from-scratch) mentioned that in his screencast, I guess that's why I realised.)
 
 About the stray `#`, `*`, `_`, , `+`, `-`, `[`, `]`, `(`, `)`, `!` that I talked about above; I think I'll just handle them by escaping them if I type in `\\*` etc, putting that in as a `Text` token with value `*`. I'm not gonna put in any fancy rules like "the second asterisk must not be at the start of a word" or anything like that, it's too complicated for what I need.
 
@@ -248,7 +245,6 @@ I'll definitely need to roll multiple `Text` tokens in a row into one big one th
 That was easy to do! The two cursors in a while loop was fun!
 
 ## Day 4
-
 No update in Day 4 - 1, I was off seeing the incredible This is the Kit!
 
 All my links between wikipages will be broken when I get them working :(. The links in the index are ok, since they include `wiki/pages/[PAGE].html` at the start, but I want the links in the pages to be just `[PAGE].html`. Obviously, if they're different, it won't work. I still want the flat links, so I'll need to do it like `wiki.[DOMAIN].[TLD]/[PAGE].html`. Off to [Caddy](https://caddyserver.com/) again, and it's great, simple configs.
@@ -315,7 +311,6 @@ rollMultipleTextTokens: function [
 Pretty simple
 
 ## Day 5
-
 I might like a dark theme like
 ```
 :root {
@@ -328,7 +323,6 @@ I might like a dark theme like
 ```
 
 ## Day 6
-
 I should read in environment variables from a .env file and set them with `set-env`, so I can just read them with `get-env` anywhere I want, avoid these nasty global variables
 Adding that in was a lot easier than I thought, now I can use .env files like a proper dev!
 
@@ -342,16 +336,14 @@ https://eli.thegreenplace.net/2018/type-inference/
 Also, maybe I should parse links into `<a>s` automatically
 
 ## Day 7
-
 Making the initial parser was easy enough (I've only done headers and emphasis right now), but I've run into a pretty big snag: the Markdown syntax says this about paragraphs and line breaks
 > A paragraph is simply one or more consecutive lines of text, separated by one or more blank lines. (A blank line is any line that looks like a blank line — a line containing nothing but spaces or tabs is considered blank.) Normal paragraphs should not be indented with spaces or tabs.
-
+> 
 > The implication of the “one or more consecutive lines of text” rule is that Markdown supports “hard-wrapped” text paragraphs. This differs significantly from most other text-to-HTML formatters (including Movable Type’s “Convert Line Breaks” option) which translate every line break character in a paragraph into a `<br />` tag.
-
+> 
 > When you do want to insert a `<br />` break tag using Markdown, you end a line with two or more spaces, then type return.
-
+> 
 > Yes, this takes a tad more effort to create a `<br />`, but a simplistic “every line break is a `<br />`” rule wouldn’t work for Markdown. Markdown’s email-style blockquoting and multi-paragraph list items work best — and look better — when you format them with hard breaks.
-
 and I don't really understand how to handle that properly. I think it means anytime you see two `\\n`s in a row, that means you start a new `<p>`, closing the existing one (if there _is_ one), and `  \\n` at the end of a line becomes a `<br>`, but what about one newline by itself? It must become a `<br>` too.
 
 I guess I'll need to make some sort of text-y Paragraph node that can include plain Text, Emphasis, Strikethrough, links, and inline code (anything inline, basically) for each string of inline tokens, and make each texty node become a `<p>` in the code generator? Consuming inline tokens until I get to a block one (headers, pluses, hyphens, numbersWithDots, exclamation marks, three backticks, four spaces, and tabs), then putting that into a Paragraph node?
@@ -388,7 +380,6 @@ So, an Emphasis node is an Asterisk, some text, and another Asterisk, and a Stro
 I think I might not do the Paragraphy bits for now, do the code generation for the Headers, Emphasis and Strikethrough, so I can see some results soon. Maybe get to crank out a proper Tree visitor thingy
 
 ## Day 8
-
 I think I'll need a `Space` token too - you nest items inside lists by using 4 spaces. Nope, that's already handled by the `FourSpaces` token used for the code blocks. 
 But, there's another space-related issue - you can write a list like `\\n* LIST ITEM`, `\\n * LIST ITEM`, all the way up to 3 spaces, and still have a normal list item (4 spaces makes a sub-list), so I've a decision to make - do I handle this in the tokenizer, or in the code generator?
 I can either make a `Space` token like I thought, and roll it into any surrounding `Text` tokens, like I already do with `Text` tokens (before the code generator gets the stream of tokens), or, when I'm parsing the token stream, if I see a Newline, followed by Text, followed by an Asterisk (or Hyphen, etc.), I can check if the Text is only a series of spaces, and make a list. The 2nd way seems more complicated.
@@ -401,7 +392,6 @@ Nope, it's the more general, harder to sort, case: backslashes inside code block
 I'm just going to make my life easy and always use two backslashes, so I'll type `\\\\` (I had to type 4 for 2 to appear)
 
 ## Day 9
-
 Code generation seems easy enough so far, you pretty much just `switch` on the node type and recursively call the generating function:
 ```
 generate: function [
@@ -526,3 +516,13 @@ Something to go into the todos.
 Just managed to delete > 100 lines by using 1 type of `Header`, rather than 1 for each size! That's the good type of refactor, where you just _know_ that it was the right thing to do. Pretty rare.
 
 Letting Headers work with all inline tokens was really once, since I'd already made a function to `parseInlineTokens`
+
+Blockquotes were very annoying to get working compared to how simple they are to type - handling the empty lines like
+```
+> a
+>
+> c
+```
+was hard to get right.
+
+But, on the bright side, everything seems to work now!
