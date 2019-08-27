@@ -68,7 +68,10 @@ Tokenizer: context [
                 |
                     headers
                 |
-                    ">" (append tokens make GreaterThan [])
+                    [newline copy spaces any space ">"] ( ; ">" is only a quote marker if it's at the start of a line
+                        append tokens make NewlineToken []
+                        append tokens make GreaterThan []
+                    )
                 |
                     "*" (append tokens make Asterisk [])
                 |

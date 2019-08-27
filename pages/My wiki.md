@@ -6,7 +6,7 @@ Hello
 I made this after I read [this interview with Ceasar Bautista](https://superorganizers.substack.com/p/why-ceasar-bautista-wrote-his-own), and I liked the idea:
 * I read a fair amount of stuff, and I can't really remember the little details of most of it. I hope I will if I write them down here
 * Writing what I think about things and how I understand they work should help my understand things properly  - I might _think_ I know how a compiler works, but do I really? Writing [an article](compiler.html) should make me actually understand it
-* I'm planning on making everything I need to make the wiki myself - so, the static-site generator, the Markdown -\> HTML compiler, hosting the website, etc, which hopefully should make me a better programmer. If I want to have the pages be dynamic in the future, I've got [a little framework](https://github.com/nd9600/framework) I can use, too.
+* I'm planning on making everything I need to make the wiki myself - so, the static-site generator, the Markdown -> HTML compiler, hosting the website, etc, which hopefully should make me a better programmer. If I want to have the pages be dynamic in the future, I've got [a little framework](https://github.com/nd9600/framework) I can use, too.
 
 # How it all works
 If you want to look at the code, see `https://www.github.com/[XXX.download]/wiki`.
@@ -119,19 +119,19 @@ Finally, the new files are live!
 
 ## Day 1
 
-* = done
+\* = done
 
-1. *Make Twig template for wikipage
+1. \*Make Twig template for wikipage
 2. For each .md file in pages/
     1. Compile Markdown into HTML
-        1. *Read tags at the start from "tags: [technology/programming/languages/red etc/another/tag]"
-        2. Compile rest of the file normally, using normal Red PARSE if it works, or mal-style thingy if it doesn't
-    2. *Output HTML as file_name_slugified.html in site/wiki/ folder
-    3. *Add index: map! from tag -> HTML file name
-        1. *to-block tag, then map to-string, then append/only [block-tag filename.html] to index: block!
-3. *Compile index.twig into index.html, using index block!
-    1. *Has the actual index at the top
-    2. *JS search, using static compiled array of filenames
+        1. \*Read tags at the start from `tags: [technology/programming/languages/red etc/another/tag]`
+        2. \*Compile rest of the file normally, using normal Red PARSE if it works, or mal-style thingy if it doesn't
+    2. \*Output HTML as file_name_slugified.html in site/wiki/ folder
+    3. \*Add index: map! from tag -> HTML file name
+        1. \*to-block tag, then map to-string, then `append/only [block-tag filename.html]` to `index: block!`
+3. \*Compile index.twig into index.html, using `index block!`
+    1. \*Has the actual index at the top
+    2. \*JS search, using static compiled array of filenames
 
 ## Day 2
 
@@ -148,7 +148,7 @@ I think I'll need these tokens:
 * `{number}.` for ordered lists
 * `[`, `]`, `(`, and `)` for links,
 * `!` for images
-* ```, `    `, and `{tab}` for code
+* `\``, `    `, and `{tab}` for code
 * newlines, so you know when a header stops
 * and everything else that isn't one of the above tokens, is a "text" token
 
@@ -166,7 +166,8 @@ One more benefit of construction logs I didn't think of - you can think through 
 Oops that `<b></b>` wasn't escaped before so now this whole thing is bold. Ok I _will_ need to escape any raw HTML.
 
 It's looking pretty good right now (this isn't formatted great, I know):
-`compiling Abstract Syntax Tree.md
+```
+compiling Abstract Syntax Tree.md
 escapedStr: {^/^/# Abstract Syntax Tree^/^/* hello world *^/^/_ italic_}
 compiled:
 type: "Newline"
@@ -197,7 +198,8 @@ value: none type: "Text"
 isType: func [typeString [string!]][not none? find self/type typeString]
 value: " italic" type: "Underscore"
 isType: func [typeString [string!]][not none? find self/type typeString]
-value: none`
+value: none
+```
 
 ## Day 3
 
@@ -215,9 +217,9 @@ So, the tokens I think I'll need now,
 * `{number}.` for ordered lists
 * `[`, `]`, `(`, and `)` for links,
 * `!` for images
-* ```, `    `, and `{tab}` for code
+* `\``, `    `, and `{tab}` for code
 * newlines, so you know when a header stops
-* "user-escaped" versions of `#` , `*`, `_`, , `+`, `-`, `[`, `]`, `(`, `)`, `!`, `\\``, like `\\*`
+* "user-escaped" versions of `#` , `*`, `_`, , `+`, `-`, `[`, `]`, `(`, `)`, `!`, `\``, like `\\\*`
 * and everything else that isn't one of the above tokens, is a "text" token
 
 Maybe I can just handle the "user-escaped" ones by, when I read in a `\\`, just putting the next character in as a `Text` token straightaway?
@@ -225,7 +227,8 @@ Maybe I can just handle the "user-escaped" ones by, when I read in a `\\`, just 
 Oh, I can't forget to not do anything with the stuff that's surrounded by two \\`s in the code generator.
 
 The tokenizer makes tokens like this:
-`Token: make object! [
+```
+Token: make object! [
     type: copy ["Token"]
 	isType: function [typeString [string!]] [not none? find self/type typeString]
     value: none
@@ -233,7 +236,8 @@ The tokenizer makes tokens like this:
 
 Header1: make Token [
     type: "Header1"
-]`
+]
+```
 
 Pretty nasty, hacking class-inheritance into a prototype-based inheritance. I need a better way.
 

@@ -231,6 +231,11 @@ Parser: context [
                 ]
             ]
 
+            ; it's inline if it's just a !
+            peek ExclamationMark [
+                parseExclamationMark
+            ]
+
             true [
                 badToken: first self/tokens
                 print rejoin ["stream is " prettyFormat copy/part self/tokens 5]
@@ -308,28 +313,25 @@ Parser: context [
 
     parseTilde: does [
         consume Tilde
-        case [
-            peek Tilde [
-                consume Tilde
-                textToken: consume Text
-                consume Tilde
-                consume Tilde
-                return make StrikethroughNode [
-                    text: textToken/value
-                ]
-            ]
-            peek Text [
-                textToken: consume Text
-                consume Tilde
-                return make StrikethroughNode [
-                    text: textToken/value
-                ]
-            ]
+        if peek Tilde [
+            consume Tilde
+        ]
 
-            true [
-                currentToken: first self/tokens
-                do make error! rejoin ["expected Tilde or Text but got " currentToken/type { in file "} self/file {"}]
-            ]
+        strikethroughText: copy ""
+        until [
+            currentToken: first self/tokens
+            append strikethroughText currentToken/value 
+            self/tokens: next self/tokens
+
+            peek Tilde
+        ]
+        consume Tilde
+        if peek Tilde [
+            consume Tilde
+        ]
+
+        return make StrikethroughNode [
+            text: strikethroughText
         ]
     ]
 
@@ -427,7 +429,6 @@ Parser: context [
             ]
             print "consumed code content"
 
-            ; this isn't working for some reason
             if (peek NewlineToken) [
                 consume NewlineToken
             ]
@@ -459,6 +460,20 @@ Parser: context [
             make InlineCodeNode [
                 code: codeContent
             ]
+        ]
+    ]
+
+    parseExclamationMark: does [
+        consume ExclamationMark
+        if (peek LeftSquareBracket) [
+            linkNode: parseLeftSquareBracket
+            return make ImageNode [
+                alt: linkNode/text
+                src: linkNode/url
+            ]
+        ]
+        return make TextNode [
+            text: "!"
         ]
     ]
 
@@ -719,20 +734,6 @@ Parser: context [
 
         make OrderedListNode [
             items: orderedListItemNodes
-        ]
-    ]
-
-    parseExclamationMark: does [
-        consume ExclamationMark
-        if (peek LeftSquareBracket) [
-            linkNode: parseLeftSquareBracket
-            return make ImageNode [
-                alt: linkNode/text
-                src: linkNode/url
-            ]
-        ]
-        return make TextNode [
-            text: "!"
         ]
     ]
 ]
