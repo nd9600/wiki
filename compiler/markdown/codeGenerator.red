@@ -52,9 +52,16 @@ CodeGenerator: context [
             ]
 
             "HeaderNode" [
-                content: (f_map lambda [self/generate ?] node/children)
-                    |> :rejoin
-                rejoin ["<h" node/size { class="header header--} node/size {">} content "</h" node/size ">"]
+                headerId: node/text 
+                    |> :trim 
+                    |> :slugifyString
+                rejoin [{<h} node/size 
+                    { class="header header--} node/size {"} 
+                    { id="} headerId {"} 
+                    {>} 
+                        node/text 
+                    {</h} node/size {>}
+                ]
             ]
             "BlockquoteNode" [
                 content: (f_map lambda [self/generate ?] node/children)

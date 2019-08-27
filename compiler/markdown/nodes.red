@@ -29,7 +29,7 @@ TextNode: make Node [
 
 HeaderNode: make Node [
     type: "HeaderNode"
-    size: 0
+    size: none
     text: none
 ]
 

@@ -94,9 +94,9 @@ addToIndexFromTags: function [
     index
 ]
 
-slugifyFilename: function [
+slugifyString: function [
     "turns 'File name a£%$' into 'file_name_'"
-    filename [string!]
+    str [string!]
 ] [
     digits: charset "0123456789"
     letters: charset [#"a" - #"z" #"A" - #"Z"]
@@ -104,16 +104,17 @@ slugifyFilename: function [
     ; https://tools.ietf.org/html/rfc1738
     ; "only alphanumerics, the special characters "$-_.+!*'(),", and [...] may be used    unencoded within a URL" but Firefox splits the URL in half if you put in a ', so we can't use that
     specialChars: charset "$-_.+!*(),"
-    acceptableChars: union union letters digits specialChars
-    slugifiedFilename: copy ""
-    parse (lowercase copy filename) [
+    alphanumeric: union letters digits 
+    acceptableChars: union alphanumeric specialChars
+    slugifiedString: copy ""
+    parse (lowercase copy str) [
         any [
-            copy char acceptableChars (append slugifiedFilename char) 
-            | space (append slugifiedFilename "_") 
+            copy char acceptableChars (append slugifiedString char) 
+            | space (append slugifiedString "_") 
             | skip
         ]
     ]
-    slugifiedFilename
+    slugifiedString
 ]
 
 makeIndexListHTML: function [
@@ -151,7 +152,7 @@ makeIndexListHTML: function [
 
     ; pages that are just associated with the tag
     foreach page index/pages [
-        htmlFilename: rejoin [(copy slugifyFilename page) ".html"]
+        htmlFilename: rejoin [(copy slugifyString page) ".html"]
         append html rejoin ["<li class='index__item'><a class='link link--index' href='" htmlFilename "'>" page "</a></li>" newline]
     ]
 
@@ -172,7 +173,7 @@ makeAToZIndexListHTML: function [
     listOfPages [block!]
 ] [
     (f_map function [page] [
-        htmlFilename: rejoin [(copy slugifyFilename page) ".html"]
+        htmlFilename: rejoin [(copy slugifyString page) ".html"]
         rejoin ["<a class='link link--block' href='" htmlFilename "'>" page "</a>" newline]
     ] listOfPages)
     |> :to-string
@@ -200,7 +201,7 @@ main: does [
 
         filenameWithoutExtension: (find filename ".md")
             |> [copy/part filename]
-        htmlFilename: append (copy slugifyFilename filenameWithoutExtension) ".html"
+        htmlFilename: append (copy slugifyString filenameWithoutExtension) ".html"
 
         print rejoin ["compiling " filename]
 

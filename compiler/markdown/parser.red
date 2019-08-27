@@ -536,31 +536,32 @@ Parser: context [
 
     parseHeader: does [
         headerToken: consume Header
-        
-        headerContentNodes: copy []
-        until [
-            maybeInlineNode: maybeParseInlineTokens
-            if found? maybeInlineNode [
-                append headerContentNodes maybeInlineNode
-            ]
 
+        headerText: copy ""
+        until [
+            currentToken: first self/tokens
+            if found? currentToken [
+                append headerText currentToken/value
+            ]
+            self/tokens: next self/tokens
+            
             any [
                 tail? self/tokens
-                not found? maybeInlineNode
+                not found? currentToken
                 peek NewlineToken
             ]
         ]
-
         if (not tail? self/tokens) [ ; we're at the end of the file
             consume NewlineToken
         ]
+
         if (peek NewlineToken) [
             consume NewlineToken
         ]
 
         make HeaderNode [
             size: headerToken/size
-            children: headerContentNodes
+            text: headerText
         ]
     ]
 
