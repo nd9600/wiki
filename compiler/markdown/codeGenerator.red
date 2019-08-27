@@ -40,6 +40,13 @@ CodeGenerator: context [
             "LinkNode" [
                 rejoin [{<a href="} node/url {" class="link">} node/text "</a>"]
             ]
+            "ImageNode" [
+                rejoin [
+                    {<a href="} node/src {" target="_blank">} newline
+                        {<img src="} node/src {" alt="} node/alt {" class="img"/>} newline
+                    "</a>"
+                ]
+            ]
 
             "HeaderNode" [
                 rejoin ["<h" node/size { class="header header--} node/size {">} (node/text) "</h" node/size ">"]

@@ -54,6 +54,12 @@ LinkNode: make Node [
     text: none
 ]
 
+ImageNode: make Node [
+    type: "ImageNode"
+    alt: none
+    src: none
+]
+
 BlockquoteNode: make Node [
     type: "BlockquoteNode"
     text: none

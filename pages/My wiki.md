@@ -97,12 +97,13 @@ Finally, the new files are live!
 # Todos
 * Let Headers work with Asterisks, Underscores, Tildes, Links, and Code, as well as just Text
 * Let Asterisks, Underscores, Tildes work with Emphasis, Strikethrough, links, and inline code, not just text
-* Let unordered lists start with Asterisks (might be hard/conflict with how the Emphasis nodes are parsed)
-* Handle sub-lists (see above)
+* Let URLs include escaped characters (see day 11)
+* Handle sub-lists (see day 8)
 * Site web/graph
 * Build a table of contents from headers
 * Copy templater tests over from the framework
 * Write system/integration tests
+* Let unordered lists start with Asterisks (might be hard/conflict with how the Emphasis nodes are parsed)
 
 ## Done
 * ~Handle backslashes inside code blocks~ just use two backslashes when you want a literal one
@@ -498,4 +499,22 @@ I'm going to do the same as I did with the hyphens - treat a newline, any spaces
 Lists with pluses _aren't_ though..
 And doing _that_ broke this: `\n* hello world *` because the token stream is `[newline, hyphen, text, asterisk]` now. I'm not sure how I can tell "a list starting with an asterisk & arbitrary inline nodes & a newline" and "emphasis started by an asterisk & arbitrary inline nodes & an asterisk & a newline" easily. I guess I'll just not start a line with emphasis made with an asterisk, only an underscore.
 
-I forgot that header's don't necessarily end with a newline, they can be at the end of the file 
+I forgot that header's don't necessarily end with a newline, they can be at the end of the file .
+
+## Day 11
+I need to disallow `\`` in URLs too - if I write `[BACKTICK]https//www.example.com[BACKTICK]`, the last backtick is marking the end of the inline code, it shouldn't be included as part of the URL.
+I can't actually escape backticks in URLs it seems, the URL will end at the escaped backtick and include the `\\` because I jump with a `to` again:
+```
+url: [
+    "http://" copy data to disallowedURLCharacters (
+            link: rejoin ["http://" data] 
+            append tokens make Text [value: link]
+        )
+    |   "https://" copy data to disallowedURLCharacters (
+            link: rejoin ["https://" data] 
+            append tokens make Text [value: link]
+        )
+]
+```
+I _really_ shouldn't use `to` if I don't absolutely need to - maybe I can check for an escaped character, or a disallowed character (and fail), or copy `skip` like I do with the normal `Text` tokens.
+Something to go into the todos.

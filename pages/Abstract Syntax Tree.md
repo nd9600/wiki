@@ -1,7 +1,7 @@
 tags: [technology/computer/programming/languages/design]
 
 ** hello world bold**
-__ italic__
+_ italic_
 ~~struckout~~
 
 hyphen - test
@@ -13,3 +13,5 @@ hyphen - test
     -e
 
 Tokens are the smallest meaningful pieces in a language - for example, in `def f() 1 end`
+
+![not Nora](https://i.imgur.com/gseAIpF.jpg)

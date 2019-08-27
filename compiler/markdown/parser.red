@@ -82,21 +82,9 @@ Parser: context [
         }
     ] [        
         ; while not at stream end
-        ;   if peek inline token
-        ;       make paragraph node
-        ;       while any [
-        ;           peek inlineNode
-        ;           all [
-        ;               peek/at NewlineToken 0
-        ;               not peek/at NewlineToken 1
-        ;           ]
-        ;       ] [
-        ;           parseInlineTokens
-        ;           add node to paragraph node
-        ;       ]
-        ;       add paragraph node to markdownChildren
-        ;   else
-        ;       parse block tokens
+        ;   maybeParseParagraph, add to markdownChildren
+        ;   if not at stream end
+        ;       parse block tokens, add to markdownChildren
 
         if error? tree: try [
             markdownChildren: copy []
@@ -331,7 +319,6 @@ Parser: context [
                 ]
             ]
             peek Text [
-                consume Asterisk
                 textToken: consume Text
                 consume Tilde
                 return make StrikethroughNode [
@@ -438,7 +425,9 @@ Parser: context [
                     ]
                 ]
             ]
+            print "consumed code content"
 
+            ; this isn't working for some reason
             if (peek NewlineToken) [
                 consume NewlineToken
             ]
@@ -464,6 +453,7 @@ Parser: context [
 
                 peek Backtick
             ]
+            print "consumed code content"
             consume Backtick
 
             make InlineCodeNode [
@@ -525,6 +515,10 @@ Parser: context [
 
             peek Backtick [
                 parseBacktick
+            ]
+
+            peek ExclamationMark [
+                parseExclamationMark
             ]
 
             true [
@@ -725,6 +719,20 @@ Parser: context [
 
         make OrderedListNode [
             items: orderedListItemNodes
+        ]
+    ]
+
+    parseExclamationMark: does [
+        consume ExclamationMark
+        if (peek LeftSquareBracket) [
+            linkNode: parseLeftSquareBracket
+            return make ImageNode [
+                alt: linkNode/text
+                src: linkNode/url
+            ]
+        ]
+        return make TextNode [
+            text: "!"
         ]
     ]
 ]
