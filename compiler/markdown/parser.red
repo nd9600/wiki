@@ -561,7 +561,8 @@ Parser: context [
 
         make HeaderNode [
             size: headerToken/size
-            text: headerText
+            text: headerText 
+                |> :trim
         ]
     ]
 

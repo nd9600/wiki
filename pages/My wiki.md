@@ -526,3 +526,70 @@ Blockquotes were very annoying to get working compared to how simple they are to
 was hard to get right.
 
 But, on the bright side, everything seems to work now!
+
+Now I'm trying to make the tables of contents, by using the headers' sizes: header 3's are children of the first header 2 above them, header 2's are children of the first header 1 above _them_, and it just isn't working. Too much recursion.
+I have the headers like this in a list:
+```
+[
+    object!: [
+        size: 1
+        text: "Technology"
+    ]
+    object!: [
+        size: 2
+        text: "Boundaries, Gary Bernhardt"
+    ]
+    object!: [
+        size: 2
+        text: "Radical stuff"
+    ]
+    object!: [
+        size: 2
+        text: "AI"
+    ]
+    object!: [
+        size: 2
+        text: "Guides"
+    ]
+    object!: [
+        size: 1
+        text: "Biology"
+    ]
+    object!: [
+        size: 1
+        text: "Politics"
+    ]
+    object!: [
+        size: 1
+        text: "Education"
+    ]
+    object!: [
+        size: 1
+        text: "Rationality"
+    ]
+    object!: [
+        size: 1
+        text: "Quanta"
+    ]
+]
+```
+and what I want is basically this (I've only put the numbers in for simplicity)
+```
+; 1 2 2 2 1 2 2 3 3 2 1
+; to
+; 1
+; |----2
+; |----2
+; |----2
+
+; 1
+; |----2
+; |----2
+; |    |----3
+; |    |----3
+; |
+; |----2
+
+; 1
+```
+Do I while over all the headers until the end, and store the current header, the previous one, and the nearest parent? No, that won't work, I might need to do header 1 - 2 - 3 - 4 - 5 - 6, and I can't store 5 parents in a nice way

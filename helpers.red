@@ -131,13 +131,18 @@ f_map: function [
     "The functional map"
     f  [function!] "the function to use, as a lambda function" 
     block [block!] "the block to map across"
+    /notOnly "insert block! elements as single values (opposite to 'append/only)"
 ] [
-    result: copy/deep block
-    while [not tail? result] [
-        replacement: f first result
-        result: change/part result replacement 1
+    result: copy []
+    while [not tail? block] [
+        either notOnly [
+            append result f first block
+        ] [
+            append/only result f first block
+        ]
+        block: next block
     ]
-    head result
+    result
 ]
 
 f_fold: function [
@@ -367,4 +372,23 @@ join: function [
 ] [
     rejoin compose/only flatten 
         f_map lambda [reduce [? copy (to-string sep)]] block
+]
+
+pickProperties: function [
+    "Pick a list of properties from an object"
+    props [block!]
+    obj [object!]
+] [
+    words: words-of obj
+    propsAsWords: f_map lambda [to-word ?] props
+    propsToPick: intersect words propsAsWords
+
+    newObject: context []
+    foreach word propsToPick [
+        value: get in obj word
+        newObject: make newObject reduce [
+            (to-set-word :word) :value
+        ]
+    ]
+    newObject
 ]
