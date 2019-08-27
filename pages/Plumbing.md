@@ -39,7 +39,7 @@ Clips move copper away from corrosive materials, like brick
 * TRV works with combi and system boilers
 * higher numbers -> increase flow rate -> more heat
 * cap unscrews and pops off
-* only costs ~£3
+* only costs \~£3
 * never set them to 0 if you have a frost setting, use it - it senses when the water inside the pipe is 2 degrees, and they turn the valve up to 5 internally, so they actually tell the boiler to send more water -> more heat, stops the pipes freezing
 
 # Pipes 
@@ -85,7 +85,7 @@ Rehau is a new material for pipes, 100 year guarantee it doesn't leak - expands 
 * make sure there's enough heat, so the solder doesn't stick to the pipe/blowtorch
 * hold in left hand, solder in right (needs more control)
 * put flux on the end of the solder first (stops the solder sticking), then heat the pipe, *then* put the solder in
-* heat first side for ~10s, then the other for ~3s (pipe conducts heat)
+* heat first side for \~10s, then the other for \~3s (pipe conducts heat)
 * make sure there's no "snotter" - don't use too much solder, put no more solder on the yorky
 
 * copper pipes might need insulation, since they lose more heat than plastic, but it looks better than plastic
@@ -104,5 +104,5 @@ Rehau is a new material for pipes, 100 year guarantee it doesn't leak - expands 
 # PTFE
 * PTFE (poly-tetra-fluoro-ethylene) is very useful to make seals when you don't have seals
 * if the screw you're using has a tapered end, it would break the washer - make sure you use the flush end
-* hold the tape facing away from you, wrap it round the screw 15 - 20 times (~10 if thick)
+* hold the tape facing away from you, wrap it round the screw 15 - 20 times (\~10 if thick)
 * then screw on with grips & shifter, make sure it's flush with the pipe and the position makes sense - it points down when you'd want the water to come out near the ground, etc
