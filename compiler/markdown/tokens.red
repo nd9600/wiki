@@ -105,3 +105,9 @@ Text: make Token [
     type: "Text"
     value: none
 ]
+
+; needed to match URLs like this one: [heap](https://en.wikipedia.org/wiki/Heap_\(data_structure\))
+urlToken: make Token [
+    type: "urlToken"
+    value: none
+]

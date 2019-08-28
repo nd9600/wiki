@@ -17,7 +17,8 @@ compile: function [
 
     newTokenizer: make Tokenizer []
     tokenStream: newTokenizer/tokenize str
-    ; print prettyFormat tokenStream
+    print prettyFormat tokenStream
+    quit
 
     newParser: make Parser [
         file: filename

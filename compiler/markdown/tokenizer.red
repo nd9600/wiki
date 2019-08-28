@@ -21,17 +21,18 @@ Tokenizer: context [
         ; we need to handle URLs explicitly so that it doesn't mess up with any of the special characters (see generator.red/slugifyFilename); it shouldn't think that e.g. an underscore is an Underscore token, for the beginning of an Emphasis node
         ; and we want `[Commodotize your complement](https://www.gwern.net/Complement#2)` to have the URL stop at `#2` - it shouldn't include the `)`, so need to exclude that too, and we might as well exclude `(` and `,` while we're at it
         whitespace: [newline | cr | lf | "^(0C)" | tab | space] ; 0C is form feed, see https://www.pcre.org/original/doc/html/pcrepattern.html
-        disallowedURLCharacters: ["(" | ")" | "," | "`" | whitespace]
+
+        disallowedURLCharacter: ["(" | ")" | "," | "`" | whitespace]
+        literalURLCharacter: ["\" copy data disallowedURLCharacter (append tokens make urlToken [value: data]) ]
+        urlCharacter: [
+                literalURLCharacter 
+            |   disallowedURLCharacter reject 
+            |   copy data skip (append tokens make urlToken [value: data]) 
+        ]
 
         url: [
-            "http://" copy data to disallowedURLCharacters (
-                    link: rejoin ["http://" data] 
-                    append tokens make Text [value: link]
-                )
-            |   "https://" copy data to disallowedURLCharacters (
-                    link: rejoin ["https://" data] 
-                    append tokens make Text [value: link]
-                )
+                "http://" (append tokens make urlToken [value: "http://"]) some urlCharacter 
+            |   "https://" (append tokens make urlToken [value: "https://"]) some urlCharacter
         ]
 
         headers: [

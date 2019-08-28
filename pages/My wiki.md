@@ -616,3 +616,14 @@ I might need to make a proper Tree data structure; this is what I actually want 
 ;                      | |             
 ;                      3 3             
 ```
+
+## Day 12
+
+It might just be "insert each number as a child of the rightmost node that's smaller than it (the root if they're isn't one)" I think I was too stuck on transforming an array with a while loop to see it, until I made an ASCII tree.
+Yeah this is a [min heap](https://en.wikipedia.org/wiki/Heap_(data_structure)), just not a binary one.
+
+WIKIPEDIA WHY DO YOU HAVE BRACKETS IN URLS!!!
+That URL won't work because I don't allow `(` or `)` in URLs, and I can't escape them right now. Another thing to fix.
+Yet another point for these notes - my day 11 notes told me how I thought I could fix the problem yesterday
+> I _really_ shouldn't use `to` if I don't absolutely need to - maybe I can check for an escaped character, or a disallowed character (and fail), or copy `skip` like I do with the normal `Text` tokens.
+and I still think that'll work, a whole day later.
