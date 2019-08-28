@@ -26,12 +26,25 @@ Tokenizer: context [
         literalURLCharacter: ["\" copy data disallowedURLCharacter (append tokens make urlToken [value: data]) ]
         urlCharacter: [
                 literalURLCharacter 
-            |   disallowedURLCharacter reject 
+            |   "(" reject ; reject makes the "some urlCharacter" fail, so it will stop matching the url
+            |   ")" (append tokens make RightBracket []) reject ; this is actually the RightBracket token used to mark the end of URL for a link, so we want to record that it's a RightBracket
+            |   "," reject
+            |   "`" (append tokens make Backtick []) reject
+            |   [newline copy spaces any space "*" not "*"] ( ; we need to check for this specifically, because we are consuming the newline here, so the "newlineAndAsterisk" rule will never be matched with "http://www.example.com\n*"
+                    append tokens make NewlineToken []
+                    loop ((length? spaces) / 4) [ ; 4 spaces marks a sub-list
+                        append tokens make FourSpaces []
+                    ]
+                    append tokens make Hyphen []
+                ) reject 
+            |   newline (append tokens make NewlineToken []) reject 
+            |   space (append tokens make Text [value: " "]) reject 
+            |   whitespace reject
             |   copy data skip (append tokens make urlToken [value: data]) 
         ]
 
         url: [
-                "http://" (append tokens make urlToken [value: "http://"]) some urlCharacter 
+                "http://" (append tokens make urlToken [value: "http://"]) some urlCharacter
             |   "https://" (append tokens make urlToken [value: "https://"]) some urlCharacter
         ]
 
@@ -42,6 +55,43 @@ Tokenizer: context [
             |   "###" (append tokens make Header [size: 3]) 
             |   "##" (append tokens make Header [size: 2]) 
             |    "#" (append tokens make Header [size: 1]) 
+        ]
+
+        newlineAndPlus: [
+            [newline copy spaces any space "+"] (
+                append tokens make NewlineToken []
+                loop ((length? spaces) / 4) [ ; 4 spaces marks a sub-list
+                    append tokens make FourSpaces []
+                ]
+                append tokens make Plus []
+            )
+        ]
+        newlineAndHyphen: [
+            [newline copy spaces any space "-"] (
+                append tokens make NewlineToken []
+                loop ((length? spaces) / 4) [ ; 4 spaces marks a sub-list
+                    append tokens make FourSpaces []
+                ]
+                append tokens make Hyphen []
+            )
+        ]
+        newlineAndAsterisk: [
+            [newline copy spaces any space "*" not "*"] ( ; this is the start of a list, not emphasis; we want to allow "**" because that's strong emphasis
+                append tokens make NewlineToken []
+                loop ((length? spaces) / 4) [ ; 4 spaces marks a sub-list
+                    append tokens make FourSpaces []
+                ]
+                append tokens make Hyphen []
+            )
+        ]
+        newlineAndNumberWithDot: [
+            [newline copy spaces any space copy data number "."] (
+                append tokens make NewlineToken []
+                loop ((length? spaces) / 4) [ ; 4 spaces marks a sub-list
+                    append tokens make FourSpaces []
+                ]
+                append tokens make NumberWithDot [value: data]
+            )
         ]
 
         non-zero: charset "123456789"
@@ -62,7 +112,6 @@ Tokenizer: context [
 
         tokenRules: [
             any [
-                [
                     literalCharacter
                 |   
                     url
@@ -80,37 +129,13 @@ Tokenizer: context [
                 |
                     "~" (append tokens make Tilde [])
                 |
-                    [newline copy spaces any space "+"] (
-                        append tokens make NewlineToken []
-                        loop ((length? spaces) / 4) [ ; 4 spaces marks a sub-list
-                            append tokens make FourSpaces []
-                        ]
-                        append tokens make Plus []
-                    )
+                    newlineAndPlus
                 |
-                    [newline copy spaces any space "-"] (
-                        append tokens make NewlineToken []
-                        loop ((length? spaces) / 4) [ ; 4 spaces marks a sub-list
-                            append tokens make FourSpaces []
-                        ]
-                        append tokens make Hyphen []
-                    )
+                    newlineAndHyphen
                 |
-                    [newline copy spaces any space "*" not "*"] ( ; this is the start of a list, not emphasis; we want to allow "**" because that's strong emphasis
-                        append tokens make NewlineToken []
-                        loop ((length? spaces) / 4) [ ; 4 spaces marks a sub-list
-                            append tokens make FourSpaces []
-                        ]
-                        append tokens make Hyphen []
-                    )
+                    newlineAndAsterisk
                 |
-                    [newline copy spaces any space copy data number "."] (
-                        append tokens make NewlineToken []
-                        loop ((length? spaces) / 4) [ ; 4 spaces marks a sub-list
-                            append tokens make FourSpaces []
-                        ]
-                        append tokens make NumberWithDot [value: data]
-                    )
+                    newlineAndNumberWithDot
                 |
                     linkCharacters
                 |
@@ -121,7 +146,6 @@ Tokenizer: context [
                     newline (append tokens make NewlineToken [])
                 |
                     copy data skip (append tokens make Text [value: data])
-                ]
             ]
         ]
 
@@ -130,7 +154,7 @@ Tokenizer: context [
     ]
 
     rollMultipleTextTokens: function [
-        "we want to roll multiple `Text` tokens in a row into one big Token, there's no point having a thousand separate ones in a row"
+        "we want to roll multiple `Text` tokens in a row into one big `Text` Token (same with `urlTokens`), there's no point having a thousand separate ones in a row"
         tokens [block!]
     ] [
         if (empty? tokens) [
@@ -142,34 +166,42 @@ Tokenizer: context [
 
         until [
             currentToken: first tokenCursor
-            either (not currentToken/isType "Text") [
-                append newTokens currentToken
-            ] [
-                rolledTextValue: copy ""
-
-                ; URLs can also have $-_.+!*(), in them (see generator.red/slugifyFilename) - so we should treat Hyphens, Underscores, NumbersWithDot, Pluses, ExclamationMarks, LeftBracket and RightBrackets as Text too, I think
-                while [
-                    all [
-                        not tail? tokenCursor ; the text might go all the way to the end, and then there won't be an innerCurrentToken
-                        found? currentToken
-                        currentToken/isType "Text"
+            case [
+                currentToken/isType "Text" [
+                    rolledTextValue: copy ""
+                    while [
+                        all [
+                            not tail? tokenCursor ; the text might go all the way to the end, and then there won't be an currentToken
+                            found? currentToken
+                            currentToken/isType "Text"
+                        ]
+                    ] [
+                        append rolledTextValue currentToken/value
+                        tokenCursor: next tokenCursor
+                        currentToken: first tokenCursor
                     ]
-                ] [
-                    append rolledTextValue currentToken/value
-                    tokenCursor: next tokenCursor
-                    currentToken: first tokenCursor
+                    append newTokens make Text [value: rolledTextValue]
                 ]
-                append newTokens make Token [type: "Text" value: rolledTextValue]
-
-                ; it wasn't adding the token after a long string of Texts without this
-                if (found? currentToken) [
+                currentToken/isType "UrlToken" [
+                    rolledUrlValue: copy ""
+                    while [
+                        all [
+                            not tail? tokenCursor
+                            found? currentToken
+                            currentToken/isType "UrlToken"
+                        ]
+                    ] [
+                        append rolledUrlValue currentToken/value
+                        tokenCursor: next tokenCursor
+                        currentToken: first tokenCursor
+                    ]
+                    append newTokens make UrlToken [value: rolledUrlValue]
+                ]
+                true [
                     append newTokens currentToken
+                    tokenCursor: next tokenCursor
                 ]
-
-                ; we want to jump to the end of all the Text tokens, because we'd go over the same tokens twice otherwise 
             ]
-
-            tokenCursor: next tokenCursor
             tail? tokenCursor
         ]
         newTokens

@@ -203,6 +203,13 @@ prettyFormat: function [
     ]
 ]
 
+prettyPrint: function [
+    "prints the thing as a nicely formatted string"
+    thing [any-type!]
+] [
+    print prettyFormat thing
+]
+
 objectToString: function [
     "converts the object! to a nicely formatted string"
     obj [object!]

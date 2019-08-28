@@ -17,8 +17,8 @@ compile: function [
 
     newTokenizer: make Tokenizer []
     tokenStream: newTokenizer/tokenize str
-    print prettyFormat tokenStream
-    quit
+    ; print prettyFormat tokenStream
+    ; quit
 
     newParser: make Parser [
         file: filename
@@ -29,7 +29,6 @@ compile: function [
 
     ; headerTree: makeHeaderTree ast
     ; print prettyFormat headerTree
-    ; quit
 
     newCodeGenerator: make CodeGenerator [
         file: filename

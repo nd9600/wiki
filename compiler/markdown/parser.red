@@ -16,6 +16,7 @@ INLINE_TOKEN_TYPES: [
     "LeftBracket"
     "RightBracket"
     "ExclamationMark"
+    "UrlToken"
 ]
 
 Parser: context [
@@ -233,6 +234,10 @@ Parser: context [
             ; it's inline if it's just a !
             peek ExclamationMark [
                 parseExclamationMark
+            ]
+
+            peek UrlToken [
+                parseUrlToken
             ]
 
             true [
@@ -478,6 +483,14 @@ Parser: context [
         ]
         return make TextNode [
             text: "!"
+        ]
+    ]
+
+    parseUrlToken: does [
+        token: consume UrlToken
+        make LinkNode [
+            text: token/value
+            url: token/value
         ]
     ]
 

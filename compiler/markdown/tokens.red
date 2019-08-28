@@ -106,8 +106,8 @@ Text: make Token [
     value: none
 ]
 
-; needed to match URLs like this one: [heap](https://en.wikipedia.org/wiki/Heap_\(data_structure\))
-urlToken: make Token [
-    type: "urlToken"
+; needed to match URLs like this one: [heap](https://en.wikipedia.org/wiki/Heap_\(data_structure\)) - this Token will hold "https://en.wikipedia.org/wiki/Heap_(data_structure)"
+UrlToken: make Token [
+    type: "UrlToken"
     value: none
 ]
