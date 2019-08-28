@@ -628,7 +628,7 @@ Yet another point for these notes - my day 11 notes told me how I thought I coul
 > I _really_ shouldn't use `to` if I don't absolutely need to - maybe I can check for an escaped character, or a disallowed character (and fail), or copy `skip` like I do with the normal `Text` tokens.
 and I still think that'll work, a whole day later.
 
-Yeah that _did_ work, it was just really annoying to do:
+Yeah that _did_ work, it was just really annoying to do (I had to make a new `UrlToken`):
 ```
 disallowedURLCharacter: ["(" | ")" | "," | "`" | whitespace]
 literalURLCharacter: ["\" copy data disallowedURLCharacter (append tokens make urlToken [value: data]) ]

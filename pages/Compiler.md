@@ -45,6 +45,12 @@ copy data skip (append tokens make Text [value: data])
 ```
 and that `skip` advances the input by one character, so a string like `test` will be made into 4 different `Text` tokens, not 1 token with "test" in it, like you'd expect, so I run a while loop over the tokens and put all the consecutive text tokens into one big one.
 
+I made a `Hyphen` token _in the context of it being used for lists_ - the token only exists to be used to start an unordered list item; a hyphen marks an unordered list _if and only if_ it follows a newline and possibly a series of spaces, so, it only needs to make a `Hyphen` token if its just read in a newline and maybe some spaces.
+In short, the `Hyphen` rule doesn't only need to have a hyphen in it!
+
+If a tokenizer makes a token for a particular series of characters, like `-`, that token might actually only be a token in the context of other characters, so you can read in other characters beforehand (or after, I suppose), and only _then_ decide to make the `-` or not.
+Same goes for the `Asterisk`, `Plus`, and `NumberWithDot` tokens.
+
 # Parser
 
 The parser takes the stream of tokens made in the last step, and turns that into a tree that the code generator will use, e.g. if the token stream (indented for readability) is
@@ -82,9 +88,13 @@ MARKDOWN
         ]
 ```
 
+This is probably the most complicated stage of the whole compiler (for the Markdown one, it's > 700 lines; the tokenizer is \~200, and the code generator \~100).
+
 It does this by using two main functions, `peek` and `consume`; both take 1 argument, which is the token type they expect to see. `peek` looks at the first token in the stream, and returns whether it's the expected type, and `consume`, if the first token has the expected type, removes it from the stream and returns it.
 
 With parsers, they quite often have to look at more than 1 token to decide how to parse the stream; this is what the `k` means in an `LR(k)` parser (the "LR" means "Left-to-right, Rightmost derivation in reverse", which isn't important here) - it's the maximum number of tokens the parser has to peek at before it knows how to parse the stream. Normally, `k` is 1, but here I think it'll need to be more than that - three backticks in a row have  to be treated differently that 1 backtick, so we can't just peek at 1 backtick and decide it's an inline code block, I think.
+
+This parser would be a 4-parser - it peeks at the next 4 tokens when parsing backticks for code blocks.
 
 Once the parser has peeked at a token, if it knows how to parse the start of stream based just off that one token, it consumes the token, optionally transforms it/uses it (and any following tokens, if it needs to) somehow to make somesort of `Node` that it then adds into the AST.
 
