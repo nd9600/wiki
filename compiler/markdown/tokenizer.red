@@ -18,45 +18,6 @@ Tokenizer: context [
         ; this needs to go first so that e.g. `\*` matches before `*`
         literalCharacter: ["\" copy data skip (append tokens make Text [value: data]) ]
 
-        ; we need to handle URLs explicitly so that it doesn't mess up with any of the special characters (see generator.red/slugifyFilename); it shouldn't think that e.g. an underscore is an Underscore token, for the beginning of an Emphasis node
-        ; and we want `[Commodotize your complement](https://www.gwern.net/Complement#2)` to have the URL stop at `#2` - it shouldn't include the `)`, so need to exclude that too, and we might as well exclude `(` and `,` while we're at it
-        whitespace: [newline | cr | lf | "^(0C)" | tab | space] ; 0C is form feed, see https://www.pcre.org/original/doc/html/pcrepattern.html
-
-        disallowedURLCharacter: ["(" | ")" | "," | "`" | whitespace]
-        literalURLCharacter: ["\" copy data disallowedURLCharacter (append tokens make urlToken [value: data]) ]
-        urlCharacter: [
-                literalURLCharacter 
-            |   "(" reject ; reject makes the "some urlCharacter" fail, so it will stop matching the url
-            |   ")" (append tokens make RightBracket []) reject ; this is actually the RightBracket token used to mark the end of URL for a link, so we want to record that it's a RightBracket
-            |   "," reject
-            |   "`" (append tokens make Backtick []) reject
-            |   [newline copy spaces any space "*" not "*"] ( ; we need to check for this specifically, because we are consuming the newline here, so the "newlineAndAsterisk" rule will never be matched with "http://www.example.com\n*"
-                    append tokens make NewlineToken []
-                    loop ((length? spaces) / 4) [ ; 4 spaces marks a sub-list
-                        append tokens make FourSpaces []
-                    ]
-                    append tokens make Hyphen []
-                ) reject 
-            |   newline (append tokens make NewlineToken []) reject 
-            |   space (append tokens make Text [value: " "]) reject 
-            |   whitespace reject
-            |   copy data skip (append tokens make urlToken [value: data]) 
-        ]
-
-        url: [
-                "http://" (append tokens make urlToken [value: "http://"]) some urlCharacter
-            |   "https://" (append tokens make urlToken [value: "https://"]) some urlCharacter
-        ]
-
-        headers: [
-                "######" (append tokens make Header [size: 6])
-            |   "#####" (append tokens make Header [size: 5]) 
-            |   "####" (append tokens make Header [size: 4]) 
-            |   "###" (append tokens make Header [size: 3]) 
-            |   "##" (append tokens make Header [size: 2]) 
-            |    "#" (append tokens make Header [size: 1]) 
-        ]
-
         newlineAndPlus: [
             [newline copy spaces any space "+"] (
                 append tokens make NewlineToken []
@@ -92,6 +53,39 @@ Tokenizer: context [
                 ]
                 append tokens make NumberWithDot [value: data]
             )
+        ]
+
+        ; we need to handle URLs explicitly so that it doesn't mess up with any of the special characters (see generator.red/slugifyFilename); it shouldn't think that e.g. an underscore is an Underscore token, for the beginning of an Emphasis node
+        ; and we want `[Commodotize your complement](https://www.gwern.net/Complement#2)` to have the URL stop at `#2` - it shouldn't include the `)`, so need to exclude that too, and we might as well exclude `(` and `,` while we're at it
+        whitespace: [newline | cr | lf | "^(0C)" | tab | space] ; 0C is form feed, see https://www.pcre.org/original/doc/html/pcrepattern.html
+
+        disallowedURLCharacter: ["(" | ")" | "," | "`" | whitespace]
+        literalURLCharacter: ["\" copy data disallowedURLCharacter (append tokens make urlToken [value: data]) ]
+        urlCharacter: [
+                literalURLCharacter 
+            |   "(" reject ; reject makes the "some urlCharacter" fail, so it will stop matching the url
+            |   ")" (append tokens make RightBracket []) reject ; this is actually the RightBracket token used to mark the end of URL for a link, so we want to record that it's a RightBracket
+            |   "," reject
+            |   "`" (append tokens make Backtick []) reject
+            |   newlineAndAsterisk reject ; we need to check for this specifically, because we are consuming the newline in the line below (it counts as whitespace), so the "newlineAndAsterisk" rule below will never be matched with "http://www.example.com\n*"
+            |   newline (append tokens make NewlineToken []) reject 
+            |   space (append tokens make Text [value: " "]) reject 
+            |   whitespace reject
+            |   copy data skip (append tokens make urlToken [value: data]) 
+        ]
+
+        url: [
+                "http://" (append tokens make urlToken [value: "http://"]) some urlCharacter
+            |   "https://" (append tokens make urlToken [value: "https://"]) some urlCharacter
+        ]
+
+        headers: [
+                "######" (append tokens make Header [size: 6])
+            |   "#####" (append tokens make Header [size: 5]) 
+            |   "####" (append tokens make Header [size: 4]) 
+            |   "###" (append tokens make Header [size: 3]) 
+            |   "##" (append tokens make Header [size: 2]) 
+            |    "#" (append tokens make Header [size: 1]) 
         ]
 
         non-zero: charset "123456789"

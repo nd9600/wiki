@@ -65,6 +65,7 @@ it gets it own section, it's that good
 [The brain is a context machine](http://nautil.us/issue/68/context/why-the-brain-is-so-noisy?fbclid=IwAR1vxs1_7h6g0J9x8r7ilo8KmBOeIRdai8nSIsi2qe6E0_Ea-erIcfvl5DE)
 
 
+# General
 [SSC books](https://old.reddit.com/r/slatestarcodex/comments/8wfexm/whats_a_book_that_you_would_recommend_that_most/)
 [Slightly more than 100 fantastic articles from 2017](https://www.theatlantic.com/ideas/archive/2018/08/slightly-more-than-100-fantastic-articles/567574/)
 [The subtle benefits of face-to-face communication](https://web.stanford.edu/class/symbsys205/facetoface.html)
