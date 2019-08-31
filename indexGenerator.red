@@ -129,7 +129,7 @@ makeAToZIndexListHTML: function [
 ] [
     (f_map function [page] [
         htmlFilename: rejoin [(copy slugifyString page) ".html"]
-        rejoin ["<a class='link display--block' href='" htmlFilename "'>" page "</a>" newline]
+        rejoin ["<a class='link display-block' href='" htmlFilename "'>" page "</a>" newline]
     ] listOfPages)
     |> :to-string
 ]

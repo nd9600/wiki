@@ -13,6 +13,13 @@
 
 <body>
     <h1 class="header header--1">My wiki</h1>
+
+    <section id="search" class="display-none">
+        <h2 class="header header--2">Search</h2>
+        <input id="search__input" class="input" placeholder="article name">
+        <div id="search__results"></div>
+    </section>
+
     <section>
         <h2 class="header header--2">Index</h2>
         <div>
@@ -27,14 +34,9 @@
             </section>
         </div>
     </section>
-    
-    <section id="search">
-        <h2 class="header header--2">Search</h2>
-        <input id="search__input" class="input" placeholder="article name">
-        <div id="search__results"></div>
-    </section>
 
     <script>
+        document.getElementById("search").classList.remove("display-none");
         const ARTICLES = [
             {% for page in listOfPages %}"{{ page }}",
             {% endfor %}
@@ -75,7 +77,7 @@
 
 
                 const searchResult = document.createElement("a");
-                searchResult.classList.add("link", "display--block");
+                searchResult.classList.add("link", "display-block");
                 searchResult.href = slugifiedArticle + ".html";
                 searchResult.innerText = article;
 
