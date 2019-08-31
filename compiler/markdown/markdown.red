@@ -7,6 +7,7 @@ Red [
 do %compiler/markdown/tokenizer.red
 do %compiler/markdown/parser.red
 do %compiler/markdown/codeGenerator.red
+do %compiler/markdown/tocGenerator.red
 
 compile: function [
     "converts an input Markdown string into tokens"
@@ -27,8 +28,11 @@ compile: function [
     ast: newParser/parse
     ; prettyPrint ast
 
-    ; headerTree: makeHeaderTree ast
-    ; prettyPrint headerTree
+    newTocGenerator: make TocGenerator [
+        ast: ast
+    ]
+    headerTree: newTocGenerator/makeHeaderTree
+    prettyPrint headerTree
 
     newCodeGenerator: make CodeGenerator [
         file: filename
