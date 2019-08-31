@@ -33,6 +33,10 @@ HeaderNode: make Node [
     text: none
 ]
 
+HorizontalRuleNode: make Node [
+    type: "HorizontalRuleNode"
+]
+
 EmphasisNode: make Node [
     type: "EmphasisNode"
     text: none

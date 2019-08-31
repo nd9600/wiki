@@ -499,6 +499,10 @@ Parser: context [
             text: "!"
         ]
     ]
+    parseHorizontalRule: does [
+        consume HorizontalRule
+        return make HorizontalRuleNode []
+    ]
 
     parseUrlToken: does [
         token: consume UrlToken
@@ -550,6 +554,10 @@ Parser: context [
 
             peek ExclamationMark [
                 parseExclamationMark
+            ]
+
+            peek HorizontalRule [
+                parseHorizontalRule
             ]
 
             true [

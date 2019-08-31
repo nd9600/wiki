@@ -101,6 +101,10 @@ CodeGenerator: context [
             "CodeBlockNode" [
                 rejoin [{<pre class="pre"><code class="code code--block">} node/code "</code></pre>"]
             ]
+
+            "HorizontalRuleNode" [
+                "<hr>"
+            ]
         ] [
             print rejoin ["AST is " prettyFormat node]
             do make error! rejoin ["can't handle " node/type { in file "} self/file {"}]

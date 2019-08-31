@@ -55,6 +55,18 @@ Tokenizer: context [
             )
         ]
 
+        hrRule: [
+            [
+                newline any space [
+                    "***" any "*"
+                |   "---" any "-"
+                |   "___" any "_"
+                ] newline
+            ] (
+                append tokens make HorizontalRule []
+            )
+        ]
+
         ; we need to handle URLs explicitly so that it doesn't mess up with any of the special characters (see generator.red/slugifyFilename); it shouldn't think that e.g. an underscore is an Underscore token, for the beginning of an Emphasis node
         ; and we want `[Commodotize your complement](https://www.gwern.net/Complement#2)` to have the URL stop at `#2` - it shouldn't include the `)`, so need to exclude that too, and we might as well exclude `(` and `,` while we're at it
         whitespace: [newline | cr | lf | "^(0C)" | tab | space] ; 0C is form feed, see https://www.pcre.org/original/doc/html/pcrepattern.html
@@ -116,6 +128,8 @@ Tokenizer: context [
                         append tokens make NewlineToken []
                         append tokens make GreaterThan []
                     )
+                |
+                    hrRule
                 |
                     "*" (append tokens make Asterisk [])
                 |

@@ -111,3 +111,8 @@ UrlToken: make Token [
     type: "UrlToken"
     value: none
 ]
+
+HorizontalRule: make Token [
+    type: "HorizontalRule"
+    value: "---"
+]

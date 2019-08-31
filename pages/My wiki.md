@@ -618,7 +618,6 @@ I might need to make a proper Tree data structure; this is what I actually want 
 ```
 
 ## Day 12
-
 It might just be "insert each number as a child of the rightmost node that's smaller than it (the root if they're isn't one)" I think I was too stuck on transforming an array with a while loop to see it, until I made an ASCII tree.
 Yeah this is a [min heap](https://en.wikipedia.org/wiki/Heap_\(data_structure\)), just not a binary one.
 
@@ -656,3 +655,7 @@ url: [
     |   "https://" (append tokens make urlToken [value: "https://"]) some urlCharacter
 ]
 ```
+
+## Day 13
+I've completely forgot to do [horizontal rules](https://daringfireball.net/projects/markdown/syntax#hr); they look very easy to do.
+They _were_ very easy to do, once I remembered to make a `Token` `object!`, not just a `block!`.
