@@ -29,14 +29,16 @@ compile: function [
     ; prettyPrint ast
 
     newTocGenerator: make TocGenerator [
-        ast: ast
+        astToUse: ast
     ]
-    headerTree: newTocGenerator/makeHeaderTree
-    prettyPrint headerTree
+    tableOfContents: newTocGenerator/generate
+    ; print tableOfContents
+    ; prettyPrint headerTree
+    ; quit
 
     newCodeGenerator: make CodeGenerator [
         file: filename
     ]
     html: newCodeGenerator/generate ast
-    html
+    rejoin [tableOfContents newline html]
 ]
