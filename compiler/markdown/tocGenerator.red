@@ -14,7 +14,10 @@ TocGenerator: context [
 
     generate: does [
         headerTree: makeHeaderTree
-
+        if not found? headerTree [
+            return ""
+        ]
+        
         childrenContent: (f_map lambda [generateListForNode ?] headerTree/children)
             |> :rejoin
 
@@ -32,6 +35,10 @@ TocGenerator: context [
         headers: astToUse/children
             |> [f_filter lambda [?/type == "HeaderNode"]]
             |> [f_map lambda [pickProperties [size text] ?]]
+
+        if empty? headers [
+            return none
+        ]
 
         headerTree: make TreeNode []
         foreach header headers [
