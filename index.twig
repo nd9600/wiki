@@ -36,14 +36,19 @@
     </section>
 
     <script>
-        document.getElementById("search").classList.remove("display-none");
+        const search = document.getElementById("search");
+        search.classList.remove("display-none");
+        
+        const searchInput = document.getElementById("search__input");
+        searchInput.focus();
+
         const ARTICLES = [
             {% for page in listOfPages %}"{{ page }}",
             {% endfor %}
         ];
 
         const searchResults = document.getElementById("search__results");
-        document.getElementById("search__input").addEventListener("input", function (event) {
+        searchInput.addEventListener("input", function (event) {
             searchResults.innerHTML = "";
 
             const searchTerm = event.target.value.toLowerCase();
