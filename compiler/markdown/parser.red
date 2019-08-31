@@ -87,7 +87,7 @@ Parser: context [
         ;   if not at stream end
         ;       parse block tokens, add to markdownChildren
 
-        if error? tree: try [
+        if error? tree: try/all [
             markdownChildren: copy []
             until [
                 maybeParagraphNode: maybeParseParagraph

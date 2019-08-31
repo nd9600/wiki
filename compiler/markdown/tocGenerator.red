@@ -11,61 +11,30 @@ do %tree.red
 
 TocGenerator: context [
     astToUse: none
-    headers: none
 
     generate: does [
         headerTree: makeHeaderTree
 
-        ; print "preOrder"
-        ; headerTree/preOrder function [n] [
-        ;     if found? n/value [
-        ;         prettyPrint n/value
-        ;     ]
-        ; ]
+        childrenContent: (f_map lambda [generateListForNode ?] headerTree/children)
+            |> :rejoin
+
         rejoin [
-            {<ul class="list list--unordered">}
-            generateListForNode headerTree
-            "</ul>"
+            {<section class="toc">} newline
+                {<p class="toc__header"> Table of contents </p>}
+                {<ol class="list list--ordered">} newline
+                    childrenContent newline
+                "</ol>"
+            "</section>"
         ]
     ]
 
-    generateListForNode: function [
-        n [object!]
-    ] [
-        header: n/value
-        text: either found? header [
-            header/text
-        ] [
-            ""
-        ]
-
-        childrenLists: copy ""
-        foreach c n/children [
-            childHeader: c/value
-            childrenContent: (f_map lambda [generateListForNode ?] n/children)
-                |> :rejoin
-            append childrenLists rejoin [
-                {<ul class="list list--unordered">}
-                    childrenContent
-                "</ul>"
-            ]
-            
-        ]
-        rejoin [
-            {<li class="list__item list__item--unordered">}
-            text
-            childrenLists
-            "</li>"
-        ]
-    ]
-
-    makeHeaderTree: does [
-        self/headers: astToUse/children
+    makeHeaderTree: function [] [
+        headers: astToUse/children
             |> [f_filter lambda [?/type == "HeaderNode"]]
             |> [f_map lambda [pickProperties [size text] ?]]
 
         headerTree: make TreeNode []
-        foreach header self/headers [
+        foreach header headers [
             nodeToInsertInto: nodeToInsertHeaderInto headerTree header
             nodeToInsertInto/insertNode make TreeNode [value: header]
         ]
@@ -93,5 +62,63 @@ TocGenerator: context [
 
         ; otherwise, we recurse into the last child's subtree
         return nodeToInsertHeaderInto lastChild header
+    ]
+
+    generateListForNode: function [
+        {
+            Makes
+                <ul>
+                    <li>
+                        Technology
+                        <ul>
+                            <li>Boundaries, Gary Bernhardt</li>
+                            <li>
+                                Radical stuff
+                                <ul>
+                                    <li>Test 3rd category</li>
+                                </ul>
+                            </li>
+                            <li>AI</li>
+                            <li>Guides</li>
+                        </ul>
+                    </li>
+                    <li>Biology</li>
+                </ul>
+        }
+        node [object!]
+    ] [
+        header: node/value
+
+        childrenLists: either empty? node/children [
+            ""
+        ] [
+            childrenContent: (f_map lambda [generateListForNode ?] node/children)
+                |> :rejoin
+            rejoin [
+                {<ol class="m-0 m-0 list list--ordered m-0">}
+                    childrenContent
+                "</ol>"
+            ]
+        ]
+            
+        if not found? header [ ; this is the root node
+            return rejoin [
+                {<li class="list__item list__item--ordered">} newline
+                    childrenLists newline
+                "</li>"
+            ]
+        ]
+        headerId: header/text 
+            |> :trim 
+            |> :slugifyString
+
+        rejoin [
+            {<li class="list__item list__item--ordered">}
+                {<a class="link link--index" href="#} headerId {">}
+                    header/text
+                "</a>"
+                childrenLists newline
+            "</li>"
+        ]
     ]
 ]

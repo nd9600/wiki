@@ -27,14 +27,12 @@ compile: function [
     ]
     ast: newParser/parse
     ; prettyPrint ast
+    ; quit
 
     newTocGenerator: make TocGenerator [
         astToUse: ast
     ]
     tableOfContents: newTocGenerator/generate
-    ; print tableOfContents
-    ; prettyPrint headerTree
-    ; quit
 
     newCodeGenerator: make CodeGenerator [
         file: filename

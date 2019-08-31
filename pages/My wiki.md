@@ -618,7 +618,7 @@ I might need to make a proper Tree data structure; this is what I actually want 
 ```
 
 ## Day 12
-It might just be "insert each number as a child of the rightmost node that's smaller than it (the root if they're isn't one)" I think I was too stuck on transforming an array with a while loop to see it, until I made an ASCII tree.
+It might just be "insert each number as a child of the rightmost node that's smaller than it (the root if they're isn't one)". I think I was too stuck on transforming an array with a while loop to see it, until I made an ASCII tree.
 Yeah this is a [min heap](https://en.wikipedia.org/wiki/Heap_\(data_structure\)), just not a binary one.
 
 WIKIPEDIA WHY DO YOU HAVE BRACKETS IN URLS!!!
@@ -659,3 +659,11 @@ url: [
 ## Day 13
 I've completely forgot to do [horizontal rules](https://daringfireball.net/projects/markdown/syntax#hr); they look very easy to do.
 They _were_ very easy to do, once I remembered to make a `Token` `object!`, not just a `block!`.
+
+> It might just be "insert each number as a child of the rightmost node that's smaller than it (the root if they're isn't one)".
+worked perfectly!
+Though I can't actually print out the tree, since a child links to its parent, and the parent to each of its children, so the stack overflows. I *can* use a [pre-order traversal](https://en.wikipedia.org/wiki/Tree_traversal#Pre-order_\(NLR\)) instead though.
+
+Table of contents is done! Looks pretty good, too.
+
+Some cross-pollination from the day job: the search should be at the top of [the homepage](index.html) - if it's at the bottom, you need to scroll to see the results.
