@@ -180,12 +180,26 @@ Parser: context [
         ] [
             maybeInlineNode: maybeParseInlineTokens
             either found? maybeInlineNode [
-                append paragraphNodeChildren maybeInlineNode
+                if any [ ; we don't want to include a blank line at the start of a paragraph, it looks bad
+                    not empty? paragraphNodeChildren
+                    maybeInlineNode/type <> "NewlineNode"
+                ] [
+                    append paragraphNodeChildren maybeInlineNode
+                ]
             ] [
                 lastNodeWasInline: false
-            ]
-            
+            ]  
         ]
+
+        ; we don't want newlines at the end of paragraphs, either
+        if empty? paragraphNodeChildren [
+            return none
+        ]
+        lastNodeInParagraph: last paragraphNodeChildren
+        if (lastNodeInParagraph/type == "NewlineNode") [
+            remove back tail paragraphNodeChildren
+        ]
+
         make ParagraphNode [
             children: paragraphNodeChildren
         ]
