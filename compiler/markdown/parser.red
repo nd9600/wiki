@@ -631,12 +631,17 @@ Parser: context [
         ]
     ]
 
-    parseHyphen: does [
+    parseList: function [
+        isOrderedList [logic!]
+    ] [
+
+        listMarkerToken: either isOrderedList [NumberWithDot] [Hyphen]
+
         ; add all the list items to a list node
-        unorderedListItemNodes: copy []
+        listItemNodes: copy []
         until [
-            if peek Hyphen [
-                consume Hyphen
+            if peek listMarkerToken [
+                consume listMarkerToken
             ]
 
             numberOfIndents: 0
@@ -649,26 +654,27 @@ Parser: context [
                     numberOfIndents: numberOfIndents + 1
                     consume FourSpaces
                 ]
-                consume Hyphen
+                consume listMarkerToken
             ]
-
-            ; if there's 1 indent, we want to surround the inlineNodes by an UnorderedListNode
-            ; if there's 2 indents, we want to surround the inlineNodes by an 2 UnorderedListNodes, etc
-            ; 1 UnorderedListNode per indent
 
             ; add all the inline nodes in the line to an item node
             inlineNodesInListItem: copy []
             until [
                 maybeInlineNode: maybeParseInlineTokens
                 if found? maybeInlineNode [
+
+                    ; if there's 1 indent, we want to surround the inlineNodes by an UnorderedListNode
+                    ; if there's 2 indents, we want to surround the inlineNodes by an 2 UnorderedListNodes, etc
+                    ; 1 UnorderedListNode per indent
                     nodeToAppend: maybeInlineNode
                     repeat indentNumber numberOfIndents [
-                        innerUnorderedListItemNode: make UnorderedListItemNode compose/deep [
+                        innerListItemNode: make ListItemNode compose/deep [
                             children: [(nodeToAppend)]
                             doesntHaveListStyle: (indentNumber <> 1)
                         ]
-                        nodeToAppend: make UnorderedListNode compose/deep [
-                            items: [(innerUnorderedListItemNode)]
+                        nodeToAppend: make ListNode compose/deep [
+                            items: [(innerListItemNode)]
+                            isOrdered: isOrderedList
                         ]
                     ]
 
@@ -687,7 +693,7 @@ Parser: context [
                 consume NewlineToken
             ]
 
-            append unorderedListItemNodes make UnorderedListItemNode [
+            append listItemNodes make ListItemNode [
                 children: inlineNodesInListItem
                 doesntHaveListStyle: numberOfIndents > 0
             ]
@@ -695,7 +701,7 @@ Parser: context [
             any [
                 tail? self/tokens
                 all [
-                    not peek Hyphen
+                    not peek listMarkerToken
                     not peek FourSpaces ; the start of a sub-list
                 ]
             ]
@@ -706,53 +712,18 @@ Parser: context [
             consume NewlineToken
         ]
 
-        make UnorderedListNode [
-            items: unorderedListItemNodes
+        make ListNode [
+            items: listItemNodes
+            isOrdered: isOrderedList
         ]
     ]
 
+    parseHyphen: does [
+        return parseList false
+    ]
+
     parseNumberWithDot: does [
-        ; add all the list items to a list node
-        orderedListItemNodes: copy []
-        until [
-            consume NumberWithDot
-
-            ; add all the inline nodes in the line to an item node
-            inlineNodesInListItem: copy []
-            until [
-                maybeInlineNode: maybeParseInlineTokens
-                if found? maybeInlineNode [
-                    append inlineNodesInListItem maybeInlineNode
-                ]
-
-                any [
-                    tail? self/tokens
-                    not found? maybeInlineNode
-                    peek NewlineToken
-                ]
-            ]
-
-            ; the list might be at the end of the file
-            if (not tail? self/tokens) [
-                consume NewlineToken
-            ]
-            append orderedListItemNodes make OrderedListItemNode [
-                children: inlineNodesInListItem
-            ]
-
-            any [
-                tail? self/tokens
-                not peek NumberWithDot
-            ]
-        ]
-        ; we don't want this extra newline
-        if (peek NewlineToken) [
-            consume NewlineToken
-        ]
-
-        make OrderedListNode [
-            items: orderedListItemNodes
-        ]
+        return parseList true
     ]
 ]
 

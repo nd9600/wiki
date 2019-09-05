@@ -102,6 +102,7 @@ Finally, the new files are live!
 * Copy templater tests over from the framework
 * Write system/integration tests
 * Let unordered lists start with Asterisks (might be hard/conflict with how the Emphasis nodes are parsed)
+* Let lists be the last thing in a file
 
 ## Done
 * ~Handle backslashes inside code blocks~ just use two backslashes when you want a literal one
@@ -112,7 +113,6 @@ Finally, the new files are live!
 * ~Handle spaces before list markers (see day 8)~
 * ~Let Headers work with Asterisks, Underscores, Tildes, Links, and Code, as well as just Text~
 * ~Let URLs include escaped characters (see day 11)~
-
 
 
 # Construction report

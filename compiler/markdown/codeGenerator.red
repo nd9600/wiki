@@ -74,46 +74,31 @@ CodeGenerator: context [
                 ]
             ]
 
-            "UnorderedListNode" [
-                unorderedListItems: either innerList [
-                    unorderedListItems: (f_map lambda [self/generate/innerList ?] node/items)
+            "ListNode" [
+                listItems: either innerList [
+                    (f_map lambda [self/generate/innerList ?] node/items)
                         |> lambda [join ? newline]
                 ] [
-                    unorderedListItems: (f_map lambda [self/generate ?] node/items)
+                    (f_map lambda [self/generate ?] node/items)
                         |> lambda [join ? newline]
                 ]
+
+                listTag: either node/isOrdered ["ol"] ["ul"]
+                listModifierClass: either node/isOrdered ["list--ordered"] ["list--unordered"]
+
                 either innerList [
-                    rejoin [{<ul class="list list--unordered list--inner">} newline unorderedListItems "</ul>"]
+                    rejoin ["<" listTag { class="list } listModifierClass { list--inner">} newline listItems "</" listTag ">"]
                 ] [
-                    rejoin [{<ul class="list list--unordered">} newline unorderedListItems "</ul>"]
+                    rejoin ["<" listTag { class="list } listModifierClass {">} newline listItems "</" listTag ">"]
                 ]
             ]
-            "UnorderedListItemNode" [
+            "ListItemNode" [
                 itemContent: (f_map lambda [self/generate/innerList ?] node/children)
                     |> :rejoin
                 either node/doesntHaveListStyle [
-                    rejoin [{<li class="list__item list__item--unordered list__item--noListStyle">} itemContent "</li>"]
+                    rejoin [{<li class="list__item list__item--noListStyle">} itemContent "</li>"]
                 ] [
-                    rejoin [{<li class="list__item list__item--unordered">} itemContent "</li>"]
-                ]
-            ]
-
-            "OrderedListNode" [
-                orderedListItems: (f_map lambda [self/generate/innerList ?] node/items)
-                    |> lambda [join ? newline]
-                either innerList [
-                    rejoin [{<ol class="list list--ordered list__item--inner">} newline orderedListItems "</ol>"]
-                ] [
-                    rejoin [{<ol class="list list--ordered">} newline orderedListItems "</ol>"]
-                ]
-            ]
-            "OrderedListItemNode" [
-                itemContent: (f_map lambda [self/generate/innerList ?] node/children)
-                    |> :rejoin
-                either innerList [
-                    rejoin [{<li class="list__item list__item--unordered list__item--inner">} itemContent "</li>"]
-                ] [
-                    rejoin [{<li class="list__item list__item--unordered">} itemContent "</li>"]
+                    rejoin [{<li class="list__item">} itemContent "</li>"]
                 ]
             ]
 

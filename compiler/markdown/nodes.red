@@ -69,25 +69,15 @@ BlockquoteNode: make Node [
     text: none
 ]
 
-UnorderedListNode: make Node [
-    type: "UnorderedListNode"
+ListNode: make Node [
+    type: "ListNode"
     items: none
+    isOrdered: false
 ]
-
-UnorderedListItemNode: make Node [
-    type: "UnorderedListItemNode"
+ListItemNode: make Node [
+    type: "ListItemNode"
     children: none
-    doesntHaveListStyle: false ; set to true in list items that contain list items
-]
-
-OrderedListNode: make Node [
-    type: "OrderedListNode"
-    items: none
-]
-
-OrderedListItemNode: make Node [
-    type: "OrderedListItemNode"
-    children: none
+    doesntHaveListStyle: false ; is set to true in list items that contain list items
 ]
 
 InlineCodeNode: make Node [
