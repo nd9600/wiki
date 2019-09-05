@@ -38,5 +38,7 @@ compile: function [
         file: filename
     ]
     html: newCodeGenerator/generate ast
+    ; print html
+    ; quit
     rejoin [tableOfContents newline html]
 ]

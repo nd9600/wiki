@@ -635,14 +635,44 @@ Parser: context [
         ; add all the list items to a list node
         unorderedListItemNodes: copy []
         until [
-            consume Hyphen
+            if peek Hyphen [
+                consume Hyphen
+            ]
+
+            numberOfIndents: 0
+            ; if it's the start of a sub-list
+            if peek FourSpaces [
+                numberOfIndents: numberOfIndents + 1
+                consume FourSpaces
+
+                while [peek FourSpaces] [
+                    numberOfIndents: numberOfIndents + 1
+                    consume FourSpaces
+                ]
+                consume Hyphen
+            ]
+
+            ; if there's 1 indent, we want to surround the inlineNodes by an UnorderedListNode
+            ; if there's 2 indents, we want to surround the inlineNodes by an 2 UnorderedListNodes, etc
+            ; 1 UnorderedListNode per indent
 
             ; add all the inline nodes in the line to an item node
             inlineNodesInListItem: copy []
             until [
                 maybeInlineNode: maybeParseInlineTokens
                 if found? maybeInlineNode [
-                    append inlineNodesInListItem maybeInlineNode
+                    nodeToAppend: maybeInlineNode
+                    repeat indentNumber numberOfIndents [
+                        innerUnorderedListItemNode: make UnorderedListItemNode compose/deep [
+                            children: [(nodeToAppend)]
+                            doesntHaveListStyle: (indentNumber <> 1)
+                        ]
+                        nodeToAppend: make UnorderedListNode compose/deep [
+                            items: [(innerUnorderedListItemNode)]
+                        ]
+                    ]
+
+                    append inlineNodesInListItem nodeToAppend
                 ]
 
                 any [
@@ -656,13 +686,18 @@ Parser: context [
             if (not tail? self/tokens) [
                 consume NewlineToken
             ]
+
             append unorderedListItemNodes make UnorderedListItemNode [
                 children: inlineNodesInListItem
+                doesntHaveListStyle: numberOfIndents > 0
             ]
 
             any [
                 tail? self/tokens
-                not peek Hyphen
+                all [
+                    not peek Hyphen
+                    not peek FourSpaces ; the start of a sub-list
+                ]
             ]
         ]
 

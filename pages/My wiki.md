@@ -96,7 +96,6 @@ Finally, the new files are live!
 
 # Todos
 * Let Asterisks, Underscores, Tildes work with Emphasis, Strikethrough, links, and inline code, not just text
-* Let URLs include escaped characters (see day 11)
 * Handle sub-lists (see day 8)
 * Site web/graph
 * Build a table of contents from headers
@@ -112,6 +111,7 @@ Finally, the new files are live!
 * ~Make a new ParagraphNode when we read in two NewlineTokens in a row, 1 NewlineToken is a NewlineNode~
 * ~Handle spaces before list markers (see day 8)~
 * ~Let Headers work with Asterisks, Underscores, Tildes, Links, and Code, as well as just Text~
+* ~Let URLs include escaped characters (see day 11)~
 
 
 
@@ -667,3 +667,51 @@ Though I can't actually print out the tree, since a child links to its parent, a
 Table of contents is done! Looks pretty good, too.
 
 Some cross-pollination from the day job: the search should be at the top of [the homepage](index.html) - if it's at the bottom, you need to scroll to see the results.
+
+## Day 14
+I'm trying to handle sub-lists now, and it's pretty awkward; the parsing was easy enough (when you're parsing a hyphen, consume as many `FourSpaces` tokens as you can immediately after, count how many there were, and rather than inserting a plain `ListItemNode`, once for each `FourSpaces` token, insert that inside a `ListNode` which itself is inside another `ListItemNode`), but the actual markup it generates now is _nasty_
+```
+<ul>
+    <li>a</li>
+    <li>
+        <ul>
+            <li>b</li>
+        </ul>
+    </li>
+    <li>
+        <ul>
+        <li>
+            <ul>
+                <li>c</li>
+            </ul>
+        </li>
+        </ul>
+    </li>
+</ul>
+```
+all to nest `b` inside `a`, and `c` inside `a` with 2 indents.
+It'd make more sense if it looked like this instead:
+```
+<ul>
+    <li>a</li>
+    <li>
+        <ul>
+            <li>
+                b
+                <ul>
+                    <li>c</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+```
+but that's quite a bit harder to do - I might need to postprocess the AST.
+
+Ooh. Rather than have 2 different List nodes, I can just have 1, and store whatever type of list it is in the node. Should be able to remove some code.
+
+The _real_ problem is it looks like this:
+![nested lists have wrong list styles](static/images/nestedListsBadListStyle.png)
+those `b` and `c` list items shouldn't have the list markers to the left of them.
+
+Only the last list item in the tree should have a marker, and that's the first one I add, so I think I'll be able to sort it out by setting something in the `ListItemNode`s that means "add the `list__item--noListStyle` class"

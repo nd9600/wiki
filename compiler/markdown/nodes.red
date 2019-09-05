@@ -77,6 +77,7 @@ UnorderedListNode: make Node [
 UnorderedListItemNode: make Node [
     type: "UnorderedListItemNode"
     children: none
+    doesntHaveListStyle: false ; set to true in list items that contain list items
 ]
 
 OrderedListNode: make Node [

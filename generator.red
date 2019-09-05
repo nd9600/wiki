@@ -100,6 +100,7 @@ main: does [
         wikipageHTML: templater/compile wikiTemplate variables
         filepath: rejoin [wikiLocation htmlFilename]
         write filepath wikipageHTML
+        quit
     ]
 
     print "compiling index"
