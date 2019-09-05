@@ -126,7 +126,7 @@ Finally, the new files are live!
         1. \*Read tags at the start from `tags: [technology/programming/languages/red etc/another/tag]`
         2. \*Compile rest of the file normally, using normal Red PARSE if it works, or mal-style thingy if it doesn't
     2. \*Output HTML as file_name_slugified.html in site/wiki/ folder
-    3. \*Add index: map! from tag -> HTML file name
+    3. \*Add index: map\! from tag -> HTML file name
         1. \*to-block tag, then map to-string, then `append/only [block-tag filename.html]` to `index: block!`
 3. \*Compile index.twig into index.html, using `index block!`
     1. \*Has the actual index at the top
@@ -700,6 +700,7 @@ It'd make more sense if it looked like this instead:
                 b
                 <ul>
                     <li>c</li>
+                    <li>d</li>
                 </ul>
             </li>
         </ul>
@@ -715,3 +716,8 @@ The _real_ problem is it looks like this:
 those `b` and `c` list items shouldn't have the list markers to the left of them.
 
 Only the last list item in the tree should have a marker, and that's the first one I add, so I think I'll be able to sort it out by setting something in the `ListItemNode`s that means "add the `list__item--noListStyle` class"
+
+Ok that works for `<ul>`s, but definitely not `<ol>`s, because of the badly shaped AST:
+![the ordered lists have the wrong numbers](static/images/orderedListsBadNumbers.png)
+
+Actually it's not just because of the AST - the numbers will stop be wrong if I fix it, since there's a `ListNode` that's being hidden by the `--noListStyle` class, so the outer lists will jump from 1 to 3, or 2 to 4, etc. Ah well. I don't think that's fixable.
