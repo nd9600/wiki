@@ -30,6 +30,7 @@ https://blog.keras.io/the-limitations-of-deep-learning.html
 https://code.fb.com/ai-research/unsupervised-machine-translation-a-novel-approach-to-provide-fast-accurate-translations-for-more-languages/
 [A theory of reality as more than the sum of its parts](https://www.quantamagazine.org/a-theory-of-reality-as-more-than-the-sum-of-its-parts-20170601/)
 [Unsupervised learning: what will replace backpropagation?](http://rebelscience.blogspot.com/2017/09/unsupervised-machine-learning-what-will.html)
+[Continual Learning in a Multi-Layer Network of an Electric Fish](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3393520)
 
 ## Guides
 [Staging servers, source control & deploy workflows, and other Stuff nobody teaches you](https://www.kalzumeus.com/2010/12/12/staging-servers-source-control-deploy-workflows-and-other-stuff-nobody-teaches-you/)
@@ -63,7 +64,7 @@ it gets it own section, it's that good
 [A primer on causal inference](https://www.erikphoel.com/blog/a-primer-on-causal-emergence)
 [If correlation doesn’t imply causation, then what does? - Michael Nielsen](http://www.michaelnielsen.org/ddi/if-correlation-doesnt-imply-causation-then-what-does/)
 [The brain is a context machine](http://nautil.us/issue/68/context/why-the-brain-is-so-noisy?fbclid=IwAR1vxs1_7h6g0J9x8r7ilo8KmBOeIRdai8nSIsi2qe6E0_Ea-erIcfvl5DE)
-
+[New AI Strategy Mimics How Brains Learn to Smell](https://www.quantamagazine.org/new-ai-strategy-mimics-how-brains-learn-to-smell-20180918/)
 
 # General
 [SSC books](https://old.reddit.com/r/slatestarcodex/comments/8wfexm/whats_a_book_that_you_would_recommend_that_most/)

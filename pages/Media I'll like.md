@@ -15,20 +15,22 @@ tags: [me/stuff_I'll_like]
 [The Death and Life of Great American Cities (Vintage)](https://www.amazon.co.uk/Death-Great-American-Cities-Vintage/dp/067974195X)
 [Lions' Commentary on UNIX 6th Edition, with Source Code - Wikipedia](https://en.wikipedia.org/wiki/Lions%27_Commentary_on_UNIX_6th_Edition)
 [Operating Systems: Three Easy Pieces](http://pages.cs.wisc.edu/%7Eremzi/OSTEP/)
-[](https://www.amazon.co.uk/dp/9332550514)
+[Operating Systems: Design And Implementation ](https://www.amazon.co.uk/dp/9332550514)
 [The Design of Everyday Things (The MIT Press)](https://www.amazon.co.uk/Design-Everyday-Things-MIT-Press/dp/0262525674)
 [Autumn in the Heavenly Kingdom: China, The West and the Epic Story of the Taiping Civil War](https://www.amazon.co.uk/Autumn-Heavenly-Kingdom-China-Taiping-ebook/dp/B0084E0DLU/ref=sr_1_1?s=books&ie=UTF8&qid=1536880056&sr=1-1&keywords=autumn+in+the+heavenly+kingdom)
 [Lost Enlightenment: Central Asia's Golden Age from the Arab Conquest to Tamerlane](https://www.amazon.co.uk/Lost-Enlightenment-Central-Conquest-Tamerlane/dp/0691165858)
 [The Lies of Locke Lamora](https://www.amazon.co.uk/Lies-Locke-Lamora-Scott-Lynch/dp/0575079754)
 [Bad Ideas\\Chemicals](https://www.amazon.co.uk/Bad-Ideas-Chemicals-Lloyd-Markham/dp/1912109689)
 [The Beginning of Infinity: Explanations that Transform The World (Penguin Press Science)](https://www.amazon.co.uk/dp/B004TRQAP4/ref=dp-kindle-redirect?_encoding=UTF8&btkr=1)
+[A Practical Guide to Evil](https://practicalguidetoevil.wordpress.com/2015/03/25/prologue/)
 
 ## Read
 [White Indians of Colonial America](https://amstudy.hku.hk/staff/kjohnson/PDF/engl56_kj_axtell_whiteindians.pdf)
 [The City is Not a Tree](https://www.patternlanguage.com/archive/cityisnotatree.html)
 [A Pattern Language - Wikipedia](https://en.wikipedia.org/wiki/A_Pattern_Language)
 [Code: The Hidden Language of Computer Hardware and Software](https://www.amazon.co.uk/Code-Language-Computer-Hardware-Software/dp/0735611319)
-
+[How to build good software](https://www.csc.gov.sg/articles/how-to-build-good-software)
+[Henry Zhu's story](https://github.com/customer-stories/hzoo)
 
 # Music
 
