@@ -95,8 +95,8 @@ I write all the files into a folder that's specified in a `.env` file (I need to
 Finally, the new files are live!
 
 # Todos
+* Let Table of contents go H2 H2 H1 H2 - it doesn't work right now
 * Let Asterisks, Underscores, Tildes work with Emphasis, Strikethrough, links, and inline code, not just text
-* Handle sub-lists (see day 8)
 * Site web/graph
 * Build a table of contents from headers
 * Copy templater tests over from the framework
@@ -113,6 +113,7 @@ Finally, the new files are live!
 * ~Handle spaces before list markers (see day 8)~
 * ~Let Headers work with Asterisks, Underscores, Tildes, Links, and Code, as well as just Text~
 * ~Let URLs include escaped characters (see day 11)~
+* ~Handle sub-lists (see day 8)~
 
 
 # Construction report
