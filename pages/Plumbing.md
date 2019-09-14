@@ -135,3 +135,102 @@ When you're measuring how a long a pipe is for when you cut it, the pipes don't 
 
 Push pipes the whole way in to plastic fittings
 You have to smooth copper pipes with a deburrer if you're puttting pipes into fittings without flux
+
+# Day 3 - outside tap
+![everything but this photo was eaten by a grue](static/images/plumbing_day3Pipe.jpg)
+
+# Day 4 - Maintenance
+![different water systems](static/images/plumbing_systems.jpg)
+
+* make sure you're not screwing in to a metal pipe
+* use wood screws if metal ones don't work
+
+## Systems
+All the different water systems came from the first one, the indirect cold water system
+
+### Indirect cold water system
+* didn't have pumps, all done by gravity (see day 1)
+* has a flow-operated valve, which turns off water to the cistern when the level's high enough
+* mains cold water flows into kitchen sink & storage cistern, from cistern to toilets, wash hand-basics, bath, etc.
+
+### Direct cold water 
+* same as the indirect, but mains goes directly to the toilet etc
+
+### Direct system of hot water
+* same as direct cold water, but the cistern goes to a hot water storage cylinder
+* HWSC has an immerser to heat the water in it
+* hot water rises, cold forces it out, the immerser is 1/3 from the bottom of the cylinder so the hot water can rise, it heats surrounding water
+
+### Indirect system of hot water
+* like the direct system of hot water, but has a boiler, used for central heating
+* cold water comes from the HWSC (the return), goes to the boiler, which heats it, and it flows back to a sealed copper coil inside the HWSC (it's not directly connected to the water inside it), which heats the water in it
+* also has an immerser inside the HWSC, which you run if you don't want the boiler on (e.g. in the Summer, when you don't need central heating)
+* the boiler always runs at e.g. 80 degress, and uses a bypass to divert water to hot taps; to heat it, it reduces the flow rate through the boiler, so the water's in contact with it for longer - you don't need to increase the boiler's temperature, it's not any less efficient to have it heat water for both central heating and taps
+
+### Combi-boiler
+* has 2 heat exchangers/a diverter valve
+* main function: hot water priority
+* water comes in, hits the boiler, goes to a heat exchanger, diverted to the central heating circuit
+* if the hot taps are on, water goes to the taps instead, then back to the central heating when the tap goes off
+
+When burning natural gas (methane etc), hot waste gases (e.g. CO<sup>2</sup>) are produced, so 120 - 200 degrees of heat are lost; combi boilers can capture most of this heat instead, and hot water is released through the condi (condensing) pipe, so you lose \~ 50 degrees of hot gas through the flue pipe
+
+* no gas boilers from 2025 in new builds
+    * might use hydrogen instead/more efficient \(than I'm used to: no bricks\) electic storage systems
+    * electric boilers are better than gas ones, but they're more expensive, since electricity costs more than gas
+
+## Taps
+* you only need a shifter, grips, screw-driver and stanley knife to replace taps
+* mixers mix in the body of the tap, other only mix at the spout
+* spindles are rising/non-rising - they can rise or not when the tap turns on
+* draw boxes on paper, 1 - 12, and put pieces in the boxes in the order you take them out, so you can re-assemble the tap in reverse-order
+* use the shifter to take out the cartridge
+* has rubber washer to avoid damaging where you fit the tap against the surface
+* plastic but secures the tap against the surface
+* shifter against nut in the cartridge
+* if removing the cartridge, turn water off if from the mains - turn the valve at the tap if possible
+* the seating is brass, where the washer sits
+* rubber washer can be different sizes, and is the only thing that stops water flowing
+* buy a tap & washer seating kit
+* tap can have a grub screw behind or under the spout, so you can't see it
+* if water drips constantly, replace the washer - peel it off
+* when you turn the tap, the spindle moves down, letting water flow
+* some taps can't be maintained - buy a maintainable tap, not one that's 1 piece of moulded plastic
+* you can compare pieces to the ones in the size chart in the kit box
+* bring washer to merchants so you can compare them and get the right replacement
+* bath taps are 180mm center - center
+* if changing taps, disconnect the supply, but open the tap first before disconnecting the supply
+* unscrew the but
+* could drip because washer under tap fails (the bottom of the adapter)
+* if the connection is rigid, the washer is fiber tap adapter
+* or two small flexible pipes - bolt and washer under the unit
+
+## Toilet
+* if you can't maintain the valve (in the bad moulded plastic things) you can change where the water level is
+* in a Portsmouth valve (bestvalve), a float rises with the water level, closing the valve & stopping water flowing
+* 2 plastic outside locking nuts, don't touch them
+* unscrew the inner metal nut
+* fiber washer comes out, then orifice, operating arm, float, endcap, piston and valve
+* the toilets that have 6 / 4 litres coming into the toilet use an aperture
+* you can flip the washer over rather than buying a new one, it's thick
+* orifice reduces pipe from 15 to 8mm, reduces flow rate since you don't need much water in a toilet, blue is high pressure orifice, white low
+* if the water trickles, change the orifice type
+* washer under constant pressure from the water, why it wears away
+* when reassembling, make the groove line up
+* bend the pin apart t ostop it falling out
+
+## Traps
+* sinks & toilets are directly connected to the sewer, so they have traps to trap the smells from the sewer
+* traps keep some water in it, creating an air seal, which stops smells from the pipe coming back in
+* a bottle trap connects to the grating with a compression fitting
+* make sure you empty the trap in _another_ sink, not the one you took the trap from
+* replace the other rubber washer - you can use PTFE tape
+* when putting the trap back, turn a full circumference back until it pops, so its on the right thread
+* plastic washer goes against rubber
+* the overflow pipe can pop off, check if it leaks
+* there won't be any smells from the sewer if the U is covered in a U-bend
+* gray water frm sinks & baths can be harvested and reused to flush sinks, but we don't use it much because we use rainwater harvesting instead - it rains a lot
+* put washers on the pipe rather than the fitting
+* rubber in the fitting, nut pushes
+* kitchen & bath waste pipes are 40mm, toilet & sink 32
+* cut the pipe, put glue on it, turn it, and leave for 12 hours
