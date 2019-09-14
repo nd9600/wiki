@@ -139,11 +139,11 @@ You have to smooth copper pipes with a deburrer if you're puttting pipes into fi
 # Day 3 - outside tap
 ![everything but this photo was eaten by a grue](static/images/plumbing_day3Pipe.jpg)
 
-# Day 4 - Maintenance
-![different water systems](static/images/plumbing_systems.jpg)
-
 * make sure you're not screwing in to a metal pipe
 * use wood screws if metal ones don't work
+
+# Day 4 - Maintenance
+![different water systems](static/images/plumbing_systems.jpg)
 
 ## Systems
 All the different water systems came from the first one, the indirect cold water system
@@ -173,7 +173,7 @@ All the different water systems came from the first one, the indirect cold water
 * water comes in, hits the boiler, goes to a heat exchanger, diverted to the central heating circuit
 * if the hot taps are on, water goes to the taps instead, then back to the central heating when the tap goes off
 
-When burning natural gas (methane etc), hot waste gases (e.g. CO<sup>2</sup>) are produced, so 120 - 200 degrees of heat are lost; combi boilers can capture most of this heat instead, and hot water is released through the condi (condensing) pipe, so you lose \~ 50 degrees of hot gas through the flue pipe
+When burning natural gas (methane etc), hot waste gases (e.g. CO<sub>2</sub>) are produced, so 120 - 200 degrees of heat are lost; combi boilers can capture most of this heat instead, and hot water is released through the condi (condensing) pipe, so you lose \~ 50 degrees of hot gas through the flue pipe
 
 * no gas boilers from 2025 in new builds
     * might use hydrogen instead/more efficient \(than I'm used to: no bricks\) electic storage systems
