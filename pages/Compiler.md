@@ -1,5 +1,5 @@
 tags: [technology/computer/programming/languages/design]
-Compilers take code written in one [programming language](programming_language.html) and translate it to another programming language.  Normally, this is from one high(er)-level language to a lower-level one, like [C](c.html) to [Assembly](assembly.html), but occasionally it's from one language to another that's "on the same level", like [Typescript](typescript.html) to [Javascript](javascript.html).  
+Compilers take code written in one [programming language](programming_language.html) and translate it to another programming language.  Normally, this is from one high(er)-level language to a lower-level one, like [C](c.html) to [Assembly](assembly.html), but occasionally it's from one language to another that's "on the same level", like [Typescript](typescript.html) to [Javascript](https://en.wikipedia.org/wiki/JavaScript).  
 
 They generally have 3 stages:
 1. A tokenizer (aka a lexer), which makes a stream of tokens from the input string
