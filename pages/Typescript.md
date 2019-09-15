@@ -303,7 +303,7 @@ queue.enqueue(startPoint);
 ```
 
 ## Type aliases
-]Type aliases](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-aliases) let you give a different name to a type (you can alias primitives, unions, tuples, etc.).
+[Type aliases](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-aliases) let you give a different name to a type (you can alias primitives, unions, tuples, etc.).
 They're normally used for documentation purposes, or to give you a shorter name to use rather than having to type out the whole thing:
 ```
 enum Place {
@@ -415,11 +415,9 @@ export { Direction };
 ```
 
 # Type inference
-
 See [type inference](type_inference.html) for more.
 
 # Declarations
-
 You can type JS files with `.d.ts` files, so you can add types to a JS library you've pulled off NPM that isn't typed yet:
 ```
 // arithmetics.d.ts for a file arithmetics.js
