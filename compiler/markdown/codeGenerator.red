@@ -60,7 +60,8 @@ CodeGenerator: context [
                     { class="header header--} node/size {"} 
                     { id="} headerId {"} 
                     {>} 
-                        node/text 
+                        node/text
+                        {<a class="link header__link" href="#} headerId {" >#</a>}
                     {</h} node/size {>}
                 ]
             ]
@@ -110,7 +111,7 @@ CodeGenerator: context [
             ]
 
             "HorizontalRuleNode" [
-                "<hr>"
+                {<hr class="hr">}
             ]
         ] [
             print rejoin ["AST is " prettyFormat node]
