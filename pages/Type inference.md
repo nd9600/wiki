@@ -1,8 +1,5 @@
 tags: [technology/computer/programming/languages/design]
 
-https://en.wikipedia.org/wiki/Hindley-Milner_type_system#Introduction
-https://eli.thegreenplace.net/2018/type-inference/
-
 # Types in general
 
 Types in Computer Science are a formalised way to enforcing categories of things, for example:
@@ -126,5 +123,61 @@ foo's return type is whatever the if returns, and it returns an int
 
 foo :: (bool -> bool) -> (int -> int) -> int -> int
 foo f g x
-
 ```
+
+## Algorithm
+
+There are 3 stages to HM type inference:
+1. Assign unique symbolic type names (like t1, t2, ...) to all subexpressions.
+2. Using the language's typing rules, write a list of type equations (or constraints) in terms of these type names.
+3. Solve the list of type equations using [unification](https://eli.thegreenplace.net/2018/unification/).
+
+### Stage 1
+Taking the above example, stage 1, assigning symbolic type names to subexpressions:
+```
+foo f g x = if f(x == 1) then g(x) else 20
+
+foo                             t0
+f                               t1
+g                               t2
+x                               t3
+if f(x == 1) then g(x) else 20  t4
+f(x == 1)                       t5
+x == 1                          t6
+1                               int
+g(x)                            t7
+x                               t3
+20                              int
+```
+
+_Every_ subexpression gets a type, and we du-duplicate them (`x` is there twice, and has type `t3` both times), and 20 is always a constant int, so we don't need a symbolic name for it.
+
+### Stage 2
+Writing type equations/constraints:
+```
+t1 = (t6 -> t5)                 since t1 is the type of f, t6 is the type of x == 1, and t5 the type of f(x == 1)
+t3 = int                        because of the types of ==, and the 2nd argument in x == 1
+t6 = bool                       ""
+t2 = (t3 -> t7)                 since t2 is the type of g, t3 is the type of x, and t7 is the type of g(x)
+t6 = bool                       again, since it's the condition of the if
+t4 = int                        since the then and else branches must match, and 20 = int
+```
+
+### Stage 3
+Now we have a list of type constraints, we need to find the most general solution - the _most general unifier_.
+
+#### Unification
+Unification is a process of automatically solving equations between symbolic terms, like we want to do here.
+
+We need to define different _terms_ from constants, variables and function applications:
+* A lowercase letter represents a constant (could be any kind of constant, like an integer or a string)
+* An uppercase letter represents a variable
+* `f(...)` is an application of function f to some parameters, which are terms themselves
+
+Examples: 
+* `V`: a single variable term
+* `foo(V, k)`: function foo applied to variable V and constant k
+* `foo(bar(k), baz(V))`: a nested function application
+
+
+<sub>big thanks to [Eli Bendersky](https://eli.thegreenplace.net/2018/type-inference/) [Wikipedia](https://en.wikipedia.org/wiki/Hindley-Milner_type_system#Introduction)</sub>
