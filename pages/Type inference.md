@@ -1,3 +1,5 @@
+tags: [technology/computer/programming/languages/design]
+
 https://en.wikipedia.org/wiki/Hindley-Milner_type_system#Introduction
 https://eli.thegreenplace.net/2018/type-inference/
 
@@ -58,4 +60,13 @@ Haskell can _infer_ that `f` returns a list of strings, even though there aren't
 3. `++` concats 2 lists together, and `"Hello "` is a string, so `newStr` must be a string too
 4. `replicate rptAmt newStr` is taking in an int and a string ,and replicate's [type signature](https://hackage.haskell.org/package/base-4.12.0.0/docs/Prelude.html#v:replicate) is `Int -> a -> [a]`, so it returns a list of strings
 
-No types needed.
+No types needed, though if you wanted to, it would be
+```
+f :: Int -> String -> [String]
+f baseAmt str = replicate rptAmt newStr
+  where
+    rptAmt = if baseAmt > 5 
+      then baseAmt 
+      else baseAmt + 2
+    newStr = “Hello “ ++ str
+```
