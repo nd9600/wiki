@@ -179,5 +179,46 @@ Examples:
 * `foo(V, k)`: function foo applied to variable V and constant k
 * `foo(bar(k), baz(V))`: a nested function application
 
+Unification's sort of a generalisation of pattern matching:
+We have a constant term, and a pattern term, which has variables. Pattern matching is finding an assignment of variables that makes the two terms match:
+Constant term: `f(a, b, bar(t))`
+Pattern term:  `f(a, V, X)`
 
-<sub>big thanks to [Eli Bendersky](https://eli.thegreenplace.net/2018/type-inference/) [Wikipedia](https://en.wikipedia.org/wiki/Hindley-Milner_type_system#Introduction)</sub>
+Obviously `V = b` and `X = bar(t)` - this can also be called a _substitution_, mapping variables to their assigned values.
+
+In a slightly harder case, variables can appear multiple times:
+Constant term: `f(top(a), a, g(top(a)), t)
+Pattern term: ` f(V,      a, g(V),      t)`
+
+Here, `V = top(a)`/
+
+Sometimes, though, there isn't a valid substitution:
+Constant term: `f(top(a), a, g(top(b)), t)
+Pattern term: ` f(V,      a, g(V),      t)`
+`V` can't match both `top(a)` and `top(b)` at the same time.
+
+---
+
+Unification's similar to that pattern matching, except both terms can have variables, so there isn't a constant term and a pattern term:
+First term: `f(a, V, bar(D))`
+Second term `f(D, k, bar(a))`
+Finding a substitution that makes them equivalent is unification - it's `{V = k, D = a}` here.
+
+Sometimes there can be an infinite number of possible unifiers:
+First term: ` f(X, Y)`
+Second term: `f(Z, g(X))`
+`{X = Z, Y = g(X)}`, `{X=K, Z=K, Y=g(K)}`, `{X=j(K), Z=j(K), Y=g(j(K))}` etc. are all valid substitutions here, and the first one is the **most general unifier** - it can be turned into any of the others, by applying `{Z = j(K)}`, but the reverse isn't true.
+
+Essentially, `X` must equal `Z`, and it can do that directly `X = Z`, or they can both be a different variable `K`, or a function of it `j(K)`, or a function of it, `h(j(K))`, forever.
+
+#### Unification algorithm
+Solving unification problems seems simple, but there are a few corner cases to know about - Peter Norvig's noted a common error <sup id="fnref:1">[1](#fn:1)</sup>
+
+
+
+<sub>big thanks to [Eli Bendersky](https://eli.thegreenplace.net/2018/type-inference/) & [Wikipedia](https://en.wikipedia.org/wiki/Hindley-Milner_type_system#Introduction)</sub>
+
+
+---
+
+1. <span id="fn:1"></span> [Correcting a Widespread Error in Unification Algorithms](https://www.semanticscholar.org/paper/Correcting-a-Widespread-Error-in-Unification-Norvig/95af3dc93c2e69b2c739a9098c3428a49e54e1b6) <sup>[\[return\]](#fnref:1)</sup>
