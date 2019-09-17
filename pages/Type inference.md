@@ -70,3 +70,61 @@ f baseAmt str = replicate rptAmt newStr
       else baseAmt + 2
     newStr = “Hello “ ++ str
 ```
+
+Given an expression `E` and a type `T`, there are 3 questions you can ask:
+1. Is `E` a `T`? -  `E : T`? - this is type checking
+2. What type is `E`? -  `E : _`? - can we derive a type for E? - this is type inference
+3. Given `T`, is there an expression for it - `_ : T`? An example of a `T`?
+
+# Hindley-Milner type system
+The Hindley-Milner (HM) type system is a type system with parametric polymorphism (generic functions & types) that can infer the most general type of a program, in almost linear time. It was described by Roger Hindley first, rediscovered by Robin Milner, and proved by Luis Damas.
+
+HM does type inference, but can also be used for type checking - if you say `E` is a `T1`, it infers a type `T` for `E`, and then checks if `T1 == T`.
+
+Examples:
+```
+mymap f [] = []
+mymap f (first:rest) = f first : mymap f rest
+
+types: 
+mymap :: (t1 -> t2) -> [t1] -> [t2]
+
+2nd argument
+first expression is [], a list
+second expression is (first:rest), : is cons, so first cons'ed on last, so it's a list too ("rest" can be an empty list)
+but we don't the types of first/rest (nothing constrains them), so the element have a "generic" type t1
+
+1st argument
+f is applied to an element in the list (type t1), so f takes in a t1, but nothing constrains the return type, so it's t2
+f :: (t1 -> t2)
+
+result
+: prepends a head on a tail of a list, and the head element must have the same type as the elements in the list, so
+: :: (t3 -> [t3] -> [t3])
+
+in this case, t3 :: f first :: t2
+so here : :: t2 -> [t2]
+
+so mymap :: (t1 -> t2) -> [t1] -> [t2]
+```
+
+Another example:
+```
+foo f g x = if f(x == 1) then g(x) else 20
+
+"if cond" must return a boolean, and the types of the branches must be the same and are what the if returns,
+f(x == 1) :: bool
+g(x) :: 20 :: int
+
+== :: t -> t
+so x == 1 means x :: 1 :: int
+
+so g :: (int -> int)
+and f :: (bool -> bool)
+
+foo's return type is whatever the if returns, and it returns an int 
+
+foo :: (bool -> bool) -> (int -> int) -> int -> int
+foo f g x
+
+```
