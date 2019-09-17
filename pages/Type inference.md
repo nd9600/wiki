@@ -302,7 +302,7 @@ unifyVariable: function [
             none
         ]
         true [
-            ; v is not yet in subst and can't simplify x. Extend subst
+            ; v is not yet in subst and can't simplify x, returns a new map like 'subst but with the key v.name = x
             {**subst, v.name: x}
         ]
     ]
