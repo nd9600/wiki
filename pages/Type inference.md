@@ -212,9 +212,123 @@ Second term: `f(Z, g(X))`
 Essentially, `X` must equal `Z`, and it can do that directly `X = Z`, or they can both be a different variable `K`, or a function of it `j(K)`, or a function of it, `h(j(K))`, forever.
 
 #### Unification algorithm
-Solving unification problems seems simple, but there are a few corner cases to know about - Peter Norvig's noted a common error <sup id="fnref:1">[1](#fn:1)</sup>
+Solving unification problems seems simple, but there are a few corner cases to know about - Peter Norvig's noted a common error <sup id="fnref:1">[1](#fn:1)</sup>.
 
+The correct algorithm is based on J.A. Robinson's 1965 paper "A machine-oriented logic based on the resolution principle". More efficient algorithms have been developed since, but this focuses on correctness and simplicity, not performance.
 
+We start by defining the data structure for terms:
+```
+Term
+
+App(Term):  // an application of `fname` to `args`
+    fname
+    args
+
+Var(Term):
+    name
+
+Const(Term):
+    value
+```
+
+Then a function to unify variables with terms:
+```
+unify: function [
+    {Unifies term 'x and 'y with initial 'subst.
+
+Returns a substitution (a map of name -> term) that unifies 'x and 'y, or none if they can't be unified. Pass 'subst = {} if no substitution is initially known. Note that {} means a valid (but empty) substitution
+    }
+    x
+    y
+    subst [map!]
+] [
+    case [
+        subst is none [
+            none
+        ]
+        x == y [
+            subst
+        ]
+        x is Var [
+            unifyVariable(x, y, subst)
+        ]
+        y is Var [
+            unifyVariable(y, x, subst)
+        ]
+        all [
+            x is App
+            y is App
+        ] [
+            either any [
+                x.fname != y.fname
+                (length? x.args) != (length? y.args)
+            ] [
+                none
+            ] [
+                repeat i (length? x.args) [
+                    subst = unify(x.args[i], y.args[i], subst)
+                ]
+                subst
+            ]
+        ]
+        true [
+            none
+        ]
+    ]
+]
+```
+
+The `unify` function does most of the work in the algorithm: it looks for a substitution, a mapping from variable names to terms. When either side is a variable, it calls `unifyVariable`, otherwise, if both sides are function applications, it makes sure they're applying the same function (there's no match, otherwise), and unifies their arguments one-by-one.
+
+```
+unifyVariable: function [
+    "Unifies variable 'v with term 'x, using 'subst. Returns updated 'subst or none on failure"
+    v
+    x
+    subst [map!]
+] [
+    assert v is Var
+    case [
+        v.name in subst [
+            unify(subst[v.name], s, subst)
+        ]
+        all [
+            x is Var
+            x.name in subst
+        ] [
+            unify(v, subst[x.name], subst)
+        ]
+        occursCheck(v, x, subst) [
+            none
+        ]
+        true [
+            ; v is not yet in subst and can't simplify x. Extend subst
+            {**subst, v.name: x}
+        ]
+    ]
+]
+```
+
+```
+occursCheck: function [
+    {Does the variable 'v occur anywhere inside 'term?
+
+Variables in 'term are looked up in subst and the check is applied
+    recursively}
+    v
+    term
+    subst [map!]
+] [
+
+]
+```
+
+The algorithm here isn't too efficient- with large unification problems, check more advanced options. 
+It copies around `subst` too much, and we don't try to cache terms that have already been unified, so it repeats too much work.
+
+For a good overview of the efficiency of unification algorithms, check out two papers:
+1. "An Efficient Unificaiton algorithm" by Martelli and Montanari
+2. "Unification: A Multidisciplinary survey" by Kevin Knight
 
 <sub>big thanks to [Eli Bendersky](https://eli.thegreenplace.net/2018/type-inference/) & [Wikipedia](https://en.wikipedia.org/wiki/Hindley-Milner_type_system#Introduction)</sub>
 
