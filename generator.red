@@ -56,7 +56,7 @@ main: does [
     ; deleteDir/matching wikiLocation lambda [endsWith ? ".html"]
 
     ; wikipages: findFiles/matching %pages/ lambda [endsWith ? ".md"]
-    wikipages: [%pages/Type%20inference.md [%pages/Typescript.md]
+    wikipages: [%pages/Type%20inference.md %pages/Typescript.md]
     wikiTemplate: read %wikipage.twig
 
     index: make map! reduce [
