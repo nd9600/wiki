@@ -98,11 +98,11 @@ Finally, the new files are live!
 * Let Table of contents go H2 H2 H1 H2 - it doesn't work right now
 * Let Asterisks, Underscores, Tildes work with Emphasis, Strikethrough, links, and inline code, not just text
 * Site web/graph
-* Build a table of contents from headers
 * Copy templater tests over from the framework
 * Write system/integration tests
 * Let unordered lists start with Asterisks (might be hard/conflict with how the Emphasis nodes are parsed)
 * Let lists be the last thing in a file
+* Allow verbatim sections, where the compiler just echos the input
 
 ## Done
 * ~Handle backslashes inside code blocks~ just use two backslashes when you want a literal one
@@ -114,6 +114,8 @@ Finally, the new files are live!
 * ~Let Headers work with Asterisks, Underscores, Tildes, Links, and Code, as well as just Text~
 * ~Let URLs include escaped characters (see day 11)~
 * ~Handle sub-lists (see day 8)~
+* ~Build a table of contents from headers~
+
 
 
 # Construction report
