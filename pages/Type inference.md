@@ -187,13 +187,13 @@ Pattern term:  `f(a, V, X)`
 Obviously `V = b` and `X = bar(t)` - this can also be called a _substitution_, mapping variables to their assigned values.
 
 In a slightly harder case, variables can appear multiple times:
-Constant term: `f(top(a), a, g(top(a)), t)
+Constant term: `f(top(a), a, g(top(a)), t)`
 Pattern term: ` f(V,      a, g(V),      t)`
 
-Here, `V = top(a)`/
+Here, `V = top(a)`
 
 Sometimes, though, there isn't a valid substitution:
-Constant term: `f(top(a), a, g(top(b)), t)
+Constant term: `f(top(a), a, g(top(b)), t)`
 Pattern term: ` f(V,      a, g(V),      t)`
 `V` can't match both `top(a)` and `top(b)` at the same time.
 
