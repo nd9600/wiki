@@ -238,9 +238,10 @@ unify: function [
 
 Returns a substitution (a map of name -> term) that unifies 'x and 'y, or none if they can't be unified. Pass 'subst = {} if no substitution is initially known. Note that {} means a valid (but empty) substitution
     }
-    x
-    y
-    subst [map!]
+    x       [term]
+    y       [term]
+    subst   [map! none]
+    return: [map! none]
 ] [
     case [
         subst is none [
@@ -283,16 +284,17 @@ The `unify` function does most of the work in the algorithm: it looks for a subs
 ```
 unifyVariable: function [
     "Unifies variable 'v with term 'x, using 'subst. Returns updated 'subst or none on failure"
-    v
-    x
+    v     [variable]
+    x     [term]
     subst [map!]
+    return: [map! none]
 ] [
     assert v is Var
     case [
         v.name in subst [
             unify(subst[v.name], s, subst)
         ]
-        all [
+        all [                                   ; this fixes the "common error" Norvig describes above
             x is Var
             x.name in subst
         ] [
@@ -303,11 +305,15 @@ unifyVariable: function [
         ]
         true [
             ; v is not yet in subst and can't simplify x, returns a new map like 'subst but with the key v.name = x
-            {**subst, v.name: x}
+            put(subst, v.name, x)
+            subst
         ]
     ]
 ]
 ```
+
+The key bit is th recursive unification: if `v` is bound in the substitution, its definition is unified with `x` to guarantee consistency throughout the process (vice-verase if x is a variable).
+`occursCheck` guarantees that there aren't any variable bindings that refer to themselves, like `X = f(X)`, whcih might cause infinite loops:
 
 ```
 occursCheck: function [
@@ -315,12 +321,51 @@ occursCheck: function [
 
 Variables in 'term are looked up in subst and the check is applied
     recursively}
-    v
-    term
+    v     [variable]
+    term  [term]
     subst [map!]
 ] [
-
+    assert v is Var
+    case [
+        v == term [
+            true
+        ]
+        all [                                   ; this fixes the "common error" Norvig describes above
+            term is Var
+            term.name in subst
+        ] [
+            occursCheck(v, subst[term.name], subst)
+        ]
+        term is App [
+            foreach arg term.args [
+                if occursCheck(v, arg, subst) [
+                    return true
+                ]
+                return false
+            ]
+        ]
+        true [
+            false
+        ]
+    ]
 ]
+```
+
+Now, tracing through an execution:
+```
+unify 
+    f(X,         h(X), Y, g(Y))
+    f(g(Z),      W,    Z, X)
+mgu = {X = g(Z), W = h(X), Y = Z}
+
+unify called
+    root of both arguments are Apps of function f, with the same # of arguments, so it loops over the arguments, unifying them individually
+    unify(X, g(Z)) calls unifyVariable(X, g(Z)) because X is a variable
+        unifyVariable(X, g(Z)): none of the conditions are matched, so {X = g(Z)} is added to the substitution
+    unify(h(X), W) calls unifyVariable(W, h(X), {X = g(Z)}) because W is variable
+        unifyVariable(W, h(X), {X = g(Z)}):
+
+
 ```
 
 The algorithm here isn't too efficient- with large unification problems, check more advanced options. 

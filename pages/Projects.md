@@ -1,10 +1,11 @@
 tags: [me projects]
 # Done
-* Transducers in PHP - https://tgvashworth.com/2014/08/31/csp-and-transducers.html
-* Ray tracing http://in1weekend.blogspot.com/2016/01/ray-tracing-in-one-weekend.html?m=1 https://www.siggraph.org/education/materials/HyperGraph/raytrace/rtrace0.htm 
+* Transducers in PHP - https://tgvashworth.com/2014/08/31/csp-and-transducers.html, see https://github.com/[x.download]/personal_misc/blob/master/misc/php/src/Transducers.php
+* Ray tracing http://in1weekend.blogspot.com/2016/01/ray-tracing-in-one-weekend.html?m=1 https://www.siggraph.org/education/materials/HyperGraph/raytrace/rtrace0.htm, see https://github.com/[x.download]/rayTracing
 
 # Not done
 * English translations of CSS selectors like http://tux.theopalgroup.com/cgi-bin/css3explainer/selectoracle.py
+* Pattern matching https://en.wikibooks.org/wiki/Haskell/Pattern_matching https://en.wikipedia.org/wiki/ML_\(programming_language\)
 * Local ebook/pdf reader website
 * Reduced MNIST with nose architecture & predictive processing https://www.quantamagazine.org/new-ai-strategy-mimics-how-brains-learn-to-smell-20180918/ http://cognitivemedium.com/rmnist https://slatestarcodex.com/2017/09/05/book-review-surfing-uncertainty/ http://www.foundalis.com/res/poc/PrinciplesOfCognition.htm#sixth_law
 * Red IDE, like Bret Victor's (w/ language server?) https://blog.acolyer.org/2016/09/05/on-the-criteria-to-be-used-in-decomposing-systems-into-modules/ https://github.com/AlexanderBaggett/RedIDE http://redlanguageblog.blogspot.com/?m=1 http://www.rebol.net/cookbook/recipes/0042.html https://github.com/fullstackio/choc http://worrydream.com/LearnableProgramming/ https://news.ycombinator.com/item?id=6458424
