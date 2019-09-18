@@ -292,7 +292,7 @@ unifyVariable: function [
     assert v is Var
     case [
         v.name in subst [
-            unify(subst[v.name], s, subst)
+            unify(subst[v.name], x, subst)
         ]
         all [                                   ; this fixes the "common error" Norvig describes above
             x is Var
@@ -312,8 +312,8 @@ unifyVariable: function [
 ]
 ```
 
-The key bit is th recursive unification: if `v` is bound in the substitution, its definition is unified with `x` to guarantee consistency throughout the process (vice-verase if x is a variable).
-`occursCheck` guarantees that there aren't any variable bindings that refer to themselves, like `X = f(X)`, whcih might cause infinite loops:
+The key bit is the recursive unification: if `v` is bound in the substitution, its definition is unified with `x` to guarantee consistency throughout the process (vice-verase if x is a variable).
+`occursCheck` guarantees that there aren't any variable bindings that refer to themselves, like `X = f(X)`, which might cause infinite loops:
 
 ```
 occursCheck: function [
@@ -359,12 +359,15 @@ unify
 mgu = {X = g(Z), W = h(X), Y = Z}
 
 unify called
-    root of both arguments are Apps of function f, with the same # of arguments, so it loops over the arguments, unifying them individually
-    unify(X, g(Z)) calls unifyVariable(X, g(Z)) because X is a variable
+root of both arguments are Apps of function f, with the same # of arguments, so it loops over the arguments, unifying them individually
+    unify(X, g(Z)): calls unifyVariable(X, g(Z)) because X is a variable
         unifyVariable(X, g(Z)): none of the conditions are matched, so {X = g(Z)} is added to the substitution
-    unify(h(X), W) calls unifyVariable(W, h(X), {X = g(Z)}) because W is variable
-        unifyVariable(W, h(X), {X = g(Z)}):
-
+    unify(h(X), W): calls unifyVariable(W, h(X), {X = g(Z)}) because W is variable
+        unifyVariable(W, h(X), {X = g(Z)}): none of the conditions are matched, so {W = h(X)} is added to the substitution
+    unify(Y, Z, {X = g(Z), W = h(X)}): calls unifyVariable(Y, Z, {X = g(Z), W = h(X)}) because Y is a variable
+        unifyVariable(Y, Z, {X = g(Z), W = h(X)}): none of the conditions are matched, so {Y = Z} is added to the substitution ({Z = Y} would also be fine)
+    unify(g(Y), X, {X = g(Z), W = h(X), Y = Z}): calls unifyVariable(X, g(Y), {X = g(Z), W = h(X), Y = Z})
+        unifyVariable(X, g(Y), {X = g(Z), W = h(X), Y = Z}): X is in the substitution, so it calls unify(subst[X])
 
 ```
 
