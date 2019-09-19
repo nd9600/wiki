@@ -367,7 +367,10 @@ root of both arguments are Apps of function f, with the same # of arguments, so 
     unify(Y, Z, {X = g(Z), W = h(X)}): calls unifyVariable(Y, Z, {X = g(Z), W = h(X)}) because Y is a variable
         unifyVariable(Y, Z, {X = g(Z), W = h(X)}): none of the conditions are matched, so {Y = Z} is added to the substitution ({Z = Y} would also be fine)
     unify(g(Y), X, {X = g(Z), W = h(X), Y = Z}): calls unifyVariable(X, g(Y), {X = g(Z), W = h(X), Y = Z})
-        unifyVariable(X, g(Y), {X = g(Z), W = h(X), Y = Z}): X is in the substitution, so it calls unify(subst[X])
+        unifyVariable(X, g(Y), {X = g(Z), W = h(X), Y = Z}): X is in the substitution, so it calls unify(subst[X], g(Y), subst) = unify(g(Z), g(Y), subst)
+            unify(g(Z), g(Y), {X = g(Z), W = h(X), Y = Z}): again, both Apps of g, so loops over the arguments, Z and Y
+                unify(Z, Y, {X = g(Z), W = h(X), Y = Z}): Z is a variable, so calls unifyVariable(Z, Y)
+                    unifyVariable(Z, Y, {X = g(Z), W = h(X), Y = Z}): Z is a Var and in the substitution, so calls unify(Z, subst[])
 
 ```
 
