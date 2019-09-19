@@ -356,7 +356,6 @@ Now, tracing through an execution:
 unify 
     f(X,         h(X), Y, g(Y))
     f(g(Z),      W,    Z, X)
-mgu = {X = g(Z), W = h(X), Y = Z}
 
 unify called
 root of both arguments are Apps of function f, with the same # of arguments, so it loops over the arguments, unifying them individually
@@ -370,7 +369,9 @@ root of both arguments are Apps of function f, with the same # of arguments, so 
         unifyVariable(X, g(Y), {X = g(Z), W = h(X), Y = Z}): X is in the substitution, so it calls unify(subst[X], g(Y), subst) = unify(g(Z), g(Y), subst)
             unify(g(Z), g(Y), {X = g(Z), W = h(X), Y = Z}): again, both Apps of g, so loops over the arguments, Z and Y
                 unify(Z, Y, {X = g(Z), W = h(X), Y = Z}): Z is a variable, so calls unifyVariable(Z, Y)
-                    unifyVariable(Z, Y, {X = g(Z), W = h(X), Y = Z}): Z is a Var and in the substitution, so calls unify(Z, subst[])
+                    unifyVariable(Z, Y, {X = g(Z), W = h(X), Y = Z}): Y is a Var and in the substitution, so calls unify(Z, subst[Y], {X = g(Z), W = h(X), Y = Z}) = unify(Z, Z, {X = g(Z), W = h(X), Y = Z})
+                        unify(Z, Z, {X = g(Z), W = h(X), Y = Z}):  Z == Z, so it just returns the (final) substitution
+    so, mgu = {X = g(Z), W = h(X), Y = Z}
 
 ```
 
