@@ -664,7 +664,39 @@ I've completely forgot to do [horizontal rules](https://daringfireball.net/proje
 They _were_ very easy to do, once I remembered to make a `Token` `object!`, not just a `block!`.
 
 > It might just be "insert each number as a child of the rightmost node that's smaller than it (the root if they're isn't one)".
-worked perfectly!
+worked perfectly! This is what the algorithm looks like:
+```
+headerTree: make TreeNode []
+foreach header headers [ // a list of headers
+    nodeToInsertInto: nodeToInsertHeaderInto headerTree header
+    nodeToInsertInto/insertNode make TreeNode [value: header]
+]
+
+nodeToInsertHeaderInto: function [
+    "find the node in the tree where the header should be inserted"
+    n [object!]
+    header [object!]
+] [
+    ; each header is inserted as a child of (the rightmost node whose header's size is smaller than it - if there isn't one, it's the root)
+    ; this finds that rightmost node
+
+    ; if this node doesn't have any children, we can only insert it here
+    if empty? n/children [
+        return n
+    ]
+
+    ; if the last child has the same size as the header we want to insert, we actually want to insert it here
+    lastChild: last n/children
+    lastHeader: lastChild/value
+    if lastHeader/size == header/size [
+        return n
+    ]
+
+    ; otherwise, we recurse into the last child's subtree
+    return nodeToInsertHeaderInto lastChild header
+]
+```
+
 Though I can't actually print out the tree, since a child links to its parent, and the parent to each of its children, so the stack overflows. I *can* use a [pre-order traversal](https://en.wikipedia.org/wiki/Tree_traversal#Pre-order_\(NLR\)) instead though.
 
 Table of contents is done! Looks pretty good, too.
