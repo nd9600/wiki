@@ -53,7 +53,8 @@ TocGenerator: context [
         n [object!]
         header [object!]
     ] [
-        ; insert each header as a child of the rightmost node whose header's size is smaller than it - if they're isn't one, it's the root
+        ; each header is inserted as a child of (the rightmost node whose header's size is smaller than it - if there isn't one, it's the root)
+        ; this finds that rightmost node
 
         ; if this node doesn't have any children, we can only insert it here
         if empty? n/children [
