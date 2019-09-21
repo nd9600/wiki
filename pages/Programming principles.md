@@ -3,7 +3,7 @@ tags: [technology/computer/programming]
 These are principles, **not** rules - you don't _need_ to follow every single one exactly all the time, you're allowed to break them. Like George Orwell's [6 rules for writing](http://www.openculture.com/2016/05/george-orwells-six-rules-for-writing-clear-and-tight-prose.html)<sup id="fnref:1">[1](#fn:1)</sup>:
 > Break any of these rules sooner than say anything outright barbarous.
 
-(all examples are in PHP)
+<sub>(all examples are in PHP)</sub>
 
 # Remember context and form
 If you're developing a solution to a problem, you might get stuck in a rut, making the solution in a particular way, and forget there could be other approaches that you haven't considered, so take a minute, and pre-empt yourself - think "ok I'm doing it _this_ particular way, but what other way could I be doing it?"
