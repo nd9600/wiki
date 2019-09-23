@@ -25,6 +25,43 @@ Different languages have more or less expressive type systems:
 * Red/Rebol lets you type function parameters and return types (though return types are ignored right now), but not variables
 * [Haskell](haskell.html) requires that everything is typed, and will _infer_ types - if a variable is instantiated as the result of calling a function that returns an int, it knows the variable's an int - so you don't need to type every single thing yourself
 
+## Polymorphism
+A _polymorphic_ function is one that doesn't require its argument(s) to have specific type(s) - they're **generic** functions & types.
+The simplest polymorphic function is `id`:
+```
+f :: a -> a
+f = \x -> x
+```
+This function has a polymorphic type, and polymorphic types are expressed through universal (∀) quantification (something is applicable to every type or holds for everything):
+the type of `id` can be written as `forall A. A -> A` - for all types `A`, the type of the function is `A -> A`. These sorts of types (they're called forall/universal quantifiers, because they quantify over all types), can be "instantiated" when they're used with an actual, concrete type, like `integers` or `booleans`.
+There are other kinds of quantification, too, like bounded quantification and existential quantification. Bounded quantification is useful when we need to apply other constraints on the generic type variables. It's commonly seen in interface types.
+
+```
+map :: (a -> b) -> [a] -> [b]
+is the same as writing
+map :: forall a. forall b. (a -> b) -> [a] -> [b]
+or
+map :: forall a b. (a -> b) -> [a] -> [b]
+```
+
+Quantifiers can be allowed in different places in a type system: monomorphic types don't allow quantifiers at all (rank 0), rank 1 allows quantifiers at the top level, so this is invalid:
+```
+forall A. A -> (forall B. B -> B)
+```
+though the inner quantifier can be moved up here, to
+```
+forall A, B. A -> B
+```
+but this isn't always possible, like in
+```
+forall B. (forall A. A) -> B     -- a forall appearing within the left-hand side of (->) cannot be moved up
+```
+so this can't be represented in a rank 1 type system
+
+The Hindley-Milner type system only allowed rank 1 types, because type inference is undecidable in an arbitrary-rank system: it's impossible to infer the types of some well-typed expressions without some type annotations, and it's harder to implement arbitrary-rank type inference, too.
+
+Polytypes (or _type schemes_) are types containing variables bound by one or more for-all quantifiers, e.g. `∀ α . α → α` 
+
 <dl class="definitionList">
     <dt>Type system</dt>
     <dd>A set of rules that assigns different types to different things</dd>
@@ -382,9 +419,108 @@ For a good overview of the efficiency of unification algorithms, check out two p
 1. "An Efficient Unificaiton algorithm" by Martelli and Montanari
 2. "Unification: A Multidisciplinary survey" by Kevin Knight
 
-<sub>big thanks to [Eli Bendersky](https://eli.thegreenplace.net/2018/type-inference/) & [Wikipedia](https://en.wikipedia.org/wiki/Hindley-Milner_type_system#Introduction)</sub>
+---
 
+## Formally
+
+The HM type system is normally shown like this in textbooks:
+![Var, App, Abs, Let, Inst, Gen](static/images/type_inference_hindleyMilner.png)
+but it's a lot less scary that it looks:
+* each _typing rule_ means "the top implies the bottom"
+* multiple expresses are anded together
+* `x : σ` means `x has type σ`
+* `∈` means `is in`, `∉` means `isn't in`
+* `Γ` is normally called an environment or context (sometimes a "partition"), but here it's our **substitution** - `x : σ ∈ Γ` means `the substitution Γ includes the fact that x has type σ`
+* `⊢` means `proves` or `determines`, so `Γ ⊢ x : σ` means that `the substitution Γ determines that x has type σ`
+* `,` is a way of including more assumptions into `Γ`, so, `Γ, x : τ ⊢ e : τ'` means that `Γ, with the additional, overriding assumption that x has type τ, proves that e has type τ'`
+
+### Var
+The first typing rule `Var` is just our `Variable` from above:
+```
+if Γ includes that x has type σ, 
+then Γ determines that x has type σ
+```
+
+### App
+This is our `Application`:
+```
+if Γ determines that e0 is a function from τ to τ' AND Γ determines that e1 has the type τ
+then Γ determines that e1 applied to e0 has type τ' 
+```
+
+### Abs
+ `Abstraction` is function abstraction:
+```
+if Γ, with the extra assumption that x has type τ, determines that e has type τ'
+then Γ determines that a function that takes an x and return an e, has type τ to τ'
+```
+
+### Let
+This rule is for _let polymorphism_<sup id="fnref:2">[2](#fn:2)</sup>:
+```
+if Γ determines that e has type σ, and Γ, with the extra assumption that x has type σ, determines that e1 has type τ
+then Γ determines that a let expression that locally binds x to e0, a value of type σ, makes e1 have type τ
+
+"if we have an expression e0 that is a 𝜎 (being a variable or a function), and some name, x, also a 𝜎, and an expression e1 of type 𝜏, then we can substitute e0 for 𝑥 wherever it appears inside of e1"
+
+"really, this just tells you that a let statement essentially lets you expand the context with a new binding - which is exactly what let does"
+```
+
+### Inst
+This is about instantiation, sub-typing (**not** like object-oriented sub-typing):
+```
+σ's relate to type-schemes like ∀ α . α -> α, not types
+
+if we have 
+id = ∀x. λx     (σ)
+and 
+id2 = ∀xy. λx -> x      (σ', y isn't used)
+id2 ⊑ id
+
+if Γ determines that e has type-scheme σ' and σ' is a sub-type of σ                   (⊑ means a partial-ordering relation)
+then Γ determines that e also has type-scheme σ
+```
+
+### Gen
+This is about generalizing types, generalization:
+```
+a free variable is a variable that isn't introduced by a let-statement or lambda inside some expression (not a bound variable); this expression now depends on the value of the free variable from its context
+
+if Γ determines that e has type σ AND α isn't a free variable in Γ
+then Γ determines that e has type σ, forall α
+
+"if there is some variable α which is not "free" in anything in your context, then it is safe to say that any expression whose type you know e : σ will have that type for any value of α"
+```
 
 ---
 
+<sub>big thanks to [Eli Bendersky](https://eli.thegreenplace.net/2018/type-inference/) & [Wikipedia](https://en.wikipedia.org/wiki/Hindley-Milner_type_system#Introduction)</sub>
+
 1. <span id="fn:1"></span> [Correcting a Widespread Error in Unification Algorithms](https://www.semanticscholar.org/paper/Correcting-a-Widespread-Error-in-Unification-Norvig/95af3dc93c2e69b2c739a9098c3428a49e54e1b6) <sup>[\[return\]](#fnref:1)</sup>
+2. <span id="fn:2"></span> From [here](https://papl.cs.brown.edu/2018/Type_Inference.html#%28part._let-poly%29) <sup>[\[return\]](#fnref:2)</sup>
+> Consider the following program:
+>
+```
+(let ([id (fun (x) x)])
+  (if (id true)
+      (id 5)
+      (id 6)))
+```
+> If we write it with explicit type annotations, it type-checks:
+```
+(if (id<Boolean> true)
+    (id<Number> 5)
+    (id<Number> 6))
+```
+> However, if we use type inference, it does not! That is because the A’s in the type of id unify either with Boolean or with Number, depending on the order in which the constraints are processed. At that point id effectively becomes either a (Boolean -> Boolean) or (Number -> Number) function. At the use of id of the other type, then, we get a type error!
+> 
+> The reason for this is because the types we have inferred through unification are not actually polymorphic. This is important to remember: just because you type variables, you don’t necessarily have polymorphism! The type variables could be unified at the next use, at which point you end up with a mere monomorphic function. Rather, true polymorphism only obtains when you can instantiate type variables.
+>
+>In languages with true polymorphism, then, constraint generation and unification are not enough. Instead, languages like ML and Haskell implement something colloquially called let-polymorphism. In this strategy, when a term with type variables is bound in a lexical context, the type is automatically promoted to be a quantified one. At each use, the term is effectively automatically instantiated.
+
+Because identifiers not bound using a `let` or `where` clause (or at the top level of a module) are limited with respect to their polymorphism. Specifically, a lambda-bound function (i.e., one passed as argument to another function) cannot be instantiated in two different ways. For example, this program is illegal:
+```
+let f g  =  (g [], g 'a')       -- ill-typed expression
+in f (\x -> x)
+```
+because `g`, bound to a lambda abstraction whose principal type is `a -> a`, is used within `f` in two different ways: once with type `[a] -> [a]`, and once with type `Char -> Char`.
