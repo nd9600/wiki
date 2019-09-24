@@ -53,10 +53,9 @@ slugifyString: function [
 ]
 
 main: does [
-    ; deleteDir/matching wikiLocation lambda [endsWith ? ".html"]
+    deleteDir/matching wikiLocation lambda [endsWith ? ".html"]
 
-    ; wikipages: findFiles/matching %pages/ lambda [endsWith ? ".md"]
-    wikipages: [%pages/Type%20inference.md %pages/Typescript.md]
+    wikipages: findFiles/matching %pages/ lambda [endsWith ? ".md"]
     wikiTemplate: read %wikipage.twig
 
     index: make map! reduce [
