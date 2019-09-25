@@ -275,10 +275,10 @@ unify: function [
 
 Returns a substitution (a map of name -> term) that unifies 'x and 'y, or none if they can't be unified. Pass 'subst = {} if no substitution is initially known. Note that {} means a valid (but empty) substitution
     }
-    x       [term]
-    y       [term]
-    subst   [map! none]
-    return: [map! none]
+    x       [object!] "term"
+    y       [object!] "term"
+    subst   [map! none!]
+    return: [map! none!]
 ] [
     case [
         subst is none [
@@ -288,10 +288,10 @@ Returns a substitution (a map of name -> term) that unifies 'x and 'y, or none i
             subst
         ]
         x is Var [
-            unifyVariable(x, y, subst)
+            unifyVariable x y subst
         ]
         y is Var [
-            unifyVariable(y, x, subst)
+            unifyVariable y x subst
         ]
         all [
             x is App
@@ -304,7 +304,7 @@ Returns a substitution (a map of name -> term) that unifies 'x and 'y, or none i
                 none
             ] [
                 repeat i (length? x.args) [
-                    subst = unify(x.args[i], y.args[i], subst)
+                    subst = unify x.args[i] y.args[i] subst
                 ]
                 subst
             ]
@@ -314,35 +314,31 @@ Returns a substitution (a map of name -> term) that unifies 'x and 'y, or none i
         ]
     ]
 ]
-```
 
-The `unify` function does most of the work in the algorithm: it looks for a substitution, a mapping from variable names to terms. When either side is a variable, it calls `unifyVariable`, otherwise, if both sides are function applications, it makes sure they're applying the same function (there's no match, otherwise), and unifies their arguments one-by-one.
-
-```
 unifyVariable: function [
     "Unifies variable 'v with term 'x, using 'subst. Returns updated 'subst or none on failure"
-    v     [variable]
-    x     [term]
+    v     [object!] "variable"
+    x     [object!] "term"
     subst [map!]
-    return: [map! none]
+    return: [map! none!]
 ] [
     assert v is Var
     case [
         v.name in subst [
-            unify(subst[v.name], x, subst)
+            unify subst[v.name] x subst
         ]
-        all [                                   ; this fixes the "common error" Norvig describes above
+        all [         ; this fixes the "common error" Peter Norvig describes in "Correcting a Widespread Error in Unification Algorithms"
             x is Var
             x.name in subst
         ] [
-            unify(v, subst[x.name], subst)
+            unify v subst[x.name] subst
         ]
-        occursCheck(v, x, subst) [
+        occursCheck v x subst [
             none
         ]
         true [
             ; v is not yet in subst and can't simplify x, returns a new map like 'subst but with the key v.name = x
-            put(subst, v.name, x)
+            put subst v.name x
             subst
         ]
     ]
@@ -356,26 +352,28 @@ The key bit is the recursive unification: if `v` is bound in the substitution, i
 occursCheck: function [
     {Does the variable 'v occur anywhere inside 'term?
 
-Variables in 'term are looked up in subst and the check is applied
-    recursively}
-    v     [variable]
-    term  [term]
+Needed to guarantee that there aren't any variable bindings that refer to themselves, like X = f(X), which might cause infinite loops
+
+Variables in 'term are looked up in subst and the check is applied recursively}
+    v     [object!] "variable"
+    term  [object!] "term"
     subst [map!]
+    return: [logic!]
 ] [
     assert v is Var
     case [
         v == term [
             true
         ]
-        all [                                   ; this fixes the "common error" Norvig describes above
+        all [         
             term is Var
             term.name in subst
         ] [
-            occursCheck(v, subst[term.name], subst)
+            occursCheck v subst[term.name] subst
         ]
         term is App [
             foreach arg term.args [
-                if occursCheck(v, arg, subst) [
+                if occursCheck v arg subst [
                     return true
                 ]
                 return false
