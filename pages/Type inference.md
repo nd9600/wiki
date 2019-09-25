@@ -299,12 +299,12 @@ Returns a substitution (a map of name -> term) that unifies 'x and 'y, or none i
         ] [
             either any [
                 x.fname != y.fname
-                (length? x.args) != (length? y.args)
+                (length? x/args) != (length? y/args)
             ] [
                 none
             ] [
-                repeat i (length? x.args) [
-                    subst = unify x.args[i] y.args[i] subst
+                repeat i (length? x/args) [
+                    subst = unify x/args/i y/args/i subst
                 ]
                 subst
             ]
@@ -324,21 +324,21 @@ unifyVariable: function [
 ] [
     assert v is Var
     case [
-        v.name in subst [
-            unify subst[v.name] x subst
+        v/name in subst [
+            unify subst(v/name) x subst
         ]
         all [         ; this fixes the "common error" Peter Norvig describes in "Correcting a Widespread Error in Unification Algorithms"
             x is Var
-            x.name in subst
+            x/name in subst
         ] [
-            unify v subst[x.name] subst
+            unify v subst/(x/name) subst
         ]
         occursCheck v x subst [
             none
         ]
         true [
             ; v is not yet in subst and can't simplify x, returns a new map like 'subst but with the key v.name = x
-            put subst v.name x
+            put subst v/name x
             subst
         ]
     ]
@@ -367,12 +367,12 @@ Variables in 'term are looked up in subst and the check is applied recursively}
         ]
         all [         
             term is Var
-            term.name in subst
+            term/name in subst
         ] [
-            occursCheck v subst[term.name] subst
+            occursCheck v subst/(term/name) subst
         ]
         term is App [
-            foreach arg term.args [
+            foreach arg term/args [
                 if occursCheck v arg subst [
                     return true
                 ]
