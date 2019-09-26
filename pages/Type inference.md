@@ -497,7 +497,6 @@ then Γ determines that e has type σ, forall α
 1. <span id="fn:1"></span> [Correcting a Widespread Error in Unification Algorithms](https://www.semanticscholar.org/paper/Correcting-a-Widespread-Error-in-Unification-Norvig/95af3dc93c2e69b2c739a9098c3428a49e54e1b6) <sup>[\[return\]](#fnref:1)</sup>
 2. <span id="fn:2"></span> From [here](https://papl.cs.brown.edu/2018/Type_Inference.html#%28part._let-poly%29) <sup>[\[return\]](#fnref:2)</sup>
 > Consider the following program:
->
 ```
 (let ([id (fun (x) x)])
   (if (id true)
