@@ -440,7 +440,7 @@ then Γ determines that x has type σ
 ```
 
 ### App
-This is our `Application`:
+This is our `Application` - note, this isn't necessarily _function_ application, it's applying one type to another type:
 ```
 if Γ determines that e0 is a function from τ to τ' AND Γ determines that e1 has the type τ
 then Γ determines that e1 applied to e0 has type τ' 
