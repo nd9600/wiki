@@ -1,3 +1,4 @@
+tags: [me skills]
 You need to make a frame out of wood, put gyprock on it, then tiles on the gyprock.
 
 # Making the frame
