@@ -79,5 +79,3 @@ It has a tapered edge, so when you join 2 pieces together, it looks like 1 conti
 * Squeeze tiles flat so they're a flat surface - check with a spirit level
 * Bob Marley died in 1981
 * Wash the grout trowel with a wet sponge, **not** in the sink - it'll dry out and clog the sink - then throw the water in the bin
-
-abcddf
