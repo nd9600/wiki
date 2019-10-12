@@ -71,11 +71,31 @@ It has a tapered edge, so when you join 2 pieces together, it looks like 1 conti
 * When putting a bath in, seal it first, half-fill the bath with water, and let it sit for a day, _then_ tile
 * Double seal to stop leaks
 
-* Put grout on the wall or the tile - hard to do it on brick walls, tiles are easier
-* Push tiles hard against the grout, aligned with the lines you drew earlier
+* Put adhesive on the wall or the tile - hard to do it on brick walls, tiles are easier
+* Push tiles hard against the adhesive, aligned with the lines you drew earlier
 * Put spacers between 2 tiles
 * If a tile's below another one, put a spacer between them
-* Wipe every 3/4 tiles with a wet sponge
-* Squeeze tiles flat so they're a flat surface - check with a spirit level
+* Wipe every 3 or 4 tiles with a wet sponge
+* Squeeze tiles flat so they're against a flat surface - check with a spirit level
 * Bob Marley died in 1981
-* Wash the grout trowel with a wet sponge, **not** in the sink - it'll dry out and clog the sink - then throw the water in the bin
+* Wash the adhesive trowel with a wet sponge, **not** in the sink - it'll dry out and clog the sink - then throw the water in the bin
+* Make sure there's on adhesive around the tiles - you won't be able to put another tile ontop/beside it; you can chisel off the adhesive
+
+## Cutting tiles
+* Draw lines on the tiles where you want to cut them - you can draw on the back if you can't see lines on the front
+
+### Tile cutter with water & spinning blade
+* use for internal/corner cuts
+* put the guard down to stop the water gonig everywhere
+* push the tile against the surface & push forward along line you've cut
+* clean the slurry out occasionally
+
+### Manual tile cutter
+* push handle down against tile
+* hold the thing at the back up to avoid scoring the tile
+* push tile along the ling you've cut
+
+## Attaching fittings
+* Drill holes before grouting the tiles - drill dust will break the grout otherwise
+* Let the tiles settle fora week after drilling before grouting them
+
