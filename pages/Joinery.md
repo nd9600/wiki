@@ -75,6 +75,7 @@ It has a tapered edge, so when you join 2 pieces together, it looks like 1 conti
 * Push tiles hard against the adhesive, aligned with the lines you drew earlier
 * Put spacers between 2 tiles
 * If a tile's below another one, put a spacer between them
+* use 5mm spacers in bathrooms so you get grout in the gaps properly
 * Wipe every 3 or 4 tiles with a wet sponge
 * Squeeze tiles flat so they're against a flat surface - check with a spirit level
 * Bob Marley died in 1981
@@ -97,5 +98,40 @@ It has a tapered edge, so when you join 2 pieces together, it looks like 1 conti
 
 ## Attaching fittings
 * Drill holes before grouting the tiles - drill dust will break the grout otherwise
-* Let the tiles settle fora week after drilling before grouting them
+* Let the tiles settle for a week after drilling before grouting them
+* make sure to clean them
+* speed plug cavity wall anchors are alternatives to wall plugs
+* if putting a TV on drywall, cut out some gyprock, find out where the wall studs are, put a horizontal strip of woof on the studs & replace the gyprock with MDF - the TV definitely won't come off the wall now
 
+### Toilet roll holder
+* draw a circle in one of the screw holes
+* with a spirit level, draw a line across so you know where to draw the 2nd circle & draw the 2nd one
+* very gently, with a tungsten tipped bit (looks like an arrowhead), drill a hole - press gently against the tile 1st, don't go the whle way through, you'll think it's not doing anything
+* go the whole way through with a normal drill bit - you might need to go through more with the tungsten bit
+* put  wall plugs in the holes - unless the hole is in the wood the whole way through, no need for them then
+* gently hammer the plugs in if they're tight
+* put screws in the TL holder & that in the drilled holes, turn by hand a bit so it catches, screw in with a drill, in intermittant bursts
+
+### Soap holder
+* mark 2 circles again
+* rest is the same as above
+* you might need to use a screwdriver if you can't fit the drill in
+
+## Silicon
+* cut the top off with a stanley knife
+* squeeze the trigger until a bit comes out
+* run along the tile edges
+* lock the trigger so silicon stops
+* clean the extra stuff with a wet finger
+* can take it off later with a razor or masking tape - leave to set for 24 hours & peel off
+
+## Grouting
+* get a rubber grout float
+* clean the tiles 1st
+* take holders & spacers off
+* put grout in the spaces between tiles, **not** on the tiles themselves - it's awkward to clean off
+* do a few tiles (2 or 3) then clean off the extra with a wet sponge - it hardens quickly
+* make sure the grout's properly in the gaps
+* wait for a while, it'll turn dusty, then clean again
+* clean 24 hours later again
+* coat gyprock with PVA to protect it from water
