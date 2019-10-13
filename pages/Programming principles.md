@@ -65,12 +65,35 @@ People generally call this [don't repeat yourself](https://en.wikipedia.org/wiki
 The purpose of an abstraction is to remove details from the code that you don't need to worry about, they're not something you should blindly aim for because "a more abstract function is always better".
 For example, mapping a function across an array can be better than a foreach, because it lets you focus on the important bit, the mapped function, not the array iteration:
 ```
-map
+$list = [1, 2, 3, 4];
+
+$newList = array_map(
+    function(int $element) {
+        return $element * 2;
+    },
+    $list
+);
 
 // vs
 
-foreach
+$newList = [];
+foreach ($list as $element) {
+    $newList[] = $element * 2;
+}
+
+/*
+unfortunately, PHP doesn't have nice syntax for mapping; but arrow functions are coming soon, and'll look like this:
+$list = [1, 2, 3, 4];
+$newList = map(fn($element) => $element * 2, $list);
+*/
 ```
+
+## Don't abstract too early
+When you're writing some code, resist the urge to abstract away a bit of it until you actually need to.
+You might make a mistake and implicitly remove details from the first version that are actually different in different instances of the problem, or leave in unnecessary details. You might not even realise your mistake until you go to use the abstraction in 2nd or 3rd case!
+For example, say you're writing code to let people book a hotel room, and you're calculating the total price, which includes taxes. Calculating the tax is annoying, so you pull it out and abstract it away, implicitly assuming that the tax is based on the number of nights the customer has booked the room for, because that's how you calculate taxes in your country, Eurasia.
+_Then_, later on, you expand out to Eastasia, but over there they calculate hotel room taxes based on the number of people staying in the room, and you've assumed too much! Now you have to go and fix the messy abstraction from before.
+If you'd left the abstracting until there were the 2 different cases, you might not have made the mistake.
 
 # Try not write functions with side-effects
 If you can make a function's output depend only on its input, do. Don't change anything about the world either, if you can help it - don't print anything, insert something into a database, make an API call.
