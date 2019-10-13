@@ -37,6 +37,7 @@ https://code.fb.com/ai-research/unsupervised-machine-translation-a-novel-approac
 [Web design in 4 minutes](https://jgthms.com/web-design-in-4-minutes/)
 [Beej's guide to network programming](http://beej.us/guide/bgnet/)
 [Crafting interpreters](http://www.craftinginterpreters.com/introduction.html)
+[An incremental approach to compiler construction](https://github.com/namin/inc)
 
 # Biology
 [Do animals have feelings?](https://www.theatlantic.com/magazine/archive/2019/03/what-the-crow-knows/580726/)
