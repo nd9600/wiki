@@ -31,7 +31,11 @@ I decided that the best place for my new code to run was in the AJAX PHP script 
 ```
 echo "
 <script>
-    const element = document.getElementById('<?php echo $date . \"-\" . $id; ?>');
+    setTimeout(function() {
+            const element = document.getElementById('<?php echo $date . \"-\" . $id; ?>');
+        }, 
+        10
+    );
     ...
 </script>
 ";
@@ -51,11 +55,22 @@ $.post(url, data, {
     }
 })
 ```
-Instead of adding a JS `<script>` to the HTML body inside an echoed string in PHP, just pull out the JS into a function, and call it from the jQuery AJAX's `onSuccess` function.
+Instead of adding JS function inside a timeout inside a `<script>` to the HTML body inside an echoed string in PHP, just pull out the JS into a function, and call it from the jQuery AJAX's `onSuccess` function.
 Far better.
 
 # If you're repeating yourself a lot, de-duplicate
-Writing the same code twice might be fine, three times probably isn't.
+People generally call this [don't repeat yourself](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself), although it's not just as simple as "when you write something twice, immediately pull that code out into a function":
+
+## Abstractions are tools, not goals
+The purpose of an abstraction is to remove details from the code that you don't need to worry about, they're not something you should blindly aim for because "a more abstract function is always better".
+For example, mapping a function across an array can be better than a foreach, because it lets you focus on the important bit, the mapped function, not the array iteration:
+```
+map
+
+// vs
+
+foreach
+```
 
 # Try not write functions with side-effects
 If you can make a function's output depend only on its input, do. Don't change anything about the world either, if you can help it - don't print anything, insert something into a database, make an API call.
