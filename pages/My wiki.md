@@ -756,3 +756,16 @@ Ok that works for `<ul>`s, but definitely not `<ol>`s, because of the badly shap
 ![the ordered lists have the wrong numbers](static/images/orderedListsBadNumbers.png)
 
 Actually it's not just because of the AST - the numbers will stop be wrong if I fix it, since there's a `ListNode` that's being hidden by the `--noListStyle` class, so the outer lists will jump from 1 to 3, or 2 to 4, etc. Ah well. I don't think that's fixable.
+
+---
+
+# Commonly needed code
+
+## Footnotes
+```
+footnote
+<sup id="fnref:1">[1](#fn:1)</sup>
+
+footnote backreference
+<span id="fn:1"></span> The other 5, if you're curious <sup>[\[return\]](#fnref:1)</sup>:
+```
