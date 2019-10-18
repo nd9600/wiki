@@ -272,5 +272,5 @@ Because there's not really much of a dependency here.
 > 
 > 5. Never use a foreign phrase, a scientific word, or a jargon word if you can think of an everyday English equivalent.
 
-2. <span id="fn:2"></span> X's Law(#fnref:2)</sup>:
+2. <span id="fn:2"></span> X's Law <sup>[\[return\]](#fnref:2)</sup>:
 > 
