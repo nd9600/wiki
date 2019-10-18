@@ -127,13 +127,28 @@ function index(bool $isLoggedIn) {
 Especially if you've already written a test for the same code in a different function, you don't really need to test it again.
 
 ### Don't write fragile tests
+If, in a test, you [decouple](/notes_on_the_synthesis_of_form.html) the code that you're testing so it's a "true unit test", by mocking out all of its dependencies, everything it needs to run successfully, and every function it calls, you're decoupling the  tested code from the _effects_ of the mocked code, but you have **explicitly** coupled it to the fact that it _does_ need that specific dependency with that specific format, or that it calls that specific function, which returns this specific data.
+Instead of your code being decoupled from other code, your test is now coupled to it instead.
+For example, say we want to get a particular country's [VAT](https://en.wikipedia.org/wiki/Value-added_tax) rate right now. This requires some sort of database query or API call, because it's live data that can change, so you'll need to mock this out if you want to make a "unit" test (this is [Mockery's](http://docs.mockery.io/en/latest/reference/creating_test_doubles.html) syntax):
+```
+$countryRepository
+    ->shouldReceive("getTaxPercentForPropertyNow")
+    ->andReturn(0.2);
+```
+Imagine, later on, that you change the method `getTaxPercentForPropertyNow` to instead be called `getCurrentTaxPercent`, and instead of representing a 20% tax rate as 0.2, you use 20; you'll need to change everywhere `getTaxPercentForPropertyNow` is called. Most likely, your IDE will do the renaming for you automatically, but it probably won't do the refactoring in the test, because it's a string, and since you're used to having your IDE do it for you, you'll probably forget to change it everywhere manually, so you'll forget about the test, which will fail, but you'll only realise the mistake once your tests run, whenever that is.
+Your test is now _fragile_; the more often you change your code like this (and not just in these sorts of simple refactorings, if you completely change what the mocked function does or returns, too), the more often you'll have to change your tests, for little real benefit.
+At work, we were spending so much time fixing these broken-but-not-really unit tests that we decided to delete all of them.
+
+A test breaking because the behaviour of the code it's testing has changed is good; breaking because that code's dependency's behaviour has isn't.
 
 ### Code that runs in tests should be the same as code that's running in production 
-Mocks can provide a false sense of security
+Mocks can provide a false sense of security here - 
+
+#
 
 
 # Be consistent
-Keep variable names, function arguments' positions, and "general coding styles" (early returns vs. returning from both `if` branches, etc) consistent - it'll give you less you need to think about.
+Keep variable names, function arguments' positions, and "general coding styles" (early returns vs. returning from both `if` branches, etc) consistent - it'll give you less unnecessary stuff you need to think about. The less unnecessary stuff you need to think about, the more necessary things you can afford to kep in your brain.
 
 # Type things
 If you can give things a type, do.
