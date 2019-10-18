@@ -142,10 +142,63 @@ At work, we were spending so much time fixing these broken-but-not-really unit t
 A test breaking because the behaviour of the code it's testing has changed is good; breaking because that code's dependency's behaviour has isn't.
 
 ### Code that runs in tests should be the same as code that's running in production 
-Mocks can provide a false sense of security here - 
+Mocks can provide a false sense of security here - when you make a mock, you're kinda embedding some assumptions about the code you're mocking, and those assumptions might not be right.
 
-#
+# Comments
+I say "comments", but I think it should be more general than that, and called "descriptions" instead, because you can achieve the same thing without comments.
 
+## If something isn't obvious from the code, describe it
+When you've just written some code, every bit of it will seem obvious to you, because you just wrote it! You can wait 6 months to forget about it, then come back, get confused at it, and try to write a comment, _or_ you can [have someone else](l#get_other_peoples_input) to look at it right now - if they ask a question about anything, then it's probably not obvious enough, and needs a comment.
+
+Generally, _why_ a particular bit of code exists is far less obvious to a reader than what it does, so you'll probably need to describe that more often.
+
+## Put the description as close as possible to the thing it's describing
+The further away a description is from the thing it's describing, the less likely it is to be read & the more likely it is to be wrong.
+This is pretty much X's Law<sup id="fnref:2">[2](#fn:2)</sup>, but for code:
+* if the description for some code is on the line above it, people will probably see it & correct it if the code changes and outdates the description
+* if the description is at the top, people _might_ see it and might correct it
+* if the description's on a wiki somewhere, people probably _won't_ even imagine that it might exist, so they won't read or correct it
+
+The best way to describe something, I think, is to use a variable or a function name - they're very simple abstractions that are directly tied to the thing that they're doing, and if you change the behaviour of a variable or a function so much that the name's invalid, you'll probably fix the name.
+So, if you have this (JS) code:
+```js
+if (
+    (
+        (
+            typeof numberOfAdults === "string"
+            && ! RegExp(/^.*\.$/).test(numberOfAdults)
+        )
+        || typeof numberOfAdults !== "string"
+    )
+    && !isNaN(parseFloat(numberOfAdults))
+    && isFinite(numberOfAdults)
+) {
+    return;
+}
+```
+
+it's _far_ better to refactor it to this
+```js
+function isNumber(n) {
+    const isString = typeof n === "string";
+    if (isString) {
+        const stringEndsInDot = RegExp(/^.*\.$/).test(n);
+        if (stringEndsInDot) {
+            return false;
+        }
+    }
+
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+if (!isNumber(numberOfAdults)) {
+    return;
+}
+```
+Both the code being in a function with the name `isNumber`, and the regex test being given the name `stringEndsInDot` make this far easier to understand.
+
+# If you people to do something, make it easy for them to do
+The easier something is to do, the more likely people are to do it.
 
 # Be consistent
 Keep variable names, function arguments' positions, and "general coding styles" (early returns vs. returning from both `if` branches, etc) consistent - it'll give you less unnecessary stuff you need to think about. The less unnecessary stuff you need to think about, the more necessary things you can afford to kep in your brain.
@@ -218,3 +271,6 @@ Because there's not really much of a dependency here.
 > 4. Never use the passive where you can use the active.
 > 
 > 5. Never use a foreign phrase, a scientific word, or a jargon word if you can think of an everyday English equivalent.
+
+2. <span id="fn:2"></span> X's Law(#fnref:2)</sup>:
+> 
