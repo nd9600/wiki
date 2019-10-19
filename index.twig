@@ -40,9 +40,9 @@
             return article.replace(
                 /./g, 
                 function(char) {
-                const letterRegex = RegExp(/[a-zA-Z]/);
-                const numberRegex = RegExp(/[0-9]/);
-                const specialCharacterRegex = RegExp(/[\$\-\_\.\+\!\*\(\)\,]/);
+                    const letterRegex = RegExp(/[a-zA-Z]/);
+                    const numberRegex = RegExp(/[0-9]/);
+                    const specialCharacterRegex = RegExp(/[\$\-\_\.\+\!\*\(\)\,]/);
             
                     const isLetter = letterRegex.test(char);
                     const isNumber = numberRegex.test(char);
@@ -52,7 +52,6 @@
                     } else if (char === " ") {
                         return "_";
                     } else if (isNumber || isSpecialCharacter) {
-                        console.log(char, isNumber, isSpecialCharacter, specialCharacterRegex);
                         return char;
                     } else {
                         return "";
