@@ -13,7 +13,7 @@ tags: [me projects]
 * Twitter follower graph, like https://kieranhealy.org/blog/archives/2013/06/09/using-metadata-to-find-paul-revere/g
 * Sentence word categoriser + deambiguator
 * Social network that's like real life - you can only send messages to specific pre-specified groups of people who have either allowed you to send them to you/allowed anyone to send to them (/in a particular time range), host time limited groups that anyone can join but get deleted after a time, or sticky 1 or 2 messages. Can groups control who are in them? Do creators? They should be ephemeral. Approve/disapprove like Brian Earp's thread (Jesse Singal's email)
-* https://medium.com/agoric/pola-would-have-prevented-the-event-stream-incident-45653ecbda99 - restricting access to IO/etc., or executing HTTP/DB requests against an interface/stream, or deciding to hit the DB, and then you have to pass that decision off to somewhere else, which actually does it
+* restricting access to IO/etc., or executing HTTP/DB requests against an interface/stream, or deciding to hit the DB, and then you have to pass that decision off to somewhere else, which actually does it https://link.springer.com/chapter/10.1007/978-3-642-22655-7_9 https://medium.com/agoric/pola-would-have-prevented-the-event-stream-incident-45653ecbda99
 * an OS - http://mikeos.sourceforge.net/write-your-own-os.html https://github.com/cfenollosa/os-tutorial
 * RateMyLandlord
 * https://projects.raspberrypi.org/en/projects/see-like-a-bat
