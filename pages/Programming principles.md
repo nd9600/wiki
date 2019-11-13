@@ -58,6 +58,14 @@ $.post(url, data, {
 Instead of adding JS function inside a timeout inside a `<script>` to the HTML body inside an echoed string in PHP, just pull out the JS into a function, and call it from the jQuery AJAX's `onSuccess` function.
 Far better.
 
+# Having a bigger toolbox is better
+It's good to know lots of different ways of doing something, even if aren't necessarily going to use a particular method all the time; for example, functional programming's [maps and filters](https://en.wikipedia.org/wiki/Map_\(higher-order_function\)\#Examples\:_mapping_a_list) are incredibly useful to know about: there'll probably be some situation where using them will make your code far easier to understand.
+Though, you need to keep in mind the next point..
+
+# That shiny new tool/technique you've just heard probably isn't the perfect thing to use _all the time_
+Ok, you've just heard about [monads](http://learnyouahaskell.com/a-fistful-of-monads), and you might think they're amazingly incredible and everyone should always use them, they abstract away _everything_ etc etc.
+You're probably wrong. Even if moands are perfect for whatever you're doing (they're probably not), other people will need to read, understand, maintain, ..., your code whenever they want to change it/it breaks. Most likely, they probably won't know how to use your shiny new tool, or have even have heard of it.
+
 # If you're repeating yourself a lot, de-duplicate
 People generally call this [don't repeat yourself](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself), although it's not just as simple as "when you write something twice, immediately pull that code out into a function":
 
