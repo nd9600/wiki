@@ -1,3 +1,5 @@
+# What's the problem?
+
 You'll probably see something like
 ```
 CORS header 'Access-Control-Allow-Origin' missing
@@ -40,7 +42,7 @@ text/plain
 So if your content type is different, or you have a CSRF token in the request, for example, the browser will make a preflight request first.
 
 **A preflight request is to the same URL** as the resource you want, but with the `OPTIONS` HTTP method.
-**You must return a 200**  to the preflight request.
+**You must return a HTTP success**  to the preflight request.
 
 # How do you fix it?
 On the server, you must allow a specific origin to make requests to the server/that specific endpoint.
