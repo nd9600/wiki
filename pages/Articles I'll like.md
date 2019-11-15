@@ -23,6 +23,7 @@ http://www.vpri.org/pdf/tr2012001_steps.pdf
 https://vimeo.com/274771188 
 https://futureofcoding.org/notes/bret-victor/dynamicland#day-1 
 http://fexpr.blogspot.com/2016/08/interpreted-programming-languages.html
+https://prog21.dadgum.com/30.html
 
 ## AI
 > humans are able to learn safe behaviours without having to die even once
