@@ -14,3 +14,4 @@
 # Gradualism
 
 # Punctuated equilibrium
+Stephen Jay Gould and Niles Eldredge
