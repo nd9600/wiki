@@ -23,7 +23,7 @@ They miss everything apart from bones/skeletons
 
 ## Introns
 
-## Extrons
+## Exons
 
 ## Splicing enzymes
 
@@ -40,4 +40,13 @@ Change the context that proteins function in, when genes are expressing: if "x" 
 ## Access of transcription factors to DNA
 Permanently change whether transcription factors can act
 Chromatids
+
+## Example
+
+Imagine you have a gene coded for by 3 [exons](#exons) A B C, and messenger RNA that includes all of them + the [introns](#introns).
+A splicing enzyme comes along and removes the introns and exons, forming the mature protein.
+
+What if the splicing enzyme mutates?
+Say it takes all of A and half of B and makes a protein, and takes the 2nd half of B and C, and makes another protein - you get 2 completely new proteins that didn't exist beforehand - a massive change, not a protein working slightly better or slightly worse.
+
 
