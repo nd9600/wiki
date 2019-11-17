@@ -79,7 +79,7 @@ Disproportionate share are genes that code for transcription factors - that make
 
 This was big support for King and Wilson from Berkeley, who came up with the "98%", and predicted that the most interesting changes in DNA will be in the regulatory parts, not the coding parts - eeverything since has supported that.
 
-### Genomse size vs % transcription factors
+### Genome size vs % transcription factors
 
 Over 100 genomes sequenced - if you line them up from short of long genomes, the more genes a species have, the higher % of genes are transcription factors:
 If you have 1 gene, you only need 1 transcription factor
@@ -93,7 +93,28 @@ n         2^n - 1
 There's an exponential increase in the # of TFs you need to take advantage of all the possible combinations of networks of gene expression.
 Little changes in genes that code for TFs, splicing enzymes, promoters -> big consequences
 
+## Transposons - jumping genes
+Barbara McClintock was a plant biologist, very successful, at 40 a member of the National Academy of Sciences.
+One day she made a discovery that destroyed her career - molecular biology didn't exist then, all you could do to make sense of inheritance is to look at the phenotype, see if peas or people are wrinkly or not, the colours of corn kernels.
+She sees a pattern of inheritance that keeps popping up - the only way for her to explain it was if genes were moving around in the DNA, so she proposed there were transposable genes - transposons, people derisively called them "jumping genes".
+People laughed at her, so she disappeared to her corn field, working alone for decades, ignored.
 
+In the 1980s, molecular techniques caught up and showed she was right.
+
+Transposons - transposable genetic elements: genes pick up and move around.
+They wouldn't have been discovered if McClintock was studying sperm whales, only in plants:
+If you're an animal, you can run/crawl/fly away if things get stuff.
+Plants can't move, they need a more subtle, fancier, mechanism - plant, in stress responses to a challenge, move genes around in the hopes of finding something novel/useful to get them out of trouble.
+They activate transposase, an enzyme, to start transposing genes.
+
+Animals have them too - where they were first discovered makes sense too.
+You're a scientist inventing a never seen before pathogen, you inject it into people, they get sick, 2 months later they've been antibodies against it, even though it's never existed before.
+How does the immune system make antibodies to fight something it's never seen before? One of the tricks is splicing genes that are relevant to making antibodies, inducable transposable events, then filtering them to see if they're good against novel pathogens.
+
+Pathogens also do it - trypanosomes cause trypanosomiasis, and take away their surface proteins, juggle their DNA a bit, so your antibodies can't recognise them anymore.
+
+### In primates
+There's a transposable element that's predominant in primates which is most mobile when brain cells that make new neurons (neural progenitor cells), at the time they start proliferating: you get novel things neurons can do, the cells in your body that have the most to do with who you are are the least constrained by genetics - right when they're first being made, their genes are getting shuffled more than anywhere else
 
 
  
