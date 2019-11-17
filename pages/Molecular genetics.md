@@ -71,6 +71,27 @@ Recent studies have shown for human males, which version of that promoter you ha
 Dynorphin is hormone neurotransmitter that has something to do with pain perception, related to morphine.
 It has a gene and a promoter - recent research has shown the more copies of that promotoer (IN RATS) predicts how readily they get addicted to some drugs
 
+### Mutation in gene for a transcription factor
+You'll get massive changes in protein networks.
+
+If you compare the human genome to the chimp genome - what are 2% of differences?
+Disproportionate share are genes that code for transcription factors - that makes sense: if you get a change in a gene for a structural protein, maybe your muscles bend a little bit one way rather than another; if a gene for a transcription factor changes, you'll have loads of new novel networks.
+
+This was big support for King and Wilson from Berkeley, who came up with the "98%", and predicted that the most interesting changes in DNA will be in the regulatory parts, not the coding parts - eeverything since has supported that.
+
+### Genomse size vs % transcription factors
+
+Over 100 genomes sequenced - if you line them up from short of long genomes, the more genes a species have, the higher % of genes are transcription factors:
+If you have 1 gene, you only need 1 transcription factor
+1 gene    1 transcription factor
+2         3 TF lets you get the max information out of them - you transcribe A, or B, or AB
+3         7
+4         15
+5         31
+n         2^n - 1
+
+There's an exponential increase in the # of TFs you need to take advantage of all the possible combinations of networks of gene expression.
+Little changes in genes that code for TFs, splicing enzymes, promoters -> big consequences
 
 
 
