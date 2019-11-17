@@ -116,5 +116,19 @@ Pathogens also do it - trypanosomes cause trypanosomiasis, and take away their s
 ### In primates
 There's a transposable element that's predominant in primates which is most mobile when brain cells that make new neurons (neural progenitor cells), at the time they start proliferating: you get novel things neurons can do, the cells in your body that have the most to do with who you are are the least constrained by genetics - right when they're first being made, their genes are getting shuffled more than anywhere else
 
+### New if-ten clauses
+Generally, a part of DNA is copied and moved randomly somewhere else, so you get big consequences.
+Imagine you have an if-then clause: if dehydrated (to do with your hematocrit/how wrinkly your kidneys are/whatever, biologically speaking), then tell your kidneys to retain water.
+This is ridiculous, there's no gene for this, but there are networks and ways your kidneys monitors that.
+Suppose there's a transposable event, suppose the promoter moves, the "if you're dehydrated" part gets copied to upstream of the gene that makes you ovulate - that lets you do seasonal mating; 6 months of the year it's really wet, 6 months it's a drought, if your gestation period is 6 months, you want to mate in the dry season & give brith in the wet season.
+
+Or if your gestation period is 2 months, then if you're dehydrated, _don't_ ovulate, because your kids will be born in the dry season & starve.
+
+This is a novel if-then clause!
+
+Imagine you have a promoter that can tell if an individual near you smells like you, then it immediately shuts down transcription for things related to fertility - the incest taboo in loads of species.
+The "smells like me" promoter can get copied to upstream of the gene that says "cooperate" - this is the start of kin selection. If there are more promoters (they smell a lot like you), then maybe you'll cooperate a lot, vice-versa - you've invented a way of taking sensory info about the degree of related-ness and turning it into whether you'll sacrifice for [1 sibling or 8 cousins]().
+
+This is again ridiculous, there aren't any promoters for "this smells like me", but there are promoters for stuff similar to it, you can imagine turning this into real biology.
 
  
