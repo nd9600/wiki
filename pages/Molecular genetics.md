@@ -144,3 +144,19 @@ One class of steroids are called glucocorticoids are stress hormones (hydrocorti
 
 Imagine the progesterone receptor's hormone-binding domain gets plunked down instead - if there's progesterone around, suppress immunity. Progesterone is _pro-gestational_ - you can suppress the immune system during pregnancy, this is good - your body doesn't have an immune reaction against it aka eat it!
 An interesting consequence is once you give birth the progesterone pretty much disappears, your immune system comes back, but it's so wiped out it can come overshoot a bit and have an over-active immune system - you can get auto-immune diseases then, like a very serious form of lupus
+
+## How often are these changes good or bad?
+Sometimes genes get duplicated/tripled/etc - this area is called "copy number variantion", different people having different numbers of genes - one extra of a gene to massive duplication of sections of chromosomes. There's evidence that schizophrenia has to do with mutations in copy number variants.
+
+In some cases, the 2nd gene is a backup - if something goes wrong in the 1st gene, the 2nd's still there doing it's job; there's a suggestion this is going on in some subsets of [Alzheimers](https://www.alzheimers.org.uk/about-dementia/types-dementia/alzheimers-disease).
+
+Or, the more copies of a gene you have, the more protein you make - recent studies show Japanese populations have more copies of a gene related to carbohydrate digestion compared to Western European populations.
+
+Or, you can "experiment" with a copy, the other one is still doing its function - there's faster evolution in genes that are duplicated, they're more likely to stumble into some greater use without sacrificing the initial use. 
+Joe Thornton has done work on the evolution of genes for steroid receptors - he's shown from ansectral genes that's what happening: a lot fo what're now  2 different genes for 2 different receptors used to be duplicates of the same gene, one allowed to change, one held in place.
+
+### The "problem of irreducible complexity"
+This helps explain the "problem of irreducible complexity" - evolution can't be real because what good is half an eye?
+You don't have to a rapid change from one gene to another, you can have 1 gene floating along until it happens to come up with the shape of a receptor that happens to be able to bind an earlier hormone that stumbled into existence 10k generations ago - it didn't matter that one copy was of a form with no receptor for it, since it was duplicated.
+There's more and more evidence that duplicated genes describe these intermediate states - you don't have half an eye, you have the pieces in place for when something pops up that completes the picture.
+Though, you can kinda have half an eye - [Russell Fernald](https://en.wikipedia.org/wiki/Russell_Fernald) has done research on the evolution of eyes and shown there _are_ intermediate versions of eyes, but multiple copies of genes still allow you the freedom to have looser evolving of single genes at a time - this is a critical mechanism for evolution.
