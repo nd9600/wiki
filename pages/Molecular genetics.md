@@ -140,5 +140,7 @@ This is again ridiculous, there aren't any promoters for "this smells like me", 
 * now, there's a transposable event - in steroid receptor genes the hormone-binding and DNA-binding domains are in different exons, so the estrogen receptor bit can get removed and replaced with a different hormone-binding domain
 * so you have "if this other hormone is around, do this" rather than "if estrogen is around, do this"
 
-One class of steroids are called glucocorticoids are stress hormones (hydrocortisone is the human version) - they suppress the immune system
+One class of steroids are called glucocorticoids are stress hormones (hydrocortisone is the human version) - they suppress the immune system; steroidal anti-inflammatories. This is very well understood - glucocorticoids bind to the hormone- binding domain of the glucocorticoid receptor and this moves to a glucocorticoid-responsive promoter.
 
+Imagine the progesterone receptor's hormone-binding domain gets plunked down instead - if there's progesterone around, suppress immunity. Progesterone is _pro-gestational_ - you can suppress the immune system during pregnancy, this is good - your body doesn't have an immune reaction against it aka eat it!
+An interesting consequence is once you give birth the progesterone pretty much disappears, your immune system comes back, but it's so wiped out it can come overshoot a bit and have an over-active immune system - you can get auto-immune diseases then, like a very serious form of lupus
