@@ -118,7 +118,7 @@ There's a transposable element that's predominant in primates which is most mobi
 
 ### New if-ten clauses
 Generally, a part of DNA is copied and moved randomly somewhere else, so you get big consequences.
-Imagine you have an if-then clause: if dehydrated (to do with your hematocrit/how wrinkly your kidneys are/whatever, biologically speaking), then tell your kidneys to retain water.
+Imagine you have an if-then clause: if dehydrated (to do with your [hematocrit](https://www.mayoclinic.org/tests-procedures/hematocrit/about/pac-20384728)/how wrinkly your kidneys are/whatever, biologically speaking), then tell your kidneys to retain water.
 This is ridiculous, there's no gene for this, but there are networks and ways your kidneys monitors that.
 Suppose there's a transposable event, suppose the promoter moves, the "if you're dehydrated" part gets copied to upstream of the gene that makes you ovulate - that lets you do seasonal mating; 6 months of the year it's really wet, 6 months it's a drought, if your gestation period is 6 months, you want to mate in the dry season & give brith in the wet season.
 
@@ -131,4 +131,14 @@ The "smells like me" promoter can get copied to upstream of the gene that says "
 
 This is again ridiculous, there aren't any promoters for "this smells like me", but there are promoters for stuff similar to it, you can imagine turning this into real biology.
 
- 
+ Transposable genetic elements also brings up the possibility of moving around parts of genes, not just regulatory elements, but how would you do that?
+[Exons](#exons) - for example, steriod hormones like estrogen, progesterone, testosterone, work like this:
+* they enter a target cell, and bind to their receptor (lock and key - they're not made of amino acids, they have a different structure, but they still have distinctive shapes)
+* each type of receptor for a type of hormone has a distinctive shape driven by it's amino acid sequence -> gene code -> etc.
+* when the hormone fits into a receptor, it activates a receptor complex - on the other side of the complex there's a "confirmation" that recognises a particular promoter on the DNA, e.g. and estrogen-responsive promoter - one part of the receptor recognises the hormone (the hormone-binding domain), one part the promoter (the DNA-binding domain)
+* so if you're reading the right part of a novel and secreting certain hormones and you're changing genomic effects after - environment regulating genes
+* now, there's a transposable event - in steroid receptor genes the hormone-binding and DNA-binding domains are in different exons, so the estrogen receptor bit can get removed and replaced with a different hormone-binding domain
+* so you have "if this other hormone is around, do this" rather than "if estrogen is around, do this"
+
+One class of steroids are called glucocorticoids are stress hormones (hydrocortisone is the human version) - they suppress the immune system
+
