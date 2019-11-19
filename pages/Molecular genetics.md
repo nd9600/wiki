@@ -169,7 +169,7 @@ You don't have to a rapid change from one gene to another, you can have 1 gene f
 There's more and more evidence that duplicated genes describe these intermediate states - you don't have half an eye, you have the pieces in place for when something pops up that completes the picture.
 Though, you can kinda have half an eye - [Russell Fernald](https://en.wikipedia.org/wiki/Russell_Fernald) has done research on the evolution of eyes and shown there _are_ intermediate versions of eyes, but multiple copies of genes still allow you the freedom to have looser evolving of single genes at a time - this is a critical mechanism for evolution.
 
-## Odds of good or bad mutations
+### Odds of good or bad mutations
 If one single base pair changes, you can have cascading changes with all of these different mechanisms (splicing enzymes, transposons etc.).
 
 It's far more likely, with bigger changes, that mutations are bad than they're good for an organism.
@@ -214,23 +214,23 @@ e.g. there are lots of rat carcasses in Chicago, from rats killed in the 1880s. 
 ### Darwin's finches
 People have been studying them for 50/75 years - gene distributions for traits like bill size (dictates what kind of food you can break in to), in response to environment changes, has been documented.
 
-# Diabetes resistance
+### Diabetes resistance
 Adult onset diabetes is becoming an epidemic. Humans are built to store calories, mix that with a Westernized diet and you get obesity and diabetes.
 People have studied populations that have had rapid shifts from traditional diets to Westernized ones ,like Pacific Islanders, or the iconic Pima Indians in Arizona - about half life in the USA, half Mexico. There've been far more changes to the diet in the American side, and the people in America have \~90% diabetes rates by 30 years old. The same thing has happened in Naru and Samoa, Jews who lived in  Yemen and moved to Israel in the 60s/70s.
 
 This killed off lots of people early in life, in their reproductive history, the people who were most vulnerable to diabetes. They left fewer copies of their genes. In the last 10 years or so, in some of the studied Pacific Island populations, diabetes rates are falling - there's been the selection that went into Western Europeans \~a century ago, where the people with most efficient metabolisms (that can store more calories) died.
 There's been selection for worse metabolisms, within 1 century.
 
-## Domesticated silver foxes in Siberia
+### Domesticated silver foxes in Siberia
 They were selectively bred for tameness from wild foxes - 5/10% of them were relatively tame, only they were allowed to breed, over only 35 generations they've become as tame as dogs are.
 They were bred for 1 trait only, a behavioural one - the ability to get close to them. **Not just the behaviour changed** - they turned into more like fox puppies, with round ears and short muzzles, and they wag their tails. 
 When you breed a wild animal to be tame-able, you're breeding for the ones that behave more childishly, that act more like developing animals that depend more on other individuals, for infantile traits (this is called neoteny).
 Also, you can't get domestic without piebald colouration patterns.
 
-## Antibiotic resistance in bacteria
+### Antibiotic resistance in bacteria
 This is very rapid change that you'll never be able to see in a fossil - bacteria don't leave fossils.
 
-# Resolution
+## Resolution
 Both micro and macro evolutionary changes can happen at the same time - say you have evidence of a punctuated change of some trait, and single traits don't evolve at a time, they come in packages (like the foxes domestication, neoteny and coat colours).
 So, there's some other punctuated change at the same time, slightly different timeframe to the first, and another one - if you have enough punctuated events happening, on a whole population level, it'll look like gradualism.
 
