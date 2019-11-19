@@ -82,15 +82,17 @@ This was big support for King and Wilson from Berkeley, who came up with the "98
 ### Genome size vs % transcription factors
 
 Over 100 genomes sequenced - if you line them up from short of long genomes, the more genes a species have, the higher % of genes are transcription factors:
-If you have 1 gene, you only need 1 transcription factor
+If you have 1 gene, you only need 1 transcription factor:
+```
 1 gene    1 transcription factor
 2         3 TF lets you get the max information out of them - you transcribe A, or B, or AB
 3         7
 4         15
 5         31
 n         2^n - 1
+```
 
-There's an exponential increase in the # of TFs you need to take advantage of all the possible combinations of networks of gene expression.
+There's an exponential increase in the \# of TFs you need to take advantage of all the possible combinations of networks of gene expression.
 Little changes in genes that code for TFs, splicing enzymes, promoters -> big consequences
 
 ## Transposons - jumping genes
