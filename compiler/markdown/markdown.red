@@ -10,7 +10,7 @@ do %compiler/markdown/codeGenerator.red
 do %compiler/markdown/tocGenerator.red
 
 compile: function [
-    "converts an input Markdown string into tokens"
+    "converts an input Markdown string into HTML"
     filename [string!]
     str [string!]
 ] [

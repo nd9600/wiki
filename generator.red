@@ -52,10 +52,18 @@ slugifyString: function [
     slugifiedString
 ]
 
-main: does [
-    deleteDir/matching wikiLocation lambda [endsWith ? ".html"]
-
-    wikipages: findFiles/matching %pages/ lambda [endsWith ? ".md"]
+main: function  [
+    args [string!]
+] [
+    shouldOnlyParseOneFile: not empty? args
+    either shouldOnlyParseOneFile [
+        filenameWithoutQuotes: copy/part at args 2 ((length? args) - 2)
+        wikipages: reduce [to-file filenameWithoutQuotes]
+    ] [
+        deleteDir/matching wikiLocation lambda [endsWith ? ".html"]
+        wikipages: findFiles/matching %pages/ lambda [endsWith ? ".md"]
+    ]
+    
     wikiTemplate: read %wikipage.twig
 
     index: make map! reduce [
@@ -86,7 +94,10 @@ main: does [
             ] 
             copy pageContent to end 
         ]
-        if not empty? tagsString [
+        if all [
+            not shouldOnlyParseOneFile
+            not empty? tagsString
+        ] [
             index: addToIndexFromTags index tagsString filenameWithoutExtension
         ]
 
@@ -102,27 +113,29 @@ main: does [
         write filepath wikipageHTML
     ]
 
-    print "compiling index"
-    filenamesWithoutExtension: f_map function [page] [
-        filename: (next find/last page "/")
-            |> :to-string
-        filenameWithoutExtension: (find filename ".md")
-            |> [copy/part filename]
-    ] wikipages
-    listOfPages: sort filenamesWithoutExtension
+    if not shouldOnlyParseOneFile [
+        print "compiling index"
+        filenamesWithoutExtension: f_map function [page] [
+            filename: (next find/last page "/")
+                |> :to-string
+            filenameWithoutExtension: (find filename ".md")
+                |> [copy/part filename]
+        ] wikipages
+        listOfPages: sort filenamesWithoutExtension
 
-    indexListHTML: makeIndexListHTML index
-    aToZindexHTML: makeAToZIndexListHTML listOfPages
+        indexListHTML: makeIndexListHTML index
+        aToZindexHTML: makeAToZIndexListHTML listOfPages
 
-    indexTemplate: read %index.twig
-    indexVariables: make map! reduce [
-        'indexListHTML indexListHTML
-        'aToZindexHTML aToZindexHTML
-        'listOfPages listOfPages
+        indexTemplate: read %index.twig
+        indexVariables: make map! reduce [
+            'indexListHTML indexListHTML
+            'aToZindexHTML aToZindexHTML
+            'listOfPages listOfPages
+        ]
+        indexHTML: templater/compile indexTemplate indexVariables
+        indexFilepath: rejoin [wikiLocation "index.html"]
+        write indexFilepath indexHTML
     ]
-    indexHTML: templater/compile indexTemplate indexVariables
-    indexFilepath: rejoin [wikiLocation "index.html"]
-    write indexFilepath indexHTML
 ]
 
-main
+main (system/script/args)
