@@ -1,5 +1,10 @@
 <sub>[source](https://www.youtube.com/watch?v=dFILgg9_hrU)</sub>
 
+# Last time
+* Individual selection
+* Kin selection
+* Group selection
+
 # The central dogma
 
 DNA -> RNA -> proteins -> life
@@ -163,3 +168,74 @@ This helps explain the "problem of irreducible complexity" - evolution can't be 
 You don't have to a rapid change from one gene to another, you can have 1 gene floating along until it happens to come up with the shape of a receptor that happens to be able to bind an earlier hormone that stumbled into existence 10k generations ago - it didn't matter that one copy was of a form with no receptor for it, since it was duplicated.
 There's more and more evidence that duplicated genes describe these intermediate states - you don't have half an eye, you have the pieces in place for when something pops up that completes the picture.
 Though, you can kinda have half an eye - [Russell Fernald](https://en.wikipedia.org/wiki/Russell_Fernald) has done research on the evolution of eyes and shown there _are_ intermediate versions of eyes, but multiple copies of genes still allow you the freedom to have looser evolving of single genes at a time - this is a critical mechanism for evolution.
+
+## Odds of good or bad mutations
+If one single base pair changes, you can have cascading changes with all of these different mechanisms (splicing enzymes, transposons etc.).
+
+It's far more likely, with bigger changes, that mutations are bad than they're good for an organism.
+This is a very stabilising mechanism for _equilibrium_ - if one single base pair changes effects 6 proteins, or through a transcription factor, entire networks, it's not very likely you'll stumble into one change than works in all the domains, or enough of them to offset the bad effects; most of the macro-mutations are bad - there's _stabilising selection_ **against** macro mutations most of the time.
+This is the equilibrium in punctuated equilibrium.
+
+The changes happen when you have circumstances that are extreme enough if doesn't matter the mutation made 10 changes and 9 of them are bit, as long as the last one will save you - it carries the other 9. 
+If there's suddenly an evolutionary bottleneck - very strong selection for a tiny subset of traits -  it doesn't matter, if you have that trait, how much of a network you've changed, you're going to survive and no one else does.
+
+The evolutionary record is full of examples of this, where \~1% of a population survives because of some rare trait they had, e.g. a bottleneck in selection with cheetas, because cheetas are so genetically similar to another you can graft tissue from any cheetah to another, without rejection - all cheetahs are descendent from a tiny population.
+
+Similarly, at a couple of points in hominid evolution, there've been selective bottlenecks (like glaciers, comets, ..) where a small subset of the population, who until then had traits that weren't useful, survived.
+This is circumstances of radical change.
+
+2 critical things: 
+1. make a change that changes a whole network and most of the time it'll be a disaster - there'll be statis most of the time.
+2. the ability to have massive macro changes in periods of selective bottlenecks 
+
+Although, this still isn't necessarily exactly right - the "rapid change" for paeleontologists is 1000s of generations for biologists.
+
+# How do you resolve punctuated equilibrium and gradualism?
+Micro-mutational changes are changes in the functions of existing proteins
+Macro-mutational changes are the inventions of new proteins, new networks, new if-then clauses, serving different functions.
+
+## Human-chimp genome differences
+Back to the differences in the human-chimp genomes - looking at the micro vs. macro differences, in the immune system for example, most are micro. 
+Humans are far more resistant to TB, chimps to malaria - this is gradualist change, the genetic differences that explain that are micro.
+
+For the macro differences, they're about development: one tiny difference and you'll get an organism that looks as different as human does from a chimp.
+The other way around, some systems' evolution is much more driven by micro changes, some much more by macro - some of the most interesting macro stuff will be development blueprints & trajectories.
+
+## Fossil records
+There are lots of complete records of some line of species now that show punctuated equilibrium.
+Though there are plenty that follow gradualist models, but the majority follow punctuated models.
+
+## Observations
+Most of the time though, it's impossible to see gradualism happening - it's hard to show if changes are incremental or rapid, but there are a few examples now of people observing evolution in organisms, ones that count as fairly rapid.
+
+### Rat carcasses in Chicago
+e.g. there are lots of rat carcasses in Chicago, from rats killed in the 1880s. Researches compared their genomes to current rats in Chicago, and showed there were a lot of changes in that time.
+
+### Darwin's finches
+People have been studying them for 50/75 years - gene distributions for traits like bill size (dictates what kind of food you can break in to), in response to environment changes, has been documented.
+
+# Diabetes resistance
+Adult onset diabetes is becoming an epidemic. Humans are built to store calories, mix that with a Westernized diet and you get obesity and diabetes.
+People have studied populations that have had rapid shifts from traditional diets to Westernized ones ,like Pacific Islanders, or the iconic Pima Indians in Arizona - about half life in the USA, half Mexico. There've been far more changes to the diet in the American side, and the people in America have \~90% diabetes rates by 30 years old. The same thing has happened in Naru and Samoa, Jews who lived in  Yemen and moved to Israel in the 60s/70s.
+
+This killed off lots of people early in life, in their reproductive history, the people who were most vulnerable to diabetes. They left fewer copies of their genes. In the last 10 years or so, in some of the studied Pacific Island populations, diabetes rates are falling - there's been the selection that went into Western Europeans \~a century ago, where the people with most efficient metabolisms (that can store more calories) died.
+There's been selection for worse metabolisms, within 1 century.
+
+## Domesticated silver foxes in Siberia
+They were selectively bred for tameness from wild foxes - 5/10% of them were relatively tame, only they were allowed to breed, over only 35 generations they've become as tame as dogs are.
+They were bred for 1 trait only, a behavioural one - the ability to get close to them. **Not just the behaviour changed** - they turned into more like fox puppies, with round ears and short muzzles, and they wag their tails. 
+When you breed a wild animal to be tame-able, you're breeding for the ones that behave more childishly, that act more like developing animals that depend more on other individuals, for infantile traits (this is called neoteny).
+Also, you can't get domestic without piebald colouration patterns.
+
+## Antibiotic resistance in bacteria
+This is very rapid change that you'll never be able to see in a fossil - bacteria don't leave fossils.
+
+# Resolution
+Both micro and macro evolutionary changes can happen at the same time - say you have evidence of a punctuated change of some trait, and single traits don't evolve at a time, they come in packages (like the foxes domestication, neoteny and coat colours).
+So, there's some other punctuated change at the same time, slightly different timeframe to the first, and another one - if you have enough punctuated events happening, on a whole population level, it'll look like gradualism.
+
+# Next time
+Behavioural genetics
+* someone gets adopted, do they share a trait more with their adoptive parents or their biological ones?
+* non-identical twins vs identical twins
+* identical twins adopted into different families at birth
