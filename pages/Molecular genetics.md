@@ -124,7 +124,7 @@ Pathogens also do it - trypanosomes cause trypanosomiasis, and take away their s
 ### In primates
 There's a transposable element that's predominant in primates which is most mobile when brain cells that make new neurons (neural progenitor cells), at the time they start proliferating: you get novel things neurons can do, the cells in your body that have the most to do with who you are are the least constrained by genetics - right when they're first being made, their genes are getting shuffled more than anywhere else
 
-### New if-ten clauses
+### New if-then clauses
 Generally, a part of DNA is copied and moved randomly somewhere else, so you get big consequences.
 Imagine you have an if-then clause: if dehydrated (to do with your [hematocrit](https://www.mayoclinic.org/tests-procedures/hematocrit/about/pac-20384728)/how wrinkly your kidneys are/whatever, biologically speaking), then tell your kidneys to retain water.
 This is ridiculous, there's no gene for this, but there are networks and ways your kidneys monitors that.
