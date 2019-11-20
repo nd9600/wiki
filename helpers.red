@@ -12,6 +12,7 @@ found?: function [
 ] [
     not none? x
 ]
+
 contains?: function [
     "returns if 's contains 'e"
     s [series!] "the series to search in"
@@ -26,6 +27,14 @@ isOneOf: make op! function [
     s [series!]
 ] [
     contains? s e
+]
+
+objectHasKey: function [
+    "returns if 'obj has 'key"
+    obj [object!]
+    key [word!]
+] [
+    key isOneOf keys-of obj
 ]
 
 cons: make op! function [

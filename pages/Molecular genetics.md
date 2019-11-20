@@ -2,10 +2,13 @@
 
 <sub>[source](https://www.youtube.com/watch?v=dFILgg9_hrU)</sub>
 
-# Last time
-* Individual selection
-* Kin selection
-* Group selection
+# Selection
+
+## Individual selection
+
+## Kin selection
+
+## Group selection
 
 # The central dogma
 
@@ -137,7 +140,7 @@ Or if your gestation period is 2 months, then if you're dehydrated, _don't_ ovul
 This is a novel if-then clause!
 
 Imagine you have a promoter that can tell if an individual near you smells like you, then it immediately shuts down transcription for things related to fertility - the incest taboo in loads of species.
-The "smells like me" promoter can get copied to upstream of the gene that says "cooperate" - this is the start of kin selection. If there are more promoters (they smell a lot like you), then maybe you'll cooperate a lot, vice-versa - you've invented a way of taking sensory info about the degree of related-ness and turning it into whether you'll sacrifice for [1 sibling or 8 cousins]().
+The "smells like me" promoter can get copied to upstream of the gene that says "cooperate" - this is the start of kin selection. If there are more promoters (they smell a lot like you), then maybe you'll cooperate a lot, vice-versa - you've invented a way of taking sensory info about the degree of related-ness and turning it into whether you'll sacrifice for [1 sibling or 8 cousins](#kin_selection).
 
 This is again ridiculous, there aren't any promoters for "this smells like me", but there are promoters for stuff similar to it, you can imagine turning this into real biology.
 

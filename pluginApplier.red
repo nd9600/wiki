@@ -18,6 +18,27 @@ PluginApplier: context [
         ;     find all the links in it by walking the AST
         ;     add to map! "'filename links to ['filename2]"
 
+        foreach pagename pagenames [
+            fileData: filesData/:pagename
+            prettyPrint self/getLinksFromNode fileData/ast
+        ]
+
         filesData
+    ]
+
+    getLinksFromNode: function [
+        node [object!]
+        return: [block!]
+    ] [
+        if node/type == "LinkNode" [
+            prettyPrint node
+            return node/url
+        ]
+        if objectHasKey node 'children [
+            return (node/children
+            |> [f_map lambda [self/getLinksFromNode ?]]
+            |> :flatten)
+        ]
+        return []
     ]
 ]

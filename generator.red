@@ -101,7 +101,7 @@ main: function  [
     ]
 
     newPluginApplier: make PluginApplier []
-    ; filesData: newPluginApplier/applyPlugins pagenames filesData
+    filesData: newPluginApplier/applyPlugins pagenames filesData
 
     foreach pagename pagenames [
         htmlFilename: append (copy slugifyString pagename) ".html"
