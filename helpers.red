@@ -28,6 +28,15 @@ isOneOf: make op! function [
     contains? s e
 ]
 
+cons: make op! function [
+    "inserts 'e at the head of 's, returns new 's"
+    e [any-type!] 
+    s [series!]
+] [
+    insert head s e 
+    s
+]
+
 startsWith: function [
     "returns whether 'series starts with 'value"
     series [series!]
@@ -174,6 +183,32 @@ f_filter: function [
     result
 ]
 
+isTrueForAny: function [
+    "Returns whether (predicate e) is true for any 'e in 'block"
+    predicate  [function!] "the function to use" 
+    block [block!] "the block to map across"
+] [
+    foreach element block [
+        if predicate element [
+            return true
+        ]
+    ]
+    false
+]
+
+isTrueForAll: function [
+    "Returns whether (predicate e) is true for all 'e in 'block"
+    predicate  [function!] "the function to use" 
+    block [block!] "the block to map across"
+] [
+    foreach element block [
+        if not predicate element [
+            return false
+        ]
+    ]
+    true
+]
+
 assert: function [
     "Raises an error if every value in 'conditions doesn't evaluate to true. Enclose variables in brackets to compose them"
     conditions [block!]
@@ -184,7 +219,7 @@ assert: function [
             e: rejoin [
                 "assertion failed for: " mold/only conditions "," 
                 newline 
-                "conditions: [" mold compose/only conditions "]"
+                "conditions: " mold compose/only conditions
             ] 
             print e 
             do make error! rejoin ["assertion failed for: " mold conditions]
@@ -377,8 +412,17 @@ join: function [
     block [block!]
     sep [string! char!]
 ] [
-    rejoin compose/only flatten 
-        f_map lambda [reduce [? copy (to-string sep)]] block
+    len: length? block 
+    str: copy "" 
+    repeat i len [
+        e: block/:i
+        either not i == len [
+            append str rejoin [e (to-string sep)]
+        ] [
+            append str e
+        ]
+    ]
+    str
 ]
 
 pickProperties: function [
