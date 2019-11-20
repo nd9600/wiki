@@ -369,6 +369,11 @@ Parser: context [
             ; the link's text is the value of all the tokens until a RightSquareBracket is peeked
             textValue: copy ""
             until [
+                ; empty text
+                if peek RightSquareBracket [
+                    break
+                ]
+
                 currentToken: first self/tokens
                 append textValue currentToken/value 
                 self/tokens: next self/tokens
@@ -381,6 +386,11 @@ Parser: context [
             ; the link's url is the value of all the tokens until a RightBracket is peeked
             urlValue: copy ""
             until [
+                ; empty link
+                if peek RightBracket [
+                    break
+                ]
+
                 currentToken: first self/tokens
                 append urlValue currentToken/value 
                 self/tokens: next self/tokens
