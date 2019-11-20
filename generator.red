@@ -10,6 +10,7 @@ dotenv: context load %dotenv.red
 dotenv/loadEnv
 
 do %indexGenerator.red
+do %pluginApplier.red
 
 wikiLocation: (get-env "WIKI_LOCATION")
     |> :dirize
@@ -61,8 +62,8 @@ main: function  [
     ]
 
     ; a map! of pagenames to their tokens, ASTs and HTML
-    filesData: make map! []
     pagenames: copy []
+    filesData: make map! []
 
     foreach file wikipages [
         tagsString: ""
@@ -71,7 +72,6 @@ main: function  [
 
         filenameWithoutExtension: (find filename ".md")
             |> [copy/part filename]
-        htmlFilename: append (copy slugifyString filenameWithoutExtension) ".html"
 
         print rejoin ["compiling " filename]
 
@@ -100,7 +100,12 @@ main: function  [
         ]
     ]
 
+    newPluginApplier: make PluginApplier []
+    ; filesData: newPluginApplier/applyPlugins pagenames filesData
+
     foreach pagename pagenames [
+        htmlFilename: append (copy slugifyString pagename) ".html"
+
         fileData: filesData/:pagename
 
         variables: make map! reduce [
@@ -110,12 +115,10 @@ main: function  [
         
         wikipageHTML: templater/compile wikiTemplate variables
         filepath: rejoin [wikiLocation htmlFilename]
+
+        print rejoin ["writing " pagename]
         write filepath wikipageHTML
     ]
-
-    ; for each file
-    ;     find all the links in it by walking the AST
-    ;     add to map! "'filename links to ['filename2]"  
 
     if not shouldOnlyParseOneFile [
         print "compiling index"
