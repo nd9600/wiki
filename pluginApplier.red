@@ -55,7 +55,6 @@ PluginApplier: context [
         return: [block!]
     ] [
         if node/type == "LinkNode" [
-            prettyPrint node
             return node/url ; todo: need to handle anchors
         ]
         if objectHasKey node 'children [
