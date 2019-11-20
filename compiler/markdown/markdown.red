@@ -17,25 +17,25 @@ compile: function [
     str
 
     newTokenizer: make Tokenizer []
-    tokenStream: newTokenizer/tokenize str
+    tokens: newTokenizer/tokenize str
     ; prettyPrint tokenStream
     ; quit
 
-    newParser: make Parser [
-        file: filename
-        tokens: tokenStream
+    newParser: make Parser compact [
+        filename
+        tokens
     ]
     ast: newParser/parse
     ; prettyPrint ast
     ; quit
 
-    newTocGenerator: make TocGenerator [
-        astToUse: ast
+    newTocGenerator: make TocGenerator compact [
+        ast
     ]
     tableOfContents: newTocGenerator/generate
 
-    newCodeGenerator: make CodeGenerator [
-        file: filename
+    newCodeGenerator: make CodeGenerator compact [
+        filename
     ]
     html: newCodeGenerator/generate ast
     ; print html

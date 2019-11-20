@@ -10,7 +10,7 @@ Red [
 do %tree.red
 
 TocGenerator: context [
-    astToUse: none
+    ast: none
 
     generate: does [
         headerTree: makeHeaderTree
@@ -32,7 +32,7 @@ TocGenerator: context [
     ]
 
     makeHeaderTree: function [] [
-        headers: astToUse/children
+        headers: ast/children
             |> [f_filter lambda [?/type == "HeaderNode"]]
             |> [f_map lambda [pickProperties [size text] ?]]
 

@@ -5,7 +5,7 @@ Red [
 ]
 
 CodeGenerator: context [
-    file: ""
+    filename: ""
 
     generate: function [
         "recursively generates the HTML for a node in %nodes.red"
@@ -115,7 +115,7 @@ CodeGenerator: context [
             ]
         ] [
             print rejoin ["AST is " prettyFormat node]
-            do make error! rejoin ["can't handle " node/type { in file "} self/file {"}]
+            do make error! rejoin ["can't handle " node/type { in file "} self/filename {"}]
         ]
     ]
 ]

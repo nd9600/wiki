@@ -20,7 +20,7 @@ INLINE_TOKEN_TYPES: [
 ]
 
 Parser: context [
-    file: ""
+    filename: ""
     tokens: [] ; a block! of Tokens from %tokens.red"
 
     peek: function [
@@ -110,7 +110,7 @@ Parser: context [
         ] [
             strError: errorToString tree
             print rejoin ["stream is " prettyFormat copy/part self/tokens 5]
-            print rejoin [newline "#####" newline "error: " strError { in file "} self/file {"}]
+            print rejoin [newline "#####" newline "error: " strError { in file "} self/filename {"}]
             quit
         ]
         tree
@@ -257,7 +257,7 @@ Parser: context [
             true [
                 badToken: first self/tokens
                 print rejoin ["stream is " prettyFormat copy/part self/tokens 5]
-                print rejoin ["can't handle " badToken/type {Token in file "} self/file {", maybeParseInlineTokens}]
+                print rejoin ["can't handle " badToken/type {Token in file "} self/filename {", maybeParseInlineTokens}]
                 quit
             ]
         ]
@@ -297,7 +297,7 @@ Parser: context [
 
             true [
                 currentToken: first self/tokens
-                do make error! rejoin ["expected Asterisk or Text but got " currentToken/type { in file "} self/file {"}]
+                do make error! rejoin ["expected Asterisk or Text but got " currentToken/type { in file "} self/filename {"}]
             ]
         ]
     ]
@@ -324,7 +324,7 @@ Parser: context [
 
             true [
                 currentToken: first self/tokens
-                do make error! rejoin ["expected Underscore or Text but got " currentToken/type { in file "} self/file {"}]
+                do make error! rejoin ["expected Underscore or Text but got " currentToken/type { in file "} self/filename {"}]
             ]
         ]
     ]
@@ -563,7 +563,7 @@ Parser: context [
             true [
                 badToken: first self/tokens
                 print rejoin ["stream is " prettyFormat copy/part self/tokens 5]
-                print rejoin ["can't handle " badToken/type {Token in file "} self/file {", maybeParseBlockTokens}]
+                print rejoin ["can't handle " badToken/type {Token in file "} self/filename {", maybeParseBlockTokens}]
                 quit
             ]
         ]

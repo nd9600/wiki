@@ -399,3 +399,18 @@ pickProperties: function [
     ]
     newObject
 ]
+
+compact: func [
+    "returns a block! with word!s and their values; given `c: 6` and 'words as `[c]`, this returns `[c: 6]`"
+    words [block!]
+    /local compactedBlock word
+    return: [block!]
+] [
+    compactedBlock: copy [] 
+    foreach word words [
+        append compactedBlock compose [
+            to-set-word (to-lit-word word) (word)
+        ]
+    ] 
+    reduce compactedBlock
+]
