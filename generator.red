@@ -72,6 +72,7 @@ main: function  [
 
         filenameWithoutExtension: (find filename ".md")
             |> [copy/part filename]
+        nameOfHtmlFile: append (copy slugifyString filenameWithoutExtension) ".html"
 
         print rejoin ["compiling " filename]
 
@@ -94,6 +95,7 @@ main: function  [
         compiledResults: markdownCompiler/compile filename pageContent
         put filesData filenameWithoutExtension context [
             pagename: filenameWithoutExtension
+            htmlFilename: (nameOfHtmlFile)
             tokens: compiledResults/tokens
             ast: compiledResults/ast
             html: compiledResults/html
@@ -104,8 +106,6 @@ main: function  [
     filesData: newPluginApplier/applyPlugins pagenames filesData
 
     foreach pagename pagenames [
-        htmlFilename: append (copy slugifyString pagename) ".html"
-
         fileData: filesData/:pagename
 
         variables: make map! reduce [
@@ -114,7 +114,7 @@ main: function  [
         ]
         
         wikipageHTML: templater/compile wikiTemplate variables
-        filepath: rejoin [wikiLocation htmlFilename]
+        filepath: rejoin [wikiLocation fileData/htmlFilename]
 
         print rejoin ["writing " pagename]
         write filepath wikipageHTML

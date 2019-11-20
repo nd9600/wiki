@@ -23,7 +23,7 @@ Types are normally checked to reduce/remove bugs (like the function receiving/re
 Different languages have more or less expressive type systems:
 * Javascript doesn't let you explicitly assign types to variables/parameters at all
 * Red/Rebol lets you type function parameters and return types (though return types are ignored right now), but not variables
-* [Haskell](haskell.html) requires that everything is typed, and will _infer_ types - if a variable is instantiated as the result of calling a function that returns an int, it knows the variable's an int - so you don't need to type every single thing yourself
+* [Haskell](/haskell.html) requires that everything is typed, and will _infer_ types - if a variable is instantiated as the result of calling a function that returns an int, it knows the variable's an int - so you don't need to type every single thing yourself
 
 ## Polymorphism
 A _polymorphic_ function is one that doesn't require its argument(s) to have specific type(s) - they're **generic** functions & types.
@@ -78,7 +78,7 @@ Polytypes (or _type schemes_) are types containing variables bound by one or mor
     <dd>A type system with parametric polymorphism (generic functions & types) that can infer the most general type of a program, in almost linear time</dd>
 </dl>
 # Inference
-This is some [Haskell](haskell.html) code:
+This is some [Haskell](/haskell.html) code:
 ```
 f baseAmt str = replicate rptAmt newStr
   where

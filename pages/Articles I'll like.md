@@ -16,7 +16,7 @@ http://blog.ploeh.dk/2017/01/27/dependency-injection-is-passing-an-argument/
 [People's favourite tech talks](https://news.ycombinator.com/item?id=12637239)
 
 ## Radical stuff
-(see [projects](projects.html))
+(see [projects](/projects.html))
 http://www.squeakland.org/resources/articles/article.jsp?id=1001 
 https://rsnous.com/posts/notes-from-dynamicland-geokit/ 
 http://www.vpri.org/pdf/tr2012001_steps.pdf 

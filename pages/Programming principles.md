@@ -114,7 +114,7 @@ Generally, there are 2 reasons for testing:
 1. Checking that you're doing the right thing
 2. Checking that you're doing the thing right
 
-Only people can do the first one - see [here](testing.html) for more.
+Only people can do the first one - see [here](/testing.html) for more.
 
 ## Do the Right Thing
 If you can, before you start doing something, make sure that it's the Right Thing to do - there's no point making an airplane, if your boss actually wanted a tank, or you needed something that could work underwater.

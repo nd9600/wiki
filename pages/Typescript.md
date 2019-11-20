@@ -415,7 +415,7 @@ export { Direction };
 ```
 
 # Type inference
-See [type inference](type_inference.html) for more.
+See [type inference](/type_inference.html) for more.
 
 # Declarations
 You can type JS files with `.d.ts` files, so you can add types to a JS library you've pulled off NPM that isn't typed yet:
