@@ -90,7 +90,7 @@ CodeGenerator: context [
                 either innerList [
                     rejoin ["<" listTag { class="list } listModifierClass { list--inner">} newline listItems "</" listTag ">"]
                 ] [
-                    rejoin ["<" listTag { class="list } listModifierClass {">} newline listItems "</" listTag ">"]
+                    rejoin ["<" listTag { class="list } listModifierClass {">} newline listItems newline "</" listTag ">"]
                 ]
             ]
             "ListItemNode" [

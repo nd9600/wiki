@@ -18,17 +18,6 @@ wikiLocation: (get-env "WIKI_LOCATION")
 templater: context load %templater.red
 markdownCompiler: context load %compiler/markdown/markdown.red
 
-compileToHTML: function [
-    filename [string!]
-    pageContent [string!] "the actual content, excluding the tags at the top"
-    extension [string!] 
-] [
-    switch extension [
-        "md" [markdownCompiler/compile filename pageContent]
-        "rst" ["CAN'T COMPILE RESTRUCTURED TEXT YET"]
-    ]
-]
-
 slugifyString: function [
     "turns 'File name a£%$' into 'file_name_'"
     str [string!]
@@ -70,15 +59,15 @@ main: function  [
         'pages []
         'innerTags make map! []
     ]
+
+    ; a map! of pagenames to their tokens, ASTs and HTML
+    filesData: make map! []
+    pagenames: copy []
+
     foreach file wikipages [
         tagsString: ""
         filename: (next find/last file "/")
             |> :to-string
-        extension: case [
-            (find/last filename ".md") ["md"]
-            (find/last filename ".rst") ["rst"]
-            true ["md"]
-        ]
 
         filenameWithoutExtension: (find filename ".md")
             |> [copy/part filename]
@@ -101,17 +90,32 @@ main: function  [
             index: addToIndexFromTags index tagsString filenameWithoutExtension
         ]
 
-        content: compileToHTML filename pageContent extension
+        append pagenames filenameWithoutExtension
+        compiledResults: markdownCompiler/compile filename pageContent
+        put filesData filenameWithoutExtension context [
+            pagename: filenameWithoutExtension
+            tokens: compiledResults/tokens
+            ast: compiledResults/ast
+            html: compiledResults/html
+        ]
+    ]
+
+    foreach pagename pagenames [
+        fileData: filesData/:pagename
 
         variables: make map! reduce [
-            'title filenameWithoutExtension
-            'content content
+            'title pagename
+            'content fileData/html
         ]
         
         wikipageHTML: templater/compile wikiTemplate variables
         filepath: rejoin [wikiLocation htmlFilename]
         write filepath wikipageHTML
     ]
+
+    ; for each file
+    ;     find all the links in it by walking the AST
+    ;     add to map! "'filename links to ['filename2]"  
 
     if not shouldOnlyParseOneFile [
         print "compiling index"

@@ -13,6 +13,7 @@ compile: function [
     "converts an input Markdown string into HTML"
     filename [string!]
     str [string!]
+    return: [object!] ; [tokens: block! ast: object! html: string!]
 ] [
     str
 
@@ -32,17 +33,21 @@ compile: function [
     newCodeGenerator: make CodeGenerator compact [
         filename
     ]
-    html: newCodeGenerator/generate ast
+    compiledHtml: newCodeGenerator/generate ast
 
-    htmlWithPlugins: applyPlugins tokens ast html
+    html: applySinglePagePlugins tokens ast compiledHtml
 
-    ; print htmlWithPlugins
+    ; print html
     ; quit
-    htmlWithPlugins
+    context compact [
+        tokens
+        ast
+        html
+    ]
 ]
 
-applyPlugins: function [
-    "applies a list of plugins to the compiled HTML from a markdown file - each can use the HTML itself, the AST, and/or the token stream"
+applySinglePagePlugins: function [
+    "applies a list of plugins to the compiled HTML from a Markdown file - each can use the HTML itself, the AST, and/or the token stream, *from that one Markdown file only*"
     tokens [block!] "see %tokens.red"
     ast [object!] "see %nodes.red"
     html [string!]
@@ -52,6 +57,6 @@ applyPlugins: function [
         ast
     ]
     tableOfContents: newTocGenerator/generate
-    
+
     rejoin [tableOfContents newline html]
 ]
