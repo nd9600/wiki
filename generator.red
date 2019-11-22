@@ -48,7 +48,11 @@ main: function  [
 ] [
     shouldOnlyParseOneFile: not empty? args
     either shouldOnlyParseOneFile [
-        filenameWithoutQuotes: copy/part at args 2 ((length? args) - 2)
+        filenameWithoutQuotes: either (contains? args space) [
+            copy/part at args 2 ((length? args) - 2) ; there'll be quotes around it we need to remove
+        ] [
+            args
+        ]
         wikipages: reduce [to-file filenameWithoutQuotes]
     ] [
         deleteDir/matching wikiLocation lambda [endsWith ? ".html"]
