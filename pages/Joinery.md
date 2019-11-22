@@ -1,4 +1,7 @@
 tags: [me skills]
+
+<sub>I did this course straight after the [plumbing course](/plumbing.html)</sub>
+
 You need to make a frame out of wood, put gyprock on it, then tiles on the gyprock.
 
 # Making the frame

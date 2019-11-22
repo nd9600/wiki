@@ -758,7 +758,7 @@ Ok that works for `<ul>`s, but definitely not `<ol>`s, because of the badly shap
 Actually it's not just because of the AST - the numbers will stop be wrong if I fix it, since there's a `ListNode` that's being hidden by the `--noListStyle` class, so the outer lists will jump from 1 to 3, or 2 to 4, etc. Ah well. I don't think that's fixable.
 
 ## Day 15
-Backlinks and forwardlinks today (copying [Roam](https://roamresearch.com/) here)!
+Back and forwardlinks (gonna call them the linkmap) today (copying [Roam](https://roamresearch.com/) here)!
 Quite fun to do, once I got the refactoring I had to do first out of the way (makes me think of essential vs. incidental complexity).
 I needed to make bi-directional maps of "what pages does this page link to?" and "what pages link to this page?", and it turned out to be _really_ simple:
 ```
@@ -804,6 +804,14 @@ foreach pagename pagenames [
     ]
 ]
 ```
+
+The only annoying thing was, to do that, I needed to have the [AST](/ast.html) for each `.md` file inside the root script that "manages" the whole compilation of the wiki, since to work out which pages link to a specific page, you need to _have_ all the different pages ASTs already.
+And I was returning the compiled-Markdown HTML only, so I had to rejig it to return the AST (and the tokens, for good measure), as well. Reminds me a bit of Fred Brooks [No Silver Bullet](https://en.wikipedia.org/wiki/No_Silver_Bullet) paper on accidental and essential complexity.
+
+### Day 16
+I've made the forward and backlinks, now to actually put them on the page
+
+![back and forwardlink](static/images/backlinks.png)
 
 ---
 

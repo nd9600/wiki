@@ -1,4 +1,7 @@
 tags: [me skills]
+
+sub>I did this course right before the [joiner course](/joinery.html)</sub>
+
 Every other time I've been on a course, it's either been to learn so I can eventually pass an exam, or for work; this was the first time I've gone on one just for myself, with no pressure.
 
 # Day 1

@@ -10,7 +10,6 @@ dotenv: context load %dotenv.red
 dotenv/loadEnv
 
 do %indexGenerator.red
-do %pluginApplier.red
 
 wikiLocation: (get-env "WIKI_LOCATION")
     |> :dirize
@@ -18,6 +17,8 @@ wikiLocation: (get-env "WIKI_LOCATION")
 
 templater: context load %templater.red
 markdownCompiler: context load %compiler/markdown/markdown.red
+
+do %plugins/pluginApplier.red
 
 slugifyString: function [
     "turns 'File name a£%$' into 'file_name_'"
