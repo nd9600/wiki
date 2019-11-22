@@ -757,6 +757,54 @@ Ok that works for `<ul>`s, but definitely not `<ol>`s, because of the badly shap
 
 Actually it's not just because of the AST - the numbers will stop be wrong if I fix it, since there's a `ListNode` that's being hidden by the `--noListStyle` class, so the outer lists will jump from 1 to 3, or 2 to 4, etc. Ah well. I don't think that's fixable.
 
+## Day 15
+Backlinks and forwardlinks today (copying [Roam](https://roamresearch.com/) here)!
+Quite fun to do, once I got the refactoring I had to do first out of the way (makes me think of essential vs. incidental complexity).
+I needed to make bi-directional maps of "what pages does this page link to?" and "what pages link to this page?", and it turned out to be _really_ simple:
+```
+ pageToPagesMap: make map! [] ; what pages does page p link to?
+pagesFromPageMap: make map! [] ; what pages link to page p?
+
+foreach pagename pagenames [
+    fileData: filesData/:pagename
+
+    htmlFilename: fileData/htmlFilename
+    allLinks: self/getLinksFromNode fileData/ast
+    linksToOtherWikiPages: allLinks
+        |> [f_filter lambda [startsWith ? "/"]]
+        |> [f_map lambda [at ? 2]]
+    prettyPrint linksToOtherWikiPages
+
+    ; htmlFilename links to each of linksToOtherWikiPages
+    put pageToPagesMap htmlFilename linksToOtherWikiPages
+
+    ; each of linksToOtherWikiPages is linked to by htmlFilename
+    foreach pageLinkedTo linksToOtherWikiPages [
+        either found? pagesFromPageMap/:pageLinkedTo [
+            append pagesFromPageMap/:pageLinkedTo htmlFilename
+        ] [
+            put pagesFromPageMap pageLinkedTo reduce [htmlFilename]
+        ]
+    ]
+
+    getLinksFromNode: function [
+        "returns all the URLs in a node from an AST"
+        node [object!]
+        return: [block!]
+    ] [
+        if node/type == "LinkNode" [
+            return node/url ; todo: need to handle anchors
+        ]
+        if objectHasKey node 'children [
+            return node/children
+                |> [f_map lambda [self/getLinksFromNode ?]]
+                |> :flatten
+        ]
+        return []
+    ]
+]
+```
+
 ---
 
 # Commonly needed code
