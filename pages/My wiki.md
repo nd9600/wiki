@@ -153,7 +153,7 @@ I think I'll need these tokens:
 * newlines, so you know when a header stops
 * and everything else that isn't one of the above tokens, is a "text" token
 
-I forgot that the index tree needed to be able to handle tags having pages _and_ other tags inside it. It broke horribly when I put actually nested tags in (the programming section). Weirdly, fixing it actually seemed to simplify how I make the tree (the `addToIndexFromTags` function). Though, I really should make a Tree `object!`, with Nodes, Branches and Leaves, rather than just this ghetto version I have right now. Visiting the tree in a [DFS](/dfs.html) shouldn't have been as hard as it was.
+I forgot that the index tree needed to be able to handle tags having pages _and_ other tags inside it. It broke horribly when I put actually nested tags in (the programming section). Weirdly, fixing it actually seemed to simplify how I make the tree (the `addToIndexFromTags` function). Though, I really should make a Tree `object!`, with Nodes, Branches and Leaves, rather than just this ghetto version I have right now. Visiting the tree in a [DFS](https://en.wikipedia.org/wiki/Depth-first_search) shouldn't have been as hard as it was.
 
 I'm not sure this "tokenizer-parser-code generator" approach is the right one right now; tokenizing the Markdown _seems_ to work ok now, but I'm 99% sure it'll break when I try to run it on something that isn't `# Abstract Syntax Tree` - mainly because I don't know how to tokenize text, everything that isn't in the Markdown syntax, something you just want to pass straight through to the output.
 Hmm, maybe just read the input in and immediately output it with transformations? No, too complicated, and how do you know when you're supposed to switch to e.g. bold mode? 
@@ -808,7 +808,7 @@ foreach pagename pagenames [
 The only annoying thing was, to do that, I needed to have the [AST](/ast.html) for each `.md` file inside the root script that "manages" the whole compilation of the wiki, since to work out which pages link to a specific page, you need to _have_ all the different pages ASTs already.
 And I was returning the compiled-Markdown HTML only, so I had to rejig it to return the AST (and the tokens, for good measure), as well. Reminds me a bit of Fred Brooks [No Silver Bullet](https://en.wikipedia.org/wiki/No_Silver_Bullet) paper on accidental and essential complexity.
 
-### Day 16
+## Day 16
 I've made the forward and backlinks, now to actually put them on the page
 
 ![back and forwardlink](static/images/backlinks.png)
