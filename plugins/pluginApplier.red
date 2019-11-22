@@ -91,12 +91,14 @@ PluginApplier: context [
         return: [block!]
     ] [
         if node/type == "LinkNode" [
-            return node/url ; todo: need to handle anchors
+            parse node/url [copy urlWithoutAnchorOrQueryString to ["#" | "?" | end]]
+            return urlWithoutAnchorOrQueryString
         ]
         if objectHasKey node 'children [
             return node/children
                 |> [f_map lambda [self/getLinksFromNode ?]]
                 |> :flatten
+                |> :unique
         ]
         return []
     ]
