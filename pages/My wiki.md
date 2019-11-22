@@ -812,6 +812,7 @@ And I was returning the compiled-Markdown HTML only, so I had to rejig it to ret
 I've made the forward and backlinks, now to actually put them on the page
 
 ![back and forwardlink](static/images/backlinks.png)
+Easy
 
 ---
 
