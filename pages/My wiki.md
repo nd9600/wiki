@@ -805,7 +805,7 @@ foreach pagename pagenames [
 ]
 ```
 
-The only annoying thing was, to do that, I needed to have the [AST](/ast.html) for each `.md` file inside the root script that "manages" the whole compilation of the wiki, since to work out which pages link to a specific page, you need to _have_ all the different pages ASTs already.
+The only annoying thing was, to do that, I needed to have the [AST](/abstract_syntax_tree.html) for each `.md` file inside the root script that "manages" the whole compilation of the wiki, since to work out which pages link to a specific page, you need to _have_ all the different pages ASTs already.
 And I was returning the compiled-Markdown HTML only, so I had to rejig it to return the AST (and the tokens, for good measure), as well. Reminds me a bit of Fred Brooks [No Silver Bullet](https://en.wikipedia.org/wiki/No_Silver_Bullet) paper on accidental and essential complexity.
 
 ## Day 16
