@@ -71,7 +71,7 @@ BlockquoteNode: make Node [
 
 ListNode: make Node [
     type: "ListNode"
-    items: none
+    children: none
     isOrdered: false
 ]
 ListItemNode: make Node [

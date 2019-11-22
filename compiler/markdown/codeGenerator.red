@@ -77,10 +77,10 @@ CodeGenerator: context [
 
             "ListNode" [
                 listItems: either innerList [
-                    (f_map lambda [self/generate/innerList ?] node/items)
+                    (f_map lambda [self/generate/innerList ?] node/children)
                         |> lambda [join ? newline]
                 ] [
-                    (f_map lambda [self/generate ?] node/items)
+                    (f_map lambda [self/generate ?] node/children)
                         |> lambda [join ? newline]
                 ]
 

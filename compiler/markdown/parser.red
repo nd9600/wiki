@@ -74,7 +74,7 @@ Parser: context [
                     TEXT: EXAMPLE
                     BR
                 ORDERED_LIST
-                    ITEMS: [
+                    CHILDREN: [
                         TEXT
                         TEXT
                         STRONG_EMPHASIS
@@ -683,7 +683,7 @@ Parser: context [
                             doesntHaveListStyle: (indentNumber <> 1)
                         ]
                         nodeToAppend: make ListNode compose/deep [
-                            items: [(innerListItemNode)]
+                            children: [(innerListItemNode)]
                             isOrdered: isOrderedList
                         ]
                     ]
@@ -723,7 +723,7 @@ Parser: context [
         ]
 
         make ListNode [
-            items: listItemNodes
+            children: listItemNodes
             isOrdered: isOrderedList
         ]
     ]
