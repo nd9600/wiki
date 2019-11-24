@@ -27,7 +27,7 @@ CodeGenerator: context [
             ]
 
             "NewlineNode" [
-                "<br>"
+                rejoin [newline "<br>" newline]
             ]
             "TextNode" [
                 node/text
