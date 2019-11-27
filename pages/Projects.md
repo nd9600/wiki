@@ -6,8 +6,8 @@ tags: [me projects]
 # Not done
 * English translations of CSS selectors like http://tux.theopalgroup.com/cgi-bin/css3explainer/selectoracle.py
 * Pattern matching https://en.wikibooks.org/wiki/Haskell/Pattern_matching https://en.wikipedia.org/wiki/ML_\(programming_language\)
-* Local ebook/pdf reader website
-* Reduced MNIST with nose architecture & predictive processing https://www.quantamagazine.org/new-ai-strategy-mimics-how-brains-learn-to-smell-20180918/ http://cognitivemedium.com/rmnist https://slatestarcodex.com/2017/09/05/book-review-surfing-uncertainty/ http://www.foundalis.com/res/poc/PrinciplesOfCognition.htm#sixth_law
+* Local ebook/pdf reader website 
+* Reduced MNIST with nose architecture & predictive processing https://www.quantamagazine.org/new-ai-strategy-mimics-how-brains-learn-to-smell-20180918/ http://cognitivemedium.com/rmnist https://slatestarcodex.com/2017/09/05/book-review-surfing-uncertainty/ http://www.foundalis.com/res/poc/PrinciplesOfCognition.htm#sixth_law https://www.quantamagazine.org/computers-evolve-a-new-path-toward-human-intelligence-20191106/
 * Red IDE, like Bret Victor's (w/ language server?) https://blog.acolyer.org/2016/09/05/on-the-criteria-to-be-used-in-decomposing-systems-into-modules/ https://github.com/AlexanderBaggett/RedIDE http://redlanguageblog.blogspot.com/?m=1 http://www.rebol.net/cookbook/recipes/0042.html https://github.com/fullstackio/choc http://worrydream.com/LearnableProgramming/ https://news.ycombinator.com/item?id=6458424
 * Twitter interest extractor + sentiment analysis to id people like in that AI trilogy
 * Twitter follower graph, like https://kieranhealy.org/blog/archives/2013/06/09/using-metadata-to-find-paul-revere/g
