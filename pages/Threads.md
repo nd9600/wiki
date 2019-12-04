@@ -5,3 +5,4 @@ tags: [me threads]
 * [Photos around](https://twitter.com/CaYD4D/status/1147660911299178497)
 * [Design around](https://twitter.com/CaYD4D/status/1127269618018672640)
 * [Good things](https://twitter.com/CaYD4D/status/1175348586198048768)
+* [AI](https://twitter.com/CaYD4D/status/1202198164373229570)
