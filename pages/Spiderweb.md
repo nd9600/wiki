@@ -60,6 +60,9 @@ Explicitly linking a post to another, __after__ both have been made; you don't n
 
 This would be in 2 different directions, a link from post A to post B, or from B to A: in a link from A to B, A is the parent, B the child
 
+##### User-level link graphs
+This explicit linking means users could have their own graphs of links between posts (not sure how useful this would be).
+
 ---
 
 Mentioning a post inside another post - this opens up the possibility of [transclusion](https://en.wikipedia.org/wiki/Transclusion) later on
@@ -76,7 +79,12 @@ To limit pile-ons, dogpiling, flaming, trolling, ratio-ing, you __must__ control
 * you can allow everyone to see your posts, or a specific set of people
 * you can __not__ allow everyone to reply to your posts, only specific people - this can be a specific set of people, people you follow, people who follow you, both, some combination of them, ... (tentative, users might just set it to "people who follow you", and then there'd essentially be no limit)
 
-Though, if no one can reply to you unless you specifically allow them to
+This will probably have unforeseen consequences, though.
+
+#### Free-for-all times
+
+Though, if no one can reply to you unless you specifically allow them to, it'd be quite hard to break in to a a group, since you can't talk to them.
+To avoid that, users could choose to allow anyone to reply to them, for a short period of time (1 - 2 hours?) once a day/week, if they want - the time period might be for a user's specific timezone, so "8pm" in GMT for someone in the UK, or it could be the same time period for __all__ users, so 8pm GMT on a Sunday for UK users, 7pm for GMT+1, etc.
 
 ### Offline
 It'd be relatively easy to do this all offline, and just store an array of Posts, and an array of Post <-> Post Links in [Local storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) or [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API), without any network calls or user accounts - a [PWA](https://developers.google.com/web/progressive-web-apps) is worth [looking in to](https://developers.google.com/web/fundamentals/instant-and-offline/web-storage/offline-for-pwa).
