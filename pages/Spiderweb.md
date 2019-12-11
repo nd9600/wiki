@@ -74,6 +74,9 @@ Mentioning a post inside another post - this opens up the possibility of [transc
 Like in Twitter, "quote posting", where you reply to another post, but rather than it appearing underneath the parent in the Y direction, it's "above" it in the Z direction.
 (writing it like that makes it seem similar to mentioning a post, above)
 
+#### Iframes
+Rather than opening a new Post in the same page you're already on, or in a new tab, you could open them in an iframe __beside__ your current bit, like [here in Andy Matuschak's tweet](https://twitter.com/andy_matuschak/status/1202670186299420672) or [Ward Cunningham's Smallest Federated Wiki](http://fed.wiki.org/welcome-visitors.html).
+
 ### Social
 
 ##### View and reply control
