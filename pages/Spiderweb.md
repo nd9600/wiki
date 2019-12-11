@@ -27,7 +27,7 @@ Basically, it's:
 * and, rather than only be able to link many child posts to 1 parent by replying to the parent, you can link many children to many parents, maybe by clicking "add parent/child" on each one
 
 ### Socially
-Also, riffing off of [vTaiwan](https://www.technologyreview.com/s/611816/the-simple-but-ingenious-system-taiwan-uses-to-crowdsource-its-laws/) - they found that not letting people reply to eachother's posts meant everyone was able to come to a consensus - letting you control who can reply to you, __separate__ from who can see your posts - remembering [Visakan's](https://twitter.com/visakanv) thread about how people with few followers like replies, and people with loads don't.
+Also, riffing off of [vTaiwan](https://www.technologyreview.com/s/611816/the-simple-but-ingenious-system-taiwan-uses-to-crowdsource-its-laws/) - they found that not letting people reply to eachother's posts meant everyone was able to come to a consensus - I also want to let you control who can reply to you, __separate__ from who can see your posts - remembering [Visakan's](https://twitter.com/visakanv) thread about how people with few followers like replies, and people with loads don't.
 
 You're social with some people, but not every single person in the whole world, but also not necessarily completely private, unless you want to be.
 
@@ -47,7 +47,7 @@ Copying in [Brian Earp's thread about Twitter](https://twitter.com/briandavidear
 ## Features
 
 ### Posts
-You can make many posts, each with a high character limit (\~10000?), and a title.
+You can make many posts, each with a title, a body with a high character limit (\~10000?), and images (just pasted URLs for now).
 Posts can live separately, or be connected to other ones, through different methods:
 
 #### Links/connections
@@ -70,6 +70,13 @@ Like in Twitter, "quote posting", where you reply to another post, but rather th
 (writing it like that makes it seem similar to mentioning a post, above)
 
 ### Social
+
+##### View and reply control
+To limit pile-ons, dogpiling, flaming, trolling, ratio-ing, you __must__ control who can reply to you, __separate__ from who can see your posts:
+* you can allow everyone to see your posts, or a specific set of people
+* you can __not__ allow everyone to reply to your posts, only specific people - this can be a specific set of people, people you follow, people who follow you, both, some combination of them, ... (tentative, users might just set it to "people who follow you", and then there'd essentially be no limit)
+
+Though, if no one can reply to you unless you specifically allow them to
 
 ### Offline
 It'd be relatively easy to do this all offline, and just store an array of Posts, and an array of Post <-> Post Links in [Local storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) or [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API), without any network calls or user accounts.
@@ -97,3 +104,13 @@ Though, I have a feeling this won't work when I try it, so I'll live with the po
 Also, I shouldn't prematurely optimize, especially since everything else apart from the Post <-> Post Links would be normally relational.
 
 A [graph database](https://en.wikipedia.org/wiki/Graph_database) might work for Links, something like [Cayley](https://cayley.io/).
+
+# Milestones
+
+## V1
+* Users
+* Posts
+* Showing all the posts for a user - if you're logged in, your posts at `spiderweb.com`, user X's posts at `spiderweb.com/user/x` 
+
+## V2
+* Replies
