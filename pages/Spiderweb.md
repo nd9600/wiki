@@ -79,7 +79,7 @@ To limit pile-ons, dogpiling, flaming, trolling, ratio-ing, you __must__ control
 Though, if no one can reply to you unless you specifically allow them to
 
 ### Offline
-It'd be relatively easy to do this all offline, and just store an array of Posts, and an array of Post <-> Post Links in [Local storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) or [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API), without any network calls or user accounts.
+It'd be relatively easy to do this all offline, and just store an array of Posts, and an array of Post <-> Post Links in [Local storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) or [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API), without any network calls or user accounts - a [PWA](https://developers.google.com/web/progressive-web-apps) is worth [looking in to](https://developers.google.com/web/fundamentals/instant-and-offline/web-storage/offline-for-pwa).
 
 People could import/export their data to JSON files really easily, and could import them from their online account, or export them __to__ it.
 
