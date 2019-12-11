@@ -27,7 +27,9 @@ Basically, it's:
 * and, rather than only be able to link many child posts to 1 parent by replying to the parent, you can link many children to many parents, maybe by clicking "add parent/child" on each one
 
 ### Socially
-Also, riffing off of [vTaiwan](https://www.technologyreview.com/s/611816/the-simple-but-ingenious-system-taiwan-uses-to-crowdsource-its-laws/) - they found that not letting people reply to eachother's posts meant everyone was able to come to a consensus - I also want to let you control who can reply to you, __separate__ from who can see your posts - remembering [Visakan's](https://twitter.com/visakanv) thread about how people with few followers like replies, and people with loads don't.
+Generally, the theme is "reduce iffy behaviours like pile-ons, while still allowing people to be social" - avoiding the creation of behaviour that seems to happen on the Internet, but not as much IRL, maybe by copying how IRL conversations work/things from physical conversations that we don't always include on the web (see Brian Earp's quote below)?
+
+Riffing off of [vTaiwan](https://www.technologyreview.com/s/611816/the-simple-but-ingenious-system-taiwan-uses-to-crowdsource-its-laws/) - they found that not letting people reply to eachother's posts meant everyone was able to come to a consensus - I also want to let you control who can reply to you, __separate__ from who can see your posts - remembering [Visakan's](https://twitter.com/visakanv) thread about how people with few followers like replies, and people with loads don't.
 
 You're social with some people, but not every single person in the whole world, but also not necessarily completely private, unless you want to be.
 
