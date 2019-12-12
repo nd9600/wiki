@@ -96,6 +96,9 @@ It'd be relatively easy to do this all offline, and just store an array of Posts
 
 People could import/export their data to JSON files really easily, and could import them from their online account, or export them __to__ it.
 
+### Twitter importer
+Far off, you could import [your Twitter data](https://twitter.com/settings/your_twitter_data) into Spiderweb
+
 # Technically
 
 This will be written with a [Laravel](https://laravel.com/) backend, since I know it best, and a frontend in [Vue](https://vuejs.org/) where necessary, for the same reason.
