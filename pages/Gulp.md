@@ -186,7 +186,7 @@ When it gets a file through the stream (as a Vinyl, passed through `pipe()s`), i
 You could also use [symlink()](https://gulpjs.com/docs/en/api/symlink), which makes links rather than files.
 
 # Globs
-[src()](#src) takes in either 1 string glob, or an array of globs to find files for your pipeline to work on - if it's given an array, it goes through them from the start to the end; this is useful for [negative globs](#exclamation_marks).
+[src()](#src\(\)) takes in either 1 string glob, or an array of globs to find files for your pipeline to work on - if it's given an array, it goes through them from the start to the end; this is useful for [negative globs](#exclamation_marks).
 
 A glob is a string of characters used to match filepaths, that can include wildcards, like in Unix paths.
 
@@ -216,11 +216,11 @@ gulp.src([
 
 ## Glob base
 The glob base is the bit of the glob before any special characters: in `/src/js/**.js`, it's `/src/js/`.
-Each [Vinyl]('vinyl) instance that [src()](#src) makes has the glob base set as their base property. 
+Each [Vinyl](#vinyl) instance that [src()](#src\(\)) makes has the glob base set as their base property. 
 
 The base must be the same for all globs used by `src()` - if they're different, you need to set it explicitly.
 
-When the Vinyl is written to the file system with [dest()](#dest), the base gets removed from the output path to preserve directory structures.
+When the Vinyl is written to the file system with [dest()](#dest\(\)), the base gets removed from the output path to preserve directory structures.
 
 If you want to change what the glob base is, use the `base` [option](https://gulpjs.com/docs/en/api/src#options) in `src()`:
 
@@ -243,3 +243,10 @@ gulp.src(
 Here, this avoids putting the images directly into wherever `gulp.dest()` specifies (which will use the same, single, path, in a versioning task), instead putting them inside the `images` folder inside where `gulp.dest()` specifies.
 
 # Vinyl
+A Vinyl is a metadata object that describes a file - the main properties are `path` and `contents` - core aspects of a file on your file system. 
+
+Vinyl objects can describe local or remote files.
+
+# Plugins
+Gulp plugins are [Node Transform Streams](https://github.com/rvagg/through2) that transform files in a pipeline.
+ They can change the filename, metadata, or contents of every file that passes through the stream.

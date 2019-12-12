@@ -28,7 +28,7 @@ slugifyString: function [
     letters: charset [#"a" - #"z" #"A" - #"Z"]
 
     ; https://tools.ietf.org/html/rfc1738
-    ; "only alphanumerics, the special characters "$-_.+!*'(),", and [...] may be used    unencoded within a URL" but Firefox splits the URL in half if you put in a ', so we can't use that
+    ; "only alphanumerics, the special characters "$-_.+!*'(),", and [...] may be used unencoded within a URL" but Firefox splits the URL in half if you put in a ', so we can't use that
     specialChars: charset "$-_.+!*(),"
     alphanumeric: union letters digits 
     acceptableChars: union alphanumeric specialChars
