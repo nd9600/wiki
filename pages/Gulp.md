@@ -144,12 +144,23 @@ exports.default = function() {
 
 ```
 
+You can [call src() or dest()](https://gulpjs.com/docs/en/getting-started/working-with-files#adding-files-to-the-stream) in the middle of a pipeline to add files halfway through (e.g. to transpile some [typescript](/typescript.html), then uglifying it and normal JS), or to write intermediate states to the filesystem (e.g. to create unminified and minified files with the same pipeline).
+
 ## src()
 `src()` is given a [glob](#globs) to read from the file system, and makes a [Node stream](https://nodejs.org/api/stream.html#stream_stream). It finds all the files that match the glob, and reads them into memory to pass through the stream, one file at a time.
 
 > A stream is an abstract interface for working with streaming data in Node.js
 
 The stream that `src()` makes should be returned, to [signal task completion](#signaling_task_completion).
+
+It has [3 modes](https://gulpjs.com/docs/en/getting-started/working-with-files#modes-streaming-buffered-and-empty):
+* buffered, the default, where files are read into memory (many plugins only support it)
+* streaming, where files are streamed from the filesystem in small chunks
+* empty, where files have no contents - it's only useful when working with file metadata
+
+It has useful [options](https://gulpjs.com/docs/en/api/src#options), like `base`, which explicitly sets the [glob base](#glob_base) on the [Vinyl](#vinyl) objects that are created.
+
+Each file is represented by a [Vinyl](#vinyl) instance.
 
 ## pipe()
 
@@ -165,7 +176,61 @@ When it gets a file through the stream (passed through `pipe()s`), it writes the
 
 You could also use [symlink()](https://gulpjs.com/docs/en/api/symlink), which makes links rather than files.
 
-
-You can [call src() or dest()](https://gulpjs.com/docs/en/getting-started/working-with-files#adding-files-to-the-stream) in the middle of a pipeline to add files halfway through (e.g. to transpile some [typescript](/typescript.html), then uglifying it and normal JS), or to write intermediate states to the filesystem (e.g. to create unminified and minified files with the same pipeline).
-
 # Globs
+[src()](#src) takes in either 1 string glob, or an array of globs to find files for your pipeline to work on - if it's given an array, it goes through them from the start to the end; this is useful for [negative globs](#exclamation_marks).
+
+A glob is a string of characters used to match filepaths, that can include wildcards, like in Unix paths.
+
+The _path separator_ is always `/`, even on Windows.
+
+A _segment_ is everything between path separators.
+
+Don't use Node's path methods, like path.join, to create globs - on Windows, it makes an invalid glob because Node uses `\\` as the path separator.
+Avoid `__dirname`, `__filename`, or `process.cwd()` for the same reason.
+
+## Single asterisks
+`*` matches any series of characters _within a single segment_, so inside 1 directory.
+
+## Double asterisks
+`**` matches any series of characters _within multiple segments_, so inside nested directories, not just 1 directory:
+`./resources/assets/js/**/*.js` matches any JS files inside the `js` folder, no matter how deeply nested they are.
+
+## Exclamation marks
+`!` removes any files that otherwise would've been included in the stream (so it must come after a non-negative glob).
+Here, any files in the `designSystem` directory aren't included in the stream:
+```
+gulp.src([
+    "./resources/assets/css/**/*.css",
+    "!./resources/assets/css/designSystem/**/*",
+], {base: "./resources/assets"})
+```
+
+## Glob base
+The glob base is the bit of the glob before any special characters: in `/src/js/**.js`, it's `/src/js/`.
+Each [Vinyl]('vinyl) instance that [src()](#src) makes has the glob base set as their base property. 
+
+The base must be the same for all globs used by `src()` - if they're different, you need to set it explicitly.
+
+When the Vinyl is written to the file system with [dest()](#dest), the base gets removed from the output path to preserve directory structures.
+
+If you want to change what the glob base is, use the `base` [option](https://gulpjs.com/docs/en/api/src#options) in `src()`:
+
+```
+gulp.src([
+    "./resources/assets/css/**/*.css",
+    "!./resources/assets/css/designSystem/**/*",
+], {base: "./resources/assets"})
+```
+
+I needed to set the base here explicitly, because the two globs have different bases otherwise.
+
+You also might want to change the base to put the output files in a different directory:
+```
+gulp.src(
+    "./resources/assets/images/**/*", 
+    {base: "./resources/assets"}
+)
+```
+Here, this avoids putting the images directly into wherever `gulp.dest()` specifies (which will use the same, single, path, in a versioning task), instead putting them inside the `images` folder inside where `gulp.dest()` specifies.
+
+# Vinyl
