@@ -126,6 +126,13 @@ A [graph database](https://en.wikipedia.org/wiki/Graph_database) might work for 
 [d3 hierarchies](https://www.d3indepth.com/layouts/#hierarchical-layouts), probably wouldn't work for links that aren't replies
 [d3 force-directed graphs](https://github.com/d3/d3-force), would work for all sorts of links, not just replies
 
+### CSS & JS build system
+Current plan:
+* CSS & JS versioning: [Gulp](/gulp.html)
+* CSS bundling: `gulp-sass`
+* JS bundling & transpiling: [Webpack](/webpack.html)
+
+
 # Milestones
 
 ## V1
