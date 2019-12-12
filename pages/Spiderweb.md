@@ -118,6 +118,13 @@ Also, I shouldn't prematurely optimize, especially since everything else apart f
 
 A [graph database](https://en.wikipedia.org/wiki/Graph_database) might work for Links, something like [Cayley](https://cayley.io/).
 
+## Technology
+
+[Treeverse](https://github.com/paulgb/Treeverse)
+[panzoom](https://github.com/anvaka/panzoom)
+[d3](https://www.d3indepth.com/introduction/)
+[d3 hierarchies](https://www.d3indepth.com/layouts/#hierarchical-layouts)
+
 # Milestones
 
 ## V1
