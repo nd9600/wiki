@@ -1,4 +1,5 @@
-[Gulp](https://gulpjs.com/) is a build system - it's a system that helps you automate tasks that you need to do to build your system.
+
+[Gulp](https://gulpjs.com/) is a build system - it's a system that helps you automate tasks that you need to do to build your app.
 
 # Installation
 ```
