@@ -103,6 +103,14 @@ For example, say you're writing code to let people book a hotel room, and you're
 _Then_, later on, you expand out to Eastasia, but over there they calculate hotel room taxes based on the number of people staying in the room, and you've assumed too much! Now you have to go and fix the messy abstraction from before.
 If you'd left the abstracting until there were the 2 different cases, you might not have made the mistake.
 
+# Don't put things together that should be separated
+Sometimes a function will do 2 different things, when it really should be 2 different functions, or you're trying to force one library to make 2 radically different outputs, but it doesn't work very well, or the resulting code is ugly.
+These are signs you should probably split them up into different functions/libraries.
+But, also, ..
+
+# Don't separate things when they should be one thing
+Sometimes you'll have 2 different functions that do similar __enough__ things that they really should just be 1 function.
+
 # Try not write functions with side-effects
 If you can make a function's output depend only on its input, do. Don't change anything about the world either, if you can help it - don't print anything, insert something into a database, make an API call.
 
