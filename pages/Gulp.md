@@ -147,7 +147,11 @@ exports.default = function() {
 You can [call src() or dest()](https://gulpjs.com/docs/en/getting-started/working-with-files#adding-files-to-the-stream) in the middle of a pipeline to add files halfway through (e.g. to transpile some [typescript](/typescript.html), then uglifying it and normal JS), or to write intermediate states to the filesystem (e.g. to create unminified and minified files with the same pipeline).
 
 ## src()
-`src()` is given a [glob](#globs) to read from the file system, and makes a [Node stream](https://nodejs.org/api/stream.html#stream_stream). It finds all the files that match the glob, and reads them into memory to pass through the stream, one file at a time.
+```
+src(globs, [options])
+```
+
+`src()` is given a [glob](#globs) to read from the file system, and makes a [Node stream](https://nodejs.org/api/stream.html#stream_stream) that produces [Vinyl](#vinyl) objects. It finds all the files that match the glob, and reads them into memory to pass through the stream, one file at a time.
 
 > A stream is an abstract interface for working with streaming data in Node.js
 
@@ -158,9 +162,10 @@ It has [3 modes](https://gulpjs.com/docs/en/getting-started/working-with-files#m
 * streaming, where files are streamed from the filesystem in small chunks
 * empty, where files have no contents - it's only useful when working with file metadata
 
+Each file is represented by a [Vinyl](#vinyl) instance.
+
 It has useful [options](https://gulpjs.com/docs/en/api/src#options), like `base`, which explicitly sets the [glob base](#glob_base) on the [Vinyl](#vinyl) objects that are created.
 
-Each file is represented by a [Vinyl](#vinyl) instance.
 
 ## pipe()
 
@@ -171,8 +176,12 @@ It's used to chain different Transform or Writable streams together:
 * a [Writable](https://nodejs.org/api/stream.html#stream_writable_streams) stream is an abstraction for a destination to which data is written, such as `fs` write streams or TCP sockets
 
 ## dest()
-You give `dest()` an output directory string, and it makes a Node stream, that's normally used to signal task completion.
-When it gets a file through the stream (passed through `pipe()s`), it writes the file out to the filesystem at that directory.
+```
+dest(folder, [options])
+```
+
+You give `dest()` an output directory string, and it makes a [Node stream](https://nodejs.org/api/stream.html#stream_stream) that consumes [Vinyl](#vinyl) objects. It's normally used to signal task completion.
+When it gets a file through the stream (as a Vinyl, passed through `pipe()s`), it writes the file out to the filesystem at that directory.
 
 You could also use [symlink()](https://gulpjs.com/docs/en/api/symlink), which makes links rather than files.
 
