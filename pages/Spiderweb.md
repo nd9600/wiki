@@ -125,9 +125,9 @@ A [graph database](https://en.wikipedia.org/wiki/Graph_database) might work for 
 
 [Treeverse](https://github.com/paulgb/Treeverse)
 [panzoom](https://github.com/anvaka/panzoom)
-[d3](https://www.d3indepth.com/introduction/)
-[d3 hierarchies](https://www.d3indepth.com/layouts/#hierarchical-layouts), probably wouldn't work for links that aren't replies
-[d3 force-directed graphs](https://github.com/d3/d3-force), would work for all sorts of links, not just replies
+[D3](/d3.html)
+[D3 hierarchies](https://www.d3indepth.com/layouts/#hierarchical-layouts), probably wouldn't work for links that aren't replies
+[D3 force-directed graphs](https://github.com/d3/d3-force), would work for all sorts of links, not just replies
 
 ### CSS & JS build system
 Current plan:
