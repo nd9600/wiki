@@ -14,6 +14,9 @@ http://blog.ploeh.dk/2016/09/26/decoupling-decisions-from-effects/
 http://blog.ploeh.dk/2017/01/27/dependency-injection-is-passing-an-argument/
 [Commodotize your complement](https://www.gwern.net/Complement#2)
 [People's favourite tech talks](https://news.ycombinator.com/item?id=12637239)
+[So you want to build a generator (possibility spaces)](https://galaxykate0.tumblr.com/post/139774965871/so-you-want-to-build-a-generator)
+
+[The Humane Representation of thought - Bret Victor](https://vimeo.com/115154289)
 
 ## Radical stuff
 (see [projects](/projects.html))
