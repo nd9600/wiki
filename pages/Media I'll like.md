@@ -2,6 +2,7 @@ tags: [me/stuff_I'll_like]
 # Books
 
 ## Not read
+[The Final Pagan generation](https://www.amazon.com/dp/0520283708/)
 [The Twenty Days of Turin](https://lareviewofbooks.org/article/foul-small-minded-deities-giorgio-de-maria/)
 [Lord of Light](https://en.wikipedia.org/wiki/Lord_of_Light)
 [How Buildings Learn: What Happens After They're Built](https://www.amazon.co.uk/dp/0140139966)
