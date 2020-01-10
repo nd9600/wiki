@@ -30,11 +30,14 @@ https://prog21.dadgum.com/30.html
 
 ## AI
 > humans are able to learn safe behaviours without having to die even once
+[AI thread](https://twitter.com/CaYD4D/status/1202198164373229570)
 https://blog.keras.io/the-limitations-of-deep-learning.html 
 https://code.fb.com/ai-research/unsupervised-machine-translation-a-novel-approach-to-provide-fast-accurate-translations-for-more-languages/
 [A theory of reality as more than the sum of its parts](https://www.quantamagazine.org/a-theory-of-reality-as-more-than-the-sum-of-its-parts-20170601/)
 [Unsupervised learning: what will replace backpropagation?](http://rebelscience.blogspot.com/2017/09/unsupervised-machine-learning-what-will.html)
 [Continual Learning in a Multi-Layer Network of an Electric Fish](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3393520)
+[ProbMods](https://probmods.org/)
+[]()
 
 ## Guides
 [Staging servers, source control & deploy workflows, and other Stuff nobody teaches you](https://www.kalzumeus.com/2010/12/12/staging-servers-source-control-deploy-workflows-and-other-stuff-nobody-teaches-you/)
