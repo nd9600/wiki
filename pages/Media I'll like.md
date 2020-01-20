@@ -2,6 +2,8 @@ tags: [me/stuff_I'll_like]
 # Books
 
 ## Not read
+[How Few Remain](https://en.wikipedia.org/wiki/How_Few_Remain)
+[Worldwar: in the balance](https://en.wikipedia.org/wiki/Worldwar:_In_the_Balance)
 [Blindness](https://en.wikipedia.org/wiki/Blindness_\(novel\))
 [The Final Pagan generation](https://www.amazon.com/dp/0520283708/)
 [The Twenty Days of Turin](https://lareviewofbooks.org/article/foul-small-minded-deities-giorgio-de-maria/)
@@ -91,7 +93,7 @@ tags: [me/stuff_I'll_like]
 
 ## Not seen
 Cobra
-Messiah
+[Big Love](https://en.wikipedia.org/wiki/Big_Love)
 [Boston Legal](https://en.m.wikipedia.org/wiki/Boston_Legal)
 [The Hitchhiker's Guide To The Galaxy](https://www.amazon.co.uk/dp/B00005OCTS/)
 [The Americans](https://www.imdb.com/title/tt2149175/)
