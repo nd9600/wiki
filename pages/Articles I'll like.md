@@ -37,7 +37,6 @@ https://code.fb.com/ai-research/unsupervised-machine-translation-a-novel-approac
 [Unsupervised learning: what will replace backpropagation?](http://rebelscience.blogspot.com/2017/09/unsupervised-machine-learning-what-will.html)
 [Continual Learning in a Multi-Layer Network of an Electric Fish](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3393520)
 [ProbMods](https://probmods.org/)
-[]()
 
 ## Guides
 [Staging servers, source control & deploy workflows, and other Stuff nobody teaches you](https://www.kalzumeus.com/2010/12/12/staging-servers-source-control-deploy-workflows-and-other-stuff-nobody-teaches-you/)
