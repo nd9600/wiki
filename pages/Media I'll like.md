@@ -52,8 +52,9 @@ tags: [me/stuff_I'll_like]
 # Films
 
 ## Not seen
+[Badlands](https://en.wikipedia.org/wiki/Badlands_\(film\))
+[A Hidden Life](https://en.wikipedia.org/wiki/A_Hidden_Life_\(2019_film\))
 [Mickey and the Bear](https://en.wikipedia.org/wiki/Mickey_and_the_Bear)
-[Climax](https://en.wikipedia.org/wiki/Climax_\(2018_film\))
 [Leave no trace](https://en.wikipedia.org/wiki/Leave_No_Trace_\(film\))
 [The Loneliest Planet](https://en.wikipedia.org/wiki/The_Loneliest_Planet)
 [Breaker Morant](https://en.m.wikipedia.org/wiki/Breaker_Morant_\(film\))
@@ -79,6 +80,7 @@ tags: [me/stuff_I'll_like]
 [Traffic (2000)](https://www.imdb.com/title/tt0181865/)
 
 ## Seen
+Climax
 [In the Name of the King: Two Worlds (2011)](https://topeuropix.net/mov/in-the-name-of-the-king-two-worlds-online-free-hd-with-subtitles-europix)
 [Special Bulletin - Wikipedia](https://en.wikipedia.org/wiki/Special_Bulletin)
 [Hospital Series - Terror attack victims](https://www.youtube.com/watch?v=0pjUNZSajuE)
