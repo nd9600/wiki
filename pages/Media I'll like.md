@@ -53,6 +53,7 @@ tags: [me/stuff_I'll_like]
 
 ## Not seen
 [The Parallax View](https://en.wikipedia.org/wiki/The_Parallax_View)
+The Faculty
 [Badlands](https://en.wikipedia.org/wiki/Badlands_\(film\))
 [A Hidden Life](https://en.wikipedia.org/wiki/A_Hidden_Life_\(2019_film\))
 [Mickey and the Bear](https://en.wikipedia.org/wiki/Mickey_and_the_Bear)
