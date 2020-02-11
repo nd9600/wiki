@@ -52,7 +52,7 @@ tags: [me/stuff_I'll_like]
 # Films
 
 ## Not seen
-Invasion of the Bodysnatchers
+[The Parallax View](https://en.wikipedia.org/wiki/The_Parallax_View)
 [Badlands](https://en.wikipedia.org/wiki/Badlands_\(film\))
 [A Hidden Life](https://en.wikipedia.org/wiki/A_Hidden_Life_\(2019_film\))
 [Mickey and the Bear](https://en.wikipedia.org/wiki/Mickey_and_the_Bear)
@@ -81,6 +81,7 @@ Invasion of the Bodysnatchers
 [Traffic (2000)](https://www.imdb.com/title/tt0181865/)
 
 ## Seen
+Invasion of the Bodysnatchers
 Climax
 [In the Name of the King: Two Worlds (2011)](https://topeuropix.net/mov/in-the-name-of-the-king-two-worlds-online-free-hd-with-subtitles-europix)
 [Special Bulletin - Wikipedia](https://en.wikipedia.org/wiki/Special_Bulletin)
