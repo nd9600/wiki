@@ -2,6 +2,7 @@ tags: [me/stuff_I'll_like]
 # Books
 
 ## Not read
+[Star Maker](https://en.wikipedia.org/wiki/Star_Maker)
 [How Few Remain](https://en.wikipedia.org/wiki/How_Few_Remain)
 [Worldwar: in the balance](https://en.wikipedia.org/wiki/Worldwar:_In_the_Balance)
 [Blindness](https://en.wikipedia.org/wiki/Blindness_\(novel\))
@@ -116,6 +117,5 @@ https://editorial.rottentomatoes.com/guide/100-percent-certified-fresh-tv-season
 # Products
 
 ## Not bought
-[Messenger bag](https://www.amazon.co.uk/dp/B01LW9KTX4/)
 
 ## Bought
