@@ -2,6 +2,7 @@ tags: [me/stuff_I'll_like]
 # Books
 
 ## Not read
+Too like the Lightning, Ada Palmer
 [Star Maker](https://en.wikipedia.org/wiki/Star_Maker)
 [How Few Remain](https://en.wikipedia.org/wiki/How_Few_Remain)
 [Worldwar: in the balance](https://en.wikipedia.org/wiki/Worldwar:_In_the_Balance)
