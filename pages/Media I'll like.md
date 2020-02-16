@@ -2,6 +2,7 @@ tags: [me/stuff_I'll_like]
 # Books
 
 ## Not read
+[Gormenghast](https://www.waterstones.com/book/the-gormenghast-trilogy/mervyn-peake/9780099288893)
 Too like the Lightning, Ada Palmer
 [Star Maker](https://en.wikipedia.org/wiki/Star_Maker)
 [How Few Remain](https://en.wikipedia.org/wiki/How_Few_Remain)
