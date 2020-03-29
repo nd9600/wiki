@@ -2,6 +2,7 @@ tags: [me/stuff_I'll_like]
 # Books
 
 ## Not read
+The Girl Who Owned a City
 Ficciones, Jorge Luis Borges
 The Coming of the French Revolution, Georges Lefebvre
 [Gormenghast](https://www.waterstones.com/book/the-gormenghast-trilogy/mervyn-peake/9780099288893)
