@@ -58,6 +58,7 @@ Too like the Lightning, Ada Palmer
 # Films
 
 ## Not seen
+[A Summer's Tale](https://en.wikipedia.org/wiki/A_Summer%27s_Tale)
 [Three Colours: Blue](https://en.wikipedia.org/wiki/Three_Colours:_Blue)
 [The Parallax View](https://en.wikipedia.org/wiki/The_Parallax_View)
 The Faculty
